@@ -13,8 +13,9 @@ import Toast from './components/Toast';
 import Modal from './components/Modal';
 import DatePicker from './components/DatePicker';
 // router.
-import {
-  BrowserRouter as Router,
+import { 
+  // BrowserRouter as Router, >> pode usar fora do githubPages.
+  HashRouter as Router,
   Switch,
   Route,
 } from 'react-router-dom'
@@ -152,7 +153,7 @@ function App() {
       }}
     >
       <div>
-        <Router basename="https://ghaprodrigolessa.github.io/pulsar-front/">
+        <Router>
           <Switch>
             <Route exact path="/">
               <Login></Login>

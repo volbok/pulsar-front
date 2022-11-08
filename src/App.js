@@ -152,7 +152,7 @@ function App() {
       }}
     >
       <div>
-        <Router>
+        <Router basename="https://ghaprodrigolessa.github.io/pulsar-front/">
           <Switch>
             <Route exact path="/">
               <Login></Login>

@@ -1,7 +1,7 @@
 {
   "name": "pulsar",
   "version": "0.1.0",
-  "homepage": "https://ghaprodrigolessa.github.io/pulsar-front",
+  "homepage": "https://ghaprodrigolessa.github.io/pulsar-front/",
   "private": true,
   "dependencies": {
     "axios": "^0.21.1",

@@ -73,7 +73,9 @@ function Riscos() {
         style={{ display: viewopcoesrisco == 1 ? 'flex' : 'none' }}>
         <div className="janela">
           {arrayopcoesrisco.map(item => (
-            <div className='button'
+            <div
+              key={'riscos ' + item}
+              className='button'
               style={{ width: 100 }}
               onClick={() => {
                 settiporisco(item);

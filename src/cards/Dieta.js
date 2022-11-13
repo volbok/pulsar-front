@@ -112,7 +112,9 @@ function Dieta() {
         style={{ display: viewopcoesdieta == 1 ? 'flex' : 'none' }}>
         <div className="janela">
           {arraydietas.map(item => (
-            <div className='button'
+            <div
+              key={'arraydietas ' + item}
+              className='button'
               style={{ width: 100 }}
               onClick={() => {
                 settipodieta(item);

@@ -2,6 +2,7 @@
 import React, { useContext, useEffect, useState } from 'react';
 import axios from 'axios';
 import Context from './Context';
+// funções.
 import toast from '../functions/toast';
 // componentes.
 import Logo from '../components/Logo';
@@ -16,6 +17,7 @@ function Login() {
     setsettings,
     pagina, setpagina,
     settoast,
+    sethospital,
     setunidade,
     unidades, setunidades,
     setusuario,
@@ -31,9 +33,9 @@ function Login() {
     }
     // eslint-disable-next-line
   }, [pagina]);
-  
-   // carregar configurações do usuário logado.
-   const loadSettings = (usuario) => {
+
+  // carregar configurações do usuário logado.
+  const loadSettings = (usuario) => {
     axios.get(html + 'settings/' + usuario).then((response) => {
       var x = [];
       x = response.data.rows;
@@ -61,8 +63,11 @@ function Login() {
         }
         axios.post(html + 'insert_settings', obj).then(() => {
           toast(settoast, 'CONFIGURAÇÕES PESSOAIS ARMAZENADAS NA BASE PULSAR', 'rgb(82, 190, 128, 1)', 3000);
+          axios.get(html + 'settings/' + usuario).then((response) => {
+            setsettings(response.data.rows);
+          });
         })
-      }   
+      }
     })
   }
 
@@ -79,7 +84,16 @@ function Login() {
     var obj = {
       id_usuario: id_usuario
     }
-    axios.post(html + 'getunidades', obj).then((response) => {
+    axios.post(html + 'getunidades', obj,
+      /*
+      Forma de passar o token pelo header (deve ser repetida em toda endpoint).
+      {
+        headers: {
+          'Authorization': `Bearer ${token}`
+        }
+      }
+      */
+    ).then((response) => {
       setacessos(response.data.rows);
       setviewlistaunidades(1);
     })
@@ -89,6 +103,7 @@ function Login() {
   let user = null;
   let password = null;
   var timeout = null;
+  var token = null;
   const checkLogin = () => {
     clearTimeout(timeout);
     timeout = setTimeout(() => {
@@ -101,24 +116,37 @@ function Login() {
       axios.post(html + 'checkusuario', obj).then((response) => {
         var x = [0, 1];
         x = response.data;
-        if (x.rows.length == 1) {
-          var objeto = x.rows.pop();
-          var firstname = '';
-          firstname = objeto.nome_usuario.split(' ', 1);
-          toast(settoast, 'OLÁ, ' + firstname, 'rgb(82, 190, 128, 1)', 3000);
+        // armazenando o token no localStorage.
+        token = x.token;
+        console.log('TOKEN RECEBIDO DA API: ' + token);
+        localStorage.setItem("token", x.token);
+        // adicionando o token ao header.
+        setAuthToken(x.token);
+
+        if (x.auth == true) {
+          toast(settoast, 'OLÁ, ' + x.nome.split(' ', 1), 'rgb(82, 190, 128, 1)', 3000);
           setusuario(
             {
-              id: parseInt(objeto.id_usuario),
-              nome_usuario: firstname,
+              id: x.id,
+              nome_usuario: x.nome.split(' ', 1),
             }
           );
-          loadAcessos(objeto.id_usuario);
-          loadSettings(objeto.id_usuario,);
+          loadAcessos(x.id);
+          loadSettings(x.id);
         } else {
           toast(settoast, 'USUÁRIO OU SENHA INCORRETOS', 'rgb(231, 76, 60, 1)', 3000);
         }
       });
     }, 1000);
+  }
+
+  // forma mais inteligente de adicionar o token ao header de todas as requisições.
+  const setAuthToken = (token) => {
+    if (token) {
+      axios.defaults.headers.common["Authorization"] = token;
+    }
+    else
+      delete axios.defaults.headers.common["Authorization"];
   }
 
   // inputs para login e senha.
@@ -183,6 +211,7 @@ function Login() {
             key={'ACESSO: ' + item.id_acesso}
             className='button' style={{ flex: 1 }}
             onClick={() => {
+              sethospital(item.id_cliente);
               setunidade(item.id_unidade);
               setpagina(1);
               history.push('/passometro');
@@ -196,7 +225,11 @@ function Login() {
   }
 
   return (
-    <div className="main cor1 fadein" style={{ display: pagina == 0 ? 'flex' : 'none' }}>
+    <div className="main cor1 fadein"
+      style={{
+        display: pagina == 0 ? 'flex' : 'none',
+        paddingTop: window.innerWidth < 426 ? 20 : '',
+      }}>
       <Logo height={100} width={100}></Logo>
       <div className="text2" style={{ margin: 20, fontSize: 20 }}>PULSAR</div>
       <Inputs></Inputs>

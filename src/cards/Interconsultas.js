@@ -242,7 +242,7 @@ function Interconsultas() {
           <div className='text1' style={{ marginBottom: 15, width: 150 }}>STATUS DA INTERCONSULTA</div>
           {arrayopcoesstatus.map(item => (
             <div
-              key={'opcao status interconsulta ' + selectedinterconsulta.id_interconsulta}
+              key={'opcao status interconsulta ' + item}
               onClick={() => {
                 var obj = {
                   id_atendimento: atendimento,

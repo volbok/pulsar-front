@@ -208,6 +208,17 @@ function Cadastro() {
                 id="inputNovaDn"
                 onFocus={(e) => (e.target.placeholder = '')}
                 onBlur={(e) => (e.target.placeholder = 'DATA DE NASCIMENTO')}
+                onKeyUp={() => {
+                  clearTimeout(timeout);
+                  var date = moment(document.getElementById("inputNovaDn").value, 'DD/MM/YY', true);
+                  // eslint-disable-next-line
+                  timeout = setTimeout(() => {
+                    if (date.isValid() == false) {
+                      toast(settoast, 'DATA INVÁLIDA', 'rgb(231, 76, 60, 1)', 3000);
+                      document.getElementById("inputNovaDn").value = '';
+                    }
+                  }, 3000);
+                }}
                 defaultValue={moment(paciente.dn_paciente).format('DD/MM/YY')}
                 style={{
                   flexDirection: 'center', justifyContent: 'center', alignSelf: 'center',

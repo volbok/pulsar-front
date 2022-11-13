@@ -13,6 +13,9 @@ import prec_contato from '../images/prec_contato.svg';
 import prec_respiratorio from '../images/prec_respiratorio.svg';
 import esteto from '../images/esteto.svg';
 import preferencias from '../images/preferencias.svg';
+import imprimir from '../images/imprimir.svg';
+// funções.
+import toast from '../functions/toast';
 // router.
 import { useHistory } from 'react-router-dom';
 // componentes.
@@ -43,10 +46,11 @@ function Passometro() {
     unidades,
     usuario,
 
+    settoast,
     pagina, setpagina,
 
     settings,
-    tema, settema,
+    // tema, settema,
     carddiasinternacao, setcarddiasinternacao,
     cardalergias, setcardalergias,
     cardanamnese, setcardanamnese,
@@ -67,10 +71,9 @@ function Passometro() {
     card, setcard,
 
     setpacientes, pacientes,
-    paciente, setpaciente,
+    setpaciente,
     atendimentos, setatendimentos,
     setatendimento, atendimento,
-
 
     // estados utilizados pela função getAllData (necessária para alimentar os card fechados).
     setalergias, alergias,
@@ -100,15 +103,22 @@ function Passometro() {
       console.log('LISTA DE PACIENTES CARREGADA.');
     })
   }
+
   // carregar lista de atendimentos ativos para a unidade selecionada.
   const [arrayatendimentos, setarrayatendimentos] = useState([]);
   const loadAtendimentos = () => {
+    var token = localStorage.getItem("token");
+    console.log(token);
+    axios.defaults.headers.common["Authorization"] = token;
     axios.get(html + 'list_atendimentos/' + unidade).then((response) => {
       setatendimentos(response.data.rows);
       setarrayatendimentos(response.data.rows);
       loadAllInterconsultas();
       console.log('LISTA DE ATENDIMENTOS CARREGADA: ' + response.data.rows.length);
     })
+      .catch(function (error) {
+        toast(settoast, error.response.data.message, 'black', 3000);
+      });
   }
 
   // registro de todas as interconsultas (serão exibição em destaque na lista de pacientes).
@@ -128,7 +138,7 @@ function Passometro() {
       setpaciente([]);
       setatendimento(null);
       loadPacientes();
-      
+
       setcarddiasinternacao(settings.map(item => item.card_diasinternacao).pop());
       setcardalergias(settings.map(item => item.card_alergias).pop());
       setcardanamnese(settings.map(item => item.card_anamnese).pop());
@@ -151,22 +161,48 @@ function Passometro() {
   }, [pagina]);
 
   // botão de configurações / settings.
-  function BtnSettings() {
+  function BtnOptions() {
     return (
-      <div className='button'
-        style={{ position: 'absolute', top: 10, right: 25, minWidth: 25, maxWidth: 25, minHeight: 25, maxHeight: 25 }}
-        title={'CONFIGURAÇÕES'}
-        onClick={() => { setpagina(4); history.push('/settings'); }}
-      >
-        <img
-          alt=""
-          src={preferencias}
+      <div style={{
+        position: 'absolute',
+        top: window.innerWidth < 426 ? 65 : 10,
+        right: window.innerWidth < 426 ? 0 : 25,
+        display: 'flex', flexDirection: 'row', justifyContent: 'center',
+      }}>
+        <div className='button cor1hover'
           style={{
-            margin: 0,
-            height: 20,
-            width: 20,
+            minWidth: 25, maxWidth: 25, minHeight: 25, maxHeight: 25, marginRight: 0
           }}
-        ></img>
+          title={'CONFIGURAÇÕES'}
+          onClick={() => { setpagina(4); history.push('/settings'); }}
+        >
+          <img
+            alt=""
+            src={preferencias}
+            style={{
+              margin: 0,
+              height: 20,
+              width: 20,
+            }}
+          ></img>
+        </div>
+        <div className='button cor1hover'
+          style={{
+            minWidth: 25, maxWidth: 25, minHeight: 25, maxHeight: 25,
+          }}
+          title={'IMPRIMIR'}
+          onClick={() => { setpagina(6); history.push('/pdf'); }}
+        >
+          <img
+            alt=""
+            src={imprimir}
+            style={{
+              margin: 0,
+              height: 20,
+              width: 20,
+            }}
+          ></img>
+        </div>
       </div>
     )
   }
@@ -267,13 +303,17 @@ function Passometro() {
         </div>
         <div
           className="scroll"
+          id="scroll atendimentos"
           style={{
             display: arrayatendimentos.length > 0 ? 'flex' : 'none', flex: 1,
             width: window.innerWidth < 426 ? 'calc(95vw - 10px)' : 'calc(30vw - 10px)',
+            height: window.innerWidth < 426 ? '75vh' : 'calc(100vh - 1000px)',
           }}>
           {arrayatendimentos.map(item => (
             <div key={'pacientes' + item.id_atendimento}>
-              <div className="row" style={{ padding: 0, flex: 4 }}>
+              <div
+                className="row" style={{ padding: 0, flex: 4 }}
+              >
                 <div className='button-yellow'
                   style={{
                     flex: 1, marginRight: 0,
@@ -283,7 +323,8 @@ function Passometro() {
                   {item.leito}
                 </div>
                 <div
-                  className={paciente == item.id_paciente ? 'button-red' : 'button'}
+                  id={'atendimento ' + item.id_atendimento}
+                  className='button'
                   style={{
                     position: 'relative',
                     flex: 3, marginLeft: 0,
@@ -295,6 +336,13 @@ function Passometro() {
                     setatendimento(item.id_atendimento);
                     setpaciente(item.id_paciente);
                     getAllData(item.id_paciente, item.id_atendimento);
+                    setTimeout(() => {
+                      var botoes = document.getElementById("scroll atendimentos").getElementsByClassName("button-red");
+                      for (var i = 0; i < botoes.length; i++) {
+                        botoes.item(i).className = "button";
+                      }
+                      document.getElementById("atendimento " + item.id_atendimento).className = "button-red";
+                    }, 100);
                   }}
                 >
                   {window.innerWidth < 768 ?
@@ -340,7 +388,7 @@ function Passometro() {
                       padding: 20,
                     }}>
                     {allinterconsultas.filter(valor => valor.id_atendimento == item.id_atendimento).map(item => (
-                      <div>{item.especialidade}</div>
+                      <div key={'interconsulta ' + item.especialidade}>{item.especialidade}</div>
                     ))}
                   </div>
                 </div>
@@ -363,7 +411,7 @@ function Passometro() {
       </div >
     )
     // eslint-disable-next-line
-  }, [arrayatendimentos, paciente, allinterconsultas, showinterconsultas]);
+  }, [arrayatendimentos, allinterconsultas, showinterconsultas]);
 
   // identificação do paciente na versão mobile, na view dos cards.
   function ViewPaciente() {
@@ -642,7 +690,7 @@ function Passometro() {
           </div>
           <div id='RESUMO VM'
             style={{
-              display: opcao == 'card-vm' ? 'flex' : 'none', flexDirection: 'column',
+              display: opcao == 'card-vm' && vm.length > 0 ? 'flex' : 'none', flexDirection: 'column',
               justifyContent: 'center', alignSelf: 'center',
             }}>
 
@@ -699,7 +747,7 @@ function Passometro() {
             <div>
               {antibioticos.filter(item => item.data_termino == null).slice(-3).map(item => (
                 <div
-                  key={'atb ' + item.id_antibiotico}
+                  key={'atb resumo ' + item.id_antibiotico}
                   className='textcard'
                   style={{ margin: 0, padding: 0 }}
                 >
@@ -746,7 +794,7 @@ function Passometro() {
           </div>
           <div id='RESUMO SINAIS VITAIS'
             style={{
-              display: opcao == 'card-sinaisvitais' ? 'flex' : 'none', flexDirection: 'column',
+              display: opcao == 'card-sinaisvitais' && sinaisvitais.length > 0 ? 'flex' : 'none', flexDirection: 'column',
               justifyContent: 'center', alignSelf: 'center',
             }}>
             <div style={{
@@ -756,7 +804,7 @@ function Passometro() {
               <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', margin: 5 }}>
                 <div className='textcard' style={{ margin: 0, padding: 0, opacity: 0.5 }}>{'PAM'}</div>
                 <div className='textcard' style={{ margin: 0, padding: 0 }}>
-                  {Math.ceil((2 * parseInt(sinaisvitais.slice(-1).map(item => item.pad)) + parseInt(sinaisvitais.slice(-1).map(item => item.pas))) / 3)}
+                  {sinaisvitais.length > 0 ? Math.ceil((2 * parseInt(sinaisvitais.slice(-1).map(item => item.pad)) + parseInt(sinaisvitais.slice(-1).map(item => item.pas))) / 3) : null}
                 </div>
               </div>
               <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', margin: 5 }}>
@@ -801,7 +849,7 @@ function Passometro() {
             <div>
               {riscos.slice(-3).map(item => (
                 <div
-                  key={'atb ' + item.id_antibiotico}
+                  key={'atb ' + item.id_risco}
                   className='textcard'
                   style={{ margin: 0, padding: 0 }}
                 >
@@ -875,7 +923,7 @@ function Passometro() {
         }}>
         <ViewPaciente></ViewPaciente>
         <div style={{ pointerEvents: 'none' }}>
-          {cartao(null, 'DIAS DE INTERNAÇÃO: ' + atendimentos.filter(item => item.id_atendimento == atendimento).map(item => moment().diff(item.data_inicio, 'days')), null, carddiasinternacao, 0 )}
+          {cartao(null, 'DIAS DE INTERNAÇÃO: ' + atendimentos.filter(item => item.id_atendimento == atendimento).map(item => moment().diff(item.data_inicio, 'days')), null, carddiasinternacao, 0)}
         </div>
         {cartao(alergias, 'ALERGIAS', 'card-alergias', cardalergias, busyalergias)}
         {cartao(null, 'ANAMNESE', 'card-anamnese', cardanamnese)}
@@ -945,7 +993,7 @@ function Passometro() {
         }}>
         <div className='text1' style={{ opacity: 0.5 }}>{'SELECIONE UM PACIENTE DA LISTA PRIMEIRO'}</div>
       </div>
-      <BtnSettings></BtnSettings>
+      <BtnOptions></BtnOptions>
     </div >
   );
 }

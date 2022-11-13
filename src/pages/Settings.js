@@ -4,8 +4,6 @@ import Context from './Context';
 import axios from 'axios';
 // router.
 import { useHistory } from 'react-router-dom';
-// funções.
-import toast from '../functions/toast';
 // imagens.
 import back from '../images/back.svg';
 import salvar from '../images/salvar.svg';
@@ -16,11 +14,10 @@ function Settings() {
   const {
     html,
     usuario,
-    settoast,
     pagina, setpagina,
-    settings, setsettings,
+    settings,
 
-    tema, settema,
+    settema,
     carddiasinternacao, setcarddiasinternacao,
     cardalergias, setcardalergias,
     cardanamnese, setcardanamnese,
@@ -45,7 +42,6 @@ function Settings() {
 
   useEffect(() => {
     if (pagina == 4) {
-      
       // recuperando configurações dos cards.
       setcarddiasinternacao(settings.map(item => item.card_diasinternacao).pop());
       setcardalergias(settings.map(item => item.card_alergias).pop());
@@ -104,7 +100,10 @@ function Settings() {
       <div
         className={estado == 1 ? 'button-red' : 'button'}
         style={{
-          minWidth: 130, maxWidth: 130, minHeight: 130, maxHeight: 130,
+          minWidth: window.innerWidth < 426 ? '35vw' : 130,
+          maxWidth: window.innerWidth < 426 ? '35vw' : 130,
+          minHeight: window.innerWidth < 426 ? '35vw' : 130,
+          maxHeight: window.innerWidth < 426 ? '35vw' : 130,
           opacity: estado == 1 ? 1 : 0.3
         }}
         onClick={() => {
@@ -121,26 +120,54 @@ function Settings() {
   }
 
   return (
-    <div className="main" style={{ justifyContent: 'flex-start' }}>
+    <div className="main scroll" style={{ justifyContent: 'flex-start' }}>
       <div className="text3">
         CONFIGURAÇÕES
       </div>
-      <div className='text1'>TEMA</div>
       <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'center' }}>
-        <div className='button'
-          onClick={() => settema(1)}
-        >
-          {'AZUL'}
+        <div className='button-red'
+          style={{ margin: 0, marginRight: 10, width: 50, height: 50, alignSelf: 'center' }}
+          title={'VOLTAR PARA O SETUP'}
+          onClick={() => { setpagina(1); history.push('/passometro') }}>
+          <img
+            alt=""
+            src={back}
+            style={{
+              margin: 0,
+              height: 30,
+              width: 30,
+            }}
+          ></img>
         </div>
-        <div className='button'
-          onClick={() => settema(2)}
-        >
-          {'VERDE'}
+        <div className='cor3' style={{ display: 'flex', flexDirection: 'column', borderRadius: 5 }}>
+          <div className='text1'>TEMA</div>
+          <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'center' }}>
+            <div className='button'
+              onClick={() => settema(1)}
+            >
+              {'AZUL'}
+            </div>
+            <div className='button'
+              onClick={() => settema(2)}
+            >
+              {'VERDE'}
+            </div>
+            <div className='button'
+              onClick={() => settema(3)}
+            >
+              {'PRETO'}
+            </div>
+          </div>
         </div>
-        <div className='button'
-          onClick={() => settema(3)}
+        <div
+          className='button'
+          style={{ margin: 10, padding: 15, width: 100 }}
+          onClick={() => {
+            setpagina(5);
+            history.push('/usuarios')
+          }}
         >
-          {'DARK'}
+          CADASTRO DE USUARIOS
         </div>
       </div>
       <div>
@@ -167,7 +194,7 @@ function Settings() {
           {cardSelector('INTERCONSULTAS', cardinterconsultas, setcardinterconsultas)}
         </div>
       </div>
-      <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'center' }}>
+      <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'center', marginBottom: 10 }}>
         <div id="botão de retorno"
           className="button-red"
           style={{

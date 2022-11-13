@@ -76,7 +76,9 @@ function Precaucoes() {
         style={{ display: viewopcoesprecaucao == 1 ? 'flex' : 'none' }}>
         <div className="janela">
           {arrayopcoesprecaucao.map(item => (
-            <div className='button'
+            <div
+              key={'arrayprecaucoes ' + item}
+              className='button'
               style={{ width: 100 }}
               onClick={() => {
                 settipoprecaucao(item);

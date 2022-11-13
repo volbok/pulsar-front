@@ -8,12 +8,14 @@ import Login from './pages/Login';
 import Cadastro from './pages/Cadastro';
 import Passometro from './pages/Passometro';
 import Settings from './pages/Settings';
+import Usuarios from './pages/Usuarios';
+import Pdf from './pages/Pdf';
 // componentes.
 import Toast from './components/Toast';
 import Modal from './components/Modal';
 import DatePicker from './components/DatePicker';
 // router.
-import { 
+import {
   // BrowserRouter as Router, >> pode usar fora do githubPages.
   HashRouter as Router,
   Switch,
@@ -22,10 +24,11 @@ import {
 
 function App() {
   // api.
-  // var html = 'http://localhost:3333/'
+  var html = 'http://localhost:3333/'
   // const html = 'http://10.0.6.3:3333/'
   // const html = 'https://pulsarapi.herokuapp.com/'
-  var html = 'https://pulsar-api.up.railway.app/'
+  
+  // var html = 'https://pulsar-api.up.railway.app/'
 
   // estados do context.
   const [toast, settoast] = useState({});
@@ -36,6 +39,7 @@ function App() {
   const [pickdate2, setpickdate2] = useState();
 
   const [unidades, setunidades] = useState([]);
+  const [hospital, sethospital] = useState([]);
   const [unidade, setunidade] = useState([]);
   const [usuario, setusuario] = useState({});
 
@@ -101,6 +105,7 @@ function App() {
         pickdate2, setpickdate2,
 
         unidades, setunidades,
+        hospital, sethospital,
         unidade, setunidade,
         usuario, setusuario,
 
@@ -161,11 +166,17 @@ function App() {
             <Route path="/passometro">
               <Passometro></Passometro>
             </Route>
+            <Route path="/pdf">
+              <Pdf></Pdf>
+            </Route>
             <Route path="/cadastro">
               <Cadastro></Cadastro>
             </Route>
             <Route path="/settings">
               <Settings></Settings>
+            </Route>
+            <Route path="/usuarios">
+              <Usuarios></Usuarios>
             </Route>
           </Switch>
         </Router>

@@ -64,7 +64,7 @@ function Alertas() {
     return (
       <div style={{ display: 'flex', flexDirection: 'row' }}>
         {invasoes.filter(item => item.data_retirada == null && moment().diff(item.data_implante, 'days') > 15).map(item => (
-          <div className='button-red'
+          <div className='button-red' key={'invasoes ' + item.id_invasao}
             style={{
               height: 150, width: 150, padding: 20,
               backgroundColor: yellow,
@@ -240,7 +240,7 @@ function Alertas() {
       }}>
         {antibioticos.filter(item => item.data_termino == null && moment().diff(moment(item.data_inicio), 'days') > 7)
           .map(item => (
-            <div className='button-red'
+            <div className='button-red' key={'alertaatb ' + item.id_antibiotico}
               style={{
                 display: 'flex',
                 height: 150, width: 150, padding: 20,
@@ -251,7 +251,7 @@ function Alertas() {
               <div style={{
                 display: 'flex', flexDirection: 'column', justifyContent: 'center',
               }}>
-                <duv>{'ANTIBIÓTICO POR TEMPO DE USO PROLONGADO:'}</duv>
+                <div>{'ANTIBIÓTICO POR TEMPO DE USO PROLONGADO:'}</div>
                 <div>{item.antibiotico}</div>
               </div>
             </div>
@@ -268,6 +268,7 @@ function Alertas() {
         {culturas.filter(item => JSON.stringify(item.resultado).includes('CGP') || JSON.stringify(item.resultado).includes('COCOS GRAM-POSITIVOS') || JSON.stringify(item.resultado).includes('STREPTO') || JSON.stringify(item.resultado).includes('STAPHYLO'))
           .map(item => (
             <div
+              key={'culturas ' + item.resultado}
               className='button-red'
               style={{
                 display: 'flex',

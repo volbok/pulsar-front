@@ -50,6 +50,21 @@ function Usuarios() {
       setusuarios(response.data.rows);
       setarrayusuarios(response.data.rows);
     })
+      .catch(function (error) {
+        if (error.response == undefined) {
+          toast(settoast, 'ERRO DE CONEXÃO, REINICIANDO APLICAÇÃO.', 'black', 3000);
+          setTimeout(() => {
+            setpagina(0);
+            history.push('/');
+          }, 3000);
+        } else {
+          toast(settoast, error.response.data.message + ' REINICIANDO APLICAÇÃO.', 'black', 3000);
+          setTimeout(() => {
+            setpagina(0);
+            history.push('/');
+          }, 3000);
+        }
+      });
   }
 
   // registrando um usuário.
@@ -70,6 +85,13 @@ function Usuarios() {
         setviewnewusuario(0);
         toast(settoast, 'USUÁRIO CADASTRADO COM SUCESSO NA BASE PULSAR', 'rgb(82, 190, 128, 1)', 3000);
       })
+        .catch(function () {
+          toast(settoast, 'ERRO DE CONEXÃO, REINICIANDO APLICAÇÃO.', 'black', 5000);
+          setTimeout(() => {
+            setpagina(0);
+            history.push('/');
+          }, 5000);
+        });
     } else {
       toast(settoast, 'USUÁRIO JÁ CADASTRADO NA BASE PULSAR', 'rgb(231, 76, 60, 1)', 3000);
     }
@@ -85,13 +107,19 @@ function Usuarios() {
       senha: selectedusuario.senha,
       login: selectedusuario.login
     }
-    console.log('NESSUN DORMA: ' + selectedusuario.id_usuario);
     axios.post(html + 'update_usuario/' + selectedusuario.id_usuario, obj).then(() => {
       loadUsuarios();
       setselectedusuario(0);
       setviewnewusuario(0);
       toast(settoast, 'USUÁRIO ATUALIZADO COM SUCESSO NA BASE PULSAR', 'rgb(82, 190, 128, 1)', 3000);
-    });
+    })
+      .catch(function () {
+        toast(settoast, 'ERRO DE CONEXÃO, REINICIANDO APLICAÇÃO.', 'black', 5000);
+        setTimeout(() => {
+          setpagina(0);
+          history.push('/');
+        }, 5000);
+      });
   }
 
   // excluir um usuário.
@@ -103,7 +131,14 @@ function Usuarios() {
       axios.get(html + 'delete_usuario/' + usuario).then(() => {
         loadUsuarios();
         toast(settoast, 'USUÁRIO EXCLUÍDO COM SUCESSO DA BASE PULSAR', 'rgb(82, 190, 128, 1)', 3000);
-      });
+      })
+        .catch(function () {
+          toast(settoast, 'ERRO DE CONEXÃO, REINICIANDO APLICAÇÃO.', 'black', 5000);
+          setTimeout(() => {
+            setpagina(0);
+            history.push('/');
+          }, 5000);
+        });
     }
   }
 
@@ -409,6 +444,13 @@ function Usuarios() {
     axios.get(html + 'list_acessos/' + unidade).then((response) => {
       setacessos(response.data.rows);
     })
+      .catch(function () {
+        toast(settoast, 'ERRO DE CONEXÃO, REINICIANDO APLICAÇÃO.', 'black', 5000);
+        setTimeout(() => {
+          setpagina(0);
+          history.push('/');
+        }, 5000);
+      });
   }
 
   // recuperando todos os acessos da base (necessário para gerenciar a exclusão segura de usuários).
@@ -417,6 +459,13 @@ function Usuarios() {
     axios.get(html + 'list_todos_acessos').then((response) => {
       settodosacessos(response.data.rows);
     })
+      .catch(function () {
+        toast(settoast, 'ERRO DE CONEXÃO, REINICIANDO APLICAÇÃO.', 'black', 5000);
+        setTimeout(() => {
+          setpagina(0);
+          history.push('/');
+        }, 5000);
+      });
   }
 
   // registrando um acesso.
@@ -433,6 +482,13 @@ function Usuarios() {
       setviewnewacesso(0);
       toast(settoast, 'ACESSO CADASTRADO COM SUCESSO NA BASE PULSAR', 'rgb(82, 190, 128, 1)', 3000);
     })
+      .catch(function () {
+        toast(settoast, 'ERRO DE CONEXÃO, REINICIANDO APLICAÇÃO.', 'black', 5000);
+        setTimeout(() => {
+          setpagina(0);
+          history.push('/');
+        }, 5000);
+      });
   }
 
   // excluindo um acesso.
@@ -441,6 +497,13 @@ function Usuarios() {
       toast(settoast, 'ACESSO EXCLUIDO COM SUCESSO', 'rgb(82, 190, 128, 1)', 3000);
       loadAcessos();
     })
+      .catch(function () {
+        toast(settoast, 'ERRO DE CONEXÃO, REINICIANDO APLICAÇÃO.', 'black', 5000);
+        setTimeout(() => {
+          setpagina(0);
+          history.push('/');
+        }, 5000);
+      });
   }
 
   const ListaDeAcessos = useCallback(() => {

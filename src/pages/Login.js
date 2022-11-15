@@ -4,6 +4,9 @@ import axios from 'axios';
 import Context from './Context';
 // funções.
 import toast from '../functions/toast';
+import checkinput from '../functions/checkinput';
+// imagens.
+import salvar from '../images/salvar.svg';
 // componentes.
 import Logo from '../components/Logo';
 // router.
@@ -20,7 +23,7 @@ function Login() {
     sethospital,
     setunidade,
     unidades, setunidades,
-    setusuario,
+    setusuario, usuario,
   } = useContext(Context);
 
   // history (router).
@@ -65,8 +68,14 @@ function Login() {
           toast(settoast, 'CONFIGURAÇÕES PESSOAIS ARMAZENADAS NA BASE PULSAR', 'rgb(82, 190, 128, 1)', 3000);
           axios.get(html + 'settings/' + usuario).then((response) => {
             setsettings(response.data.rows);
-          });
+          })
+            .catch(function (error) {
+              console.log(error);
+            })
         })
+          .catch(function (error) {
+            console.log(error);
+          })
       }
     })
   }
@@ -76,6 +85,9 @@ function Login() {
     axios.get(html + 'list_unidades').then((response) => {
       setunidades(response.data.rows);
     })
+      .catch(function (error) {
+        console.log(error);
+      })
   }
 
   // recuperando registros de acessos do usuário logado.
@@ -97,6 +109,9 @@ function Login() {
       setacessos(response.data.rows);
       setviewlistaunidades(1);
     })
+      .catch(function (error) {
+        console.log(error);
+      })
   }
 
   // checando se o usuário inserido está registrado no sistema.
@@ -120,6 +135,8 @@ function Login() {
         token = x.token;
         console.log('TOKEN RECEBIDO DA API: ' + token);
         localStorage.setItem("token", x.token);
+
+        console.log('DADOS DO USUÁRIO: ' + x.nome + ' - ' + x.dn + ' - ' + x.cpf + ' - ' + x.email);
         // adicionando o token ao header.
         setAuthToken(x.token);
 
@@ -128,14 +145,24 @@ function Login() {
           setusuario(
             {
               id: x.id,
-              nome_usuario: x.nome.split(' ', 1),
+              nome_usuario: x.nome,
+              dn_usuario: x.dn,
+              cpf_usuario: x.cpf,
+              email_usuario: x.email
             }
           );
           loadAcessos(x.id);
           loadSettings(x.id);
+
         } else {
           toast(settoast, 'USUÁRIO OU SENHA INCORRETOS', 'rgb(231, 76, 60, 1)', 3000);
         }
+      }).catch(function () {
+        toast(settoast, 'ERRO DE CONEXÃO, REINICIANDO APLICAÇÃO.', 'black', 5000);
+        setTimeout(() => {
+          setpagina(0);
+          history.push('/');
+        }, 5000);
       });
     }, 1000);
   }
@@ -199,7 +226,7 @@ function Login() {
     return (
       <div
         style={{
-          display: viewlistaunidades == 1 ? 'flex' : 'none',
+          display: viewlistaunidades == 1 && viewalterarsenha == 0 ? 'flex' : 'none',
           flexDirection: 'column',
           justifyContent: 'center',
           width: window.innerWidth > 425 ? '40vw' : '70vw',
@@ -224,16 +251,141 @@ function Login() {
     )
   }
 
+  // ## TROCA DE SENHA ## //
+  // atualizar usuário.
+  const updateUsuario = () => {
+    let novasenha = document.getElementById("inputNovaSenha").value;
+    let repetesenha = document.getElementById("inputConfirmaSenha").value;
+
+    if (novasenha == repetesenha) {
+      var obj = {
+        nome_usuario: usuario.nome_usuario,
+        dn_usuario: usuario.dn_usuario,
+        cpf_usuario: usuario.cpf_usuario,
+        email_usuario: usuario.email_usuario,
+        senha: novasenha,
+        login: usuario.cpf_usuario,
+      }
+      axios.post(html + 'update_usuario/' + usuario.id, obj).then(() => {
+        setviewalterarsenha(0);
+        toast(settoast, 'SENHA ATUALIZADA COM SUCESSO NA BASE PULSAR', 'rgb(82, 190, 128, 1)', 3000);
+      })
+        .catch(function () {
+          toast(settoast, 'ERRO DE CONEXÃO, REINICIANDO APLICAÇÃO.', 'black', 5000);
+          setTimeout(() => {
+            setpagina(0);
+            history.push('/');
+          }, 5000);
+        });
+    } else {
+      document.getElementById("inputNovaSenha").value = '';
+      document.getElementById("inputConfirmaSenha").value = '';
+      document.getElementById("inputNovaSenha").focus();
+      toast(settoast, 'SENHA REPETIDA NÃO CONFERE', 'rgb(231, 76, 60, 1)', 3000);
+    }
+  }
+
+  // componente para alteração da senha:
+  const [viewalterarsenha, setviewalterarsenha] = useState(0);
+  function AlterarSenha() {
+    return (
+      <div style={{
+        display: viewalterarsenha == 1 ? 'flex' : 'none',
+        flexDirection: 'column', justifyContent: 'center'
+      }}>
+        <div className='text3' style={{ color: 'white', fontSize: 16 }}>{usuario.nome_usuario}</div>
+        <div className='text1' style={{ color: 'white' }}>DIGITE A NOVA SENHA</div>
+        <input
+          autoComplete="off"
+          placeholder="NOVA SENHA"
+          className="input"
+          type="password"
+          id="inputNovaSenha"
+          onFocus={(e) => (e.target.placeholder = '')}
+          onBlur={(e) => (e.target.placeholder = 'NOVA SENHA')}
+          style={{
+            marginTop: 10,
+            marginBottom: 10,
+            width: 200,
+            height: 50,
+          }}
+        ></input>
+        <div className='text1' style={{ color: 'white' }}>CONFIRME A NOVA SENHA</div>
+        <input
+          autoComplete="off"
+          placeholder="REPITA SENHA"
+          className="input"
+          type="password"
+          id="inputConfirmaSenha"
+          onFocus={(e) => (e.target.placeholder = '')}
+          onBlur={(e) => (e.target.placeholder = 'REPITA SENHA')}
+          style={{
+            marginTop: 10,
+            marginBottom: 10,
+            width: 200,
+            height: 50,
+          }}
+        ></input>
+        <div id="btnTrocarSenha" title="ALTERAR SENHA" className="button-green"
+          onClick={() => {
+            checkinput('input', settoast, ['inputNovaSenha', 'inputConfirmaSenha'], 'btnTrocarSenha', updateUsuario, []);
+          }}
+          style={{ width: 50, height: 50, alignSelf: 'center' }}
+        >
+          <img
+            alt=""
+            src={salvar}
+            style={{
+              margin: 10,
+              height: 30,
+              width: 30,
+            }}
+          ></img>
+        </div>
+      </div>
+    )
+  }
+
   return (
-    <div className="main cor1 fadein"
+    <div className="main cor1"
       style={{
         display: pagina == 0 ? 'flex' : 'none',
-        paddingTop: window.innerWidth < 426 ? 20 : '',
+        overflowY: 'auto'
       }}>
-      <Logo height={100} width={100}></Logo>
-      <div className="text2" style={{ margin: 20, fontSize: 20 }}>PULSAR</div>
+      <div className="text2"
+        style={{
+          display: window.innerWidth < 426 && viewalterarsenha == 1 ? 'none' : 'flex',
+          marginTop: 30
+        }}>
+        <Logo height={100} width={100}></Logo>
+      </div>
+      <div className="text2"
+        style={{
+          display: window.innerWidth < 426 && viewalterarsenha == 1 ? 'none' : 'flex',
+          margin: 20, fontSize: 20
+        }}>
+        PULSAR
+      </div>
       <Inputs></Inputs>
       <ListaDeAcessos></ListaDeAcessos>
+      <div className='text1'
+        style={{
+          display: usuario.id != null ? 'flex' : 'none',
+          textDecoration: 'underline',
+          color: 'white',
+          marginTop: window.innerWidth < 426 && viewalterarsenha == 1 ? 20 : 0,
+        }}
+        onClick={() => {
+          if (viewalterarsenha == 1) {
+            setviewalterarsenha(0);
+          } else {
+            setviewalterarsenha(1);
+          }
+        }}
+      >
+        ALTERAR SENHA
+      </div>
+      <AlterarSenha></AlterarSenha>
     </div>
   );
 }

@@ -14,7 +14,7 @@ import calendario from '../images/calendario.svg';
 import deletar from '../images/deletar.svg';
 
 function Boneco() {
-  
+
   // context.
   const {
     html,
@@ -241,6 +241,8 @@ function Boneco() {
           {invasoes.filter(item => item.local == sitio && item.data_retirada == null).map(item => item.dispositivo)}
         </div>
       );
+    } else {
+      return null;
     }
   };
 
@@ -316,6 +318,8 @@ function Boneco() {
           </div>
         );
       }
+    } else {
+      return null;
     }
   };
 

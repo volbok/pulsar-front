@@ -108,7 +108,7 @@ body {
 }
 
 .cor1 {
-  background-color: var(--cor1);
+  background-color: var(--cor1) !important;
 }
 
 .cor1hover {

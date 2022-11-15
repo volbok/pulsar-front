@@ -1,10 +1,11 @@
 /* eslint eqeqeq: "off" */
-import React, { useContext } from 'react';
+import React, { useEffect, useContext, useState } from 'react';
 import Context from './Context';
 import { useHistory } from 'react-router-dom';
 import { Page, Text, View, Document, PDFViewer, StyleSheet } from '@react-pdf/renderer';
 import { Font } from '@react-pdf/renderer';
 import fontbold from '../fonts/Roboto-Bold.ttf';
+import moment from 'moment';
 // imagens.
 import back from '../images/back.svg';
 
@@ -14,13 +15,27 @@ function Pdf() {
   const {
     pagina,
     setpagina,
+    pacientes,
+    atendimento,
     atendimentos,
-    atendimento, // id do atendimento selecionado.
+
+    interconsultas
 
   } = useContext(Context);
 
   // history (router).
   let history = useHistory();
+
+  const [selectedatendimento, setselectedatendimento] = useState(null);
+  useEffect(() => {
+    if (pagina == 6) {
+      setselectedatendimento(atendimentos.filter(item => item.id_atendimento == atendimento));
+      console.log('ATENDIMENTOS: ' + atendimentos.length);
+      console.log('ID ATENDIMENTO: ' + atendimento);
+      console.log(atendimentos.filter(item => item.id_atendimento == atendimento));
+    }
+    // eslint-disable-next-line
+  }, [pagina]);
 
   // registro de fontes para o react-pdf (a lib não aceita ajustar fontWeight).
   Font.register({
@@ -40,26 +55,38 @@ function Pdf() {
       maxHeight: 20
     },
     title2: {
+      flex: 1,
       display: 'flex',
       fontFamily: 'Helvetica-Bold',
-      fontSize: 10, textAlign: 'center',
+      fontSize: 10,
       fontWeight: 'bold',
+      padding: 10,
       margin: 5,
-      padding: 0,
+      borderStyle: 'solid', borderWidth: 1, borderRadius: 5, borderColor: 'black',
     },
-    view1: {
+    view0: {
       display: 'flex',
+      flexDirection: 'column',
+      justifyContent: 'center',
       marginTop: 2.5,
       padding: 2.5,
       borderStyle: 'solid', borderWidth: 1, borderRadius: 5, borderColor: 'black',
     },
-    view2: {
+    view1: {
+      flex: 1,
       display: 'flex',
       flexDirection: 'row',
       justifyContent: 'center',
-      flexWrap: 'wrap',
-      margin: 2.5,
+      marginTop: 2.5,
       padding: 2.5,
+      borderStyle: 'none', borderWidth: 0, borderRadius: 5, borderColor: 'transparent',
+    },
+    view2: {
+      display: 'flex',
+      flexDirection: 'column',
+      justifyContent: 'center',
+      margin: 2.5,
+      padding: 5,
       borderRadius: 5,
       backgroundColor: '#f2f2f2'
     },
@@ -96,6 +123,37 @@ function Pdf() {
     )
   }
 
+  // conteúdo de cada atendimento.
+  const pdfAtendimento = (item) => {
+    return (
+      <View style={styles.view0}>
+        <View style={styles.view1}>
+          <Text style={[styles.title2, { flex: 1 }]}>
+            {'LEITO: ' + item.leito}
+          </Text>
+          <Text style={[styles.title2, { flex: 5 }]}>
+            {'NOME: ' + pacientes.filter(valor => valor.id_paciente == item.id_paciente).map(valor => valor.nome_paciente)}
+          </Text>
+        </View>
+        <View style={styles.view1}>
+          <Text style={styles.title2}>
+            {'IDADE: ' + pacientes.filter(valor => valor.id_paciente == item.id_paciente).map(valor => moment().diff(valor.dn_paciente, 'years'))}
+          </Text>
+          <Text style={styles.title2}>
+            {'ADMISSÃO: ' + moment(item.data_inicio).format('DD/MM/YY')}
+          </Text>
+          <Text style={[styles.title2, { flex: 2 }]}>
+            {'DIAS DE INTERNAÇÃO: ' + moment().diff(item.data_inicio, 'days')}
+          </Text>
+          <Text style={[styles.title2, { flex: 4 }]}>
+            {'INTERCONSULTAS: ' + interconsultas}
+          </Text>
+        </View>
+
+      </View>
+    )
+  }
+
   return (
     <div style={{ display: pagina == 6 ? 'flex' : 'none' }}>
       <BackButton></BackButton>
@@ -109,12 +167,9 @@ function Pdf() {
         <Document>
           <Page size="A4" style={{ padding: 10 }}>
             <View id="CONTEUDO">
-              <Text style={styles.title1}>
-                {'LISTA DE PROBLEMAS:'}
-              </Text>
-              <Text>
-                {atendimentos.filter(item => item.id_atendimento == atendimento).map(item => item.problemas)}
-              </Text>
+              {
+                // pdfAtendimento(selectedatendimento.pop())
+              }
             </View>
           </Page>
         </Document>

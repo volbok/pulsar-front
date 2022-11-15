@@ -102,14 +102,34 @@ function Passometro() {
       loadAtendimentos();
       console.log('LISTA DE PACIENTES CARREGADA.');
     })
+    .catch(function (error) {
+      if (error.response == undefined) {
+        toast(settoast, 'ERRO DE CONEXÃO, REINICIANDO APLICAÇÃO.', 'black', 3000);
+        setTimeout(() => {
+          setpagina(0);
+          history.push('/');
+        }, 3000);
+      } else {
+        toast(settoast, error.response.data.message + ' REINICIANDO APLICAÇÃO.', 'black', 3000);
+        setTimeout(() => {
+          setpagina(0);
+          history.push('/');
+        }, 3000);
+      }
+    });
   }
 
   // carregar lista de atendimentos ativos para a unidade selecionada.
   const [arrayatendimentos, setarrayatendimentos] = useState([]);
   const loadAtendimentos = () => {
+
+    /*
+    // Mecanismo para resgatar o token da localStorage e lançá-lo no header da requisição protegida.
     var token = localStorage.getItem("token");
     console.log(token);
     axios.defaults.headers.common["Authorization"] = token;
+    */
+
     axios.get(html + 'list_atendimentos/' + unidade).then((response) => {
       setatendimentos(response.data.rows);
       setarrayatendimentos(response.data.rows);
@@ -117,7 +137,19 @@ function Passometro() {
       console.log('LISTA DE ATENDIMENTOS CARREGADA: ' + response.data.rows.length);
     })
       .catch(function (error) {
-        toast(settoast, error.response.data.message, 'black', 3000);
+        if (error.response == undefined) {
+          toast(settoast, 'ERRO DE CONEXÃO, REINICIANDO APLICAÇÃO.', 'black', 3000);
+          setTimeout(() => {
+            setpagina(0);
+            history.push('/');
+          }, 3000);
+        } else {
+          toast(settoast, error.response.data.message + ' REINICIANDO APLICAÇÃO.', 'black', 3000);
+          setTimeout(() => {
+            setpagina(0);
+            history.push('/');
+          }, 3000);
+        }
       });
   }
 
@@ -215,7 +247,7 @@ function Passometro() {
       }}>
         <div className='button-red'
           style={{ margin: 0, marginRight: 10 }}
-          title={'USUÁRIO: ' + usuario.nome_usuario}
+          title={'USUÁRIO: ' + usuario.nome_usuario.split(' ', 1)}
           onClick={() => { setpagina(0); history.push('/'); }}>
           <img
             alt=""
@@ -336,13 +368,15 @@ function Passometro() {
                     setatendimento(item.id_atendimento);
                     setpaciente(item.id_paciente);
                     getAllData(item.id_paciente, item.id_atendimento);
-                    setTimeout(() => {
-                      var botoes = document.getElementById("scroll atendimentos").getElementsByClassName("button-red");
-                      for (var i = 0; i < botoes.length; i++) {
-                        botoes.item(i).className = "button";
-                      }
-                      document.getElementById("atendimento " + item.id_atendimento).className = "button-red";
-                    }, 100);
+                    if (pagina == 1) {
+                      setTimeout(() => {
+                        var botoes = document.getElementById("scroll atendimentos").getElementsByClassName("button-red");
+                        for (var i = 0; i < botoes.length; i++) {
+                          botoes.item(i).className = "button";
+                        }
+                        document.getElementById("atendimento " + item.id_atendimento).className = "button-red";
+                      }, 100);
+                    }
                   }}
                 >
                   {window.innerWidth < 768 ?
@@ -484,18 +518,39 @@ function Passometro() {
         setalergias(response.data.rows);
         setbusyalergias(0);
       })
+        .catch(function (error) {
+          if (error.response == undefined) {
+            toast(settoast, 'ERRO DE CONEXÃO, REINICIANDO APLICAÇÃO.', 'black', 3000);
+            setTimeout(() => {
+              setpagina(0);
+              history.push('/');
+            }, 3000);
+          } else {
+            toast(settoast, error.response.data.message + ' REINICIANDO APLICAÇÃO.', 'black', 3000);
+            setTimeout(() => {
+              setpagina(0);
+              history.push('/');
+            }, 3000);
+          }
+        });
     }
     // lesões.
     if (cardbody == 1) {
       axios.get(html + 'paciente_lesoes/' + paciente).then((response) => {
         setlesoes(response.data.rows);
       })
+        .catch(function (error) {
+          console.log(error);
+        })
     }
     // precauções.
     if (cardprecaucoes == 1) {
       axios.get(html + 'paciente_precaucoes/' + paciente).then((response) => {
         setprecaucoes(response.data.rows);
       })
+        .catch(function (error) {
+          console.log(error);
+        })
     }
     // riscos.
     if (cardriscos == 1) {
@@ -504,6 +559,9 @@ function Passometro() {
         setriscos(response.data.rows);
         setbusyriscos(0);
       })
+        .catch(function (error) {
+          console.log(error);
+        })
     }
     // Dados relacionados ao atendimento.
     // antibióticos.
@@ -512,7 +570,10 @@ function Passometro() {
       axios.get(html + 'list_antibioticos/' + atendimento).then((response) => {
         setantibioticos(response.data.rows);
         setbusyatb(0);
-      });
+      })
+        .catch(function (error) {
+          console.log(error);
+        })
     }
     // culturas.
     if (cardculturas == 1) {
@@ -521,6 +582,9 @@ function Passometro() {
         setculturas(response.data.rows);
         setbusyculturas(0);
       })
+        .catch(function (error) {
+          console.log(error);
+        })
     }
     // dietas.
     if (carddieta == 1) {
@@ -529,6 +593,9 @@ function Passometro() {
         setdietas(response.data.rows);
         setbusydieta(0);
       })
+        .catch(function (error) {
+          console.log(error);
+        })
     }
     // evoluções.
     if (cardevolucoes == 1) {
@@ -536,6 +603,9 @@ function Passometro() {
         setevolucoes(response.data.rows);
         setarrayevolucoes(response.data.rows);
       })
+        .catch(function (error) {
+          console.log(error);
+        })
     }
     // infusões.
     if (cardinfusoes == 1) {
@@ -544,12 +614,18 @@ function Passometro() {
         setinfusoes(response.data.rows);
         setbusyinfusoes(0);
       })
+        .catch(function (error) {
+          console.log(error);
+        })
     }
     // invasões.
     if (cardbody == 1) {
       axios.get(html + 'list_invasoes/' + atendimento).then((response) => {
         setinvasoes(response.data.rows);
       })
+        .catch(function (error) {
+          console.log(error);
+        })
     }
     // propostas.
     if (cardpropostas == 1) {
@@ -558,6 +634,9 @@ function Passometro() {
         setpropostas(response.data.rows);
         setbusypropostas(0);
       })
+        .catch(function (error) {
+          console.log(error);
+        })
     }
     // sinais vitais.
     if (cardsinaisvitais == 1) {
@@ -574,6 +653,9 @@ function Passometro() {
         }
         setbalancoacumulado(arraybalancos.reduce(soma, 0));
       })
+        .catch(function (error) {
+          console.log(error);
+        })
     }
     // vm.
     if (cardvm == 1) {
@@ -582,6 +664,9 @@ function Passometro() {
         setbusyvm(0);
         setvm(response.data.rows);
       })
+        .catch(function (error) {
+          console.log(error);
+        })
     }
     // interconsultas.
     if (cardinterconsultas == 1) {
@@ -590,6 +675,9 @@ function Passometro() {
         setinterconsultas(response.data.rows);
         setbusyinterconsultas(0);
       })
+        .catch(function (error) {
+          console.log(error);
+        })
     }
   }
 

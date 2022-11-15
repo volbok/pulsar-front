@@ -47,6 +47,21 @@ function Cadastro() {
       setpacientes(response.data.rows);
       setarraypacientes(response.data.rows);
     })
+      .catch(function (error) {
+        if (error.response == undefined) {
+          toast(settoast, 'ERRO DE CONEXÃO, REINICIANDO APLICAÇÃO.', 'black', 3000);
+          setTimeout(() => {
+            setpagina(0);
+            history.push('/');
+          }, 3000);
+        } else {
+          toast(settoast, error.response.data.message + ' REINICIANDO APLICAÇÃO.', 'black', 3000);
+          setTimeout(() => {
+            setpagina(0);
+            history.push('/');
+          }, 3000);
+        }
+      });
   }
 
   // recuperando registros de pacientes cadastrados na aplicação.
@@ -54,6 +69,13 @@ function Cadastro() {
     axios.get(html + 'list_atendimentos/' + unidade).then((response) => {
       setatendimentos(response.data.rows);
     })
+      .catch(function () {
+        toast(settoast, 'ERRO DE CONEXÃO, REINICIANDO APLICAÇÃO.', 'black', 5000);
+        setTimeout(() => {
+          setpagina(0);
+          history.push('/');
+        }, 5000);
+      });
   }
 
   // registrando um novo paciente.
@@ -71,6 +93,13 @@ function Cadastro() {
       setviewnewpaciente(0);
       toast(settoast, 'PACIENTE CADASTRADO COM SUCESSO NA BASE PULSAR', 'rgb(82, 190, 128, 1)', 3000);
     })
+      .catch(function () {
+        toast(settoast, 'ERRO DE CONEXÃO, REINICIANDO APLICAÇÃO.', 'black', 5000);
+        setTimeout(() => {
+          setpagina(0);
+          history.push('/');
+        }, 5000);
+      });
   }
 
   // atualizando um novo paciente.
@@ -87,6 +116,13 @@ function Cadastro() {
       loadPacientes();
       toast(settoast, 'PACIENTE ATUALIZADO COM SUCESSO NA BASE PULSAR', 'rgb(82, 190, 128, 1)', 3000);
     })
+      .catch(function () {
+        toast(settoast, 'ERRO DE CONEXÃO, REINICIANDO APLICAÇÃO.', 'black', 5000);
+        setTimeout(() => {
+          setpagina(0);
+          history.push('/');
+        }, 5000);
+      });
   }
 
   // excluir um paciente.
@@ -104,6 +140,13 @@ function Cadastro() {
         return null;
       })
     })
+      .catch(function () {
+        toast(settoast, 'ERRO DE CONEXÃO, REINICIANDO APLICAÇÃO.', 'black', 5000);
+        setTimeout(() => {
+          setpagina(0);
+          history.push('/');
+        }, 5000);
+      });
   }
 
   // registrando um novo atendimento.
@@ -121,6 +164,13 @@ function Cadastro() {
       loadAtendimentos();
       toast(settoast, 'ATENDIMENTO INICIADO COM SUCESSO', 'rgb(82, 190, 128, 1)', 3000);
     })
+      .catch(function () {
+        toast(settoast, 'ERRO DE CONEXÃO, REINICIANDO APLICAÇÃO.', 'black', 5000);
+        setTimeout(() => {
+          setpagina(0);
+          history.push('/');
+        }, 5000);
+      });
   }
 
   // atualizando um atendimento (mudando de leito).
@@ -139,7 +189,14 @@ function Cadastro() {
       axios.post(html + 'update_atendimento/' + item.id_atendimento, obj).then(() => {
         loadAtendimentos();
         toast(settoast, 'ATENDIMENTO ATUALIZADO COM SUCESSO NA BASE PULSAR', 'rgb(82, 190, 128, 1)', 3000);
-      });
+      })
+        .catch(function () {
+          toast(settoast, 'ERRO DE CONEXÃO, REINICIANDO APLICAÇÃO.', 'black', 5000);
+          setTimeout(() => {
+            setpagina(0);
+            history.push('/');
+          }, 5000);
+        });
       return null;
     });
   }
@@ -159,17 +216,33 @@ function Cadastro() {
       axios.post(html + 'update_atendimento/' + item.id_atendimento, obj).then(() => {
         loadAtendimentos();
         toast(settoast, 'ATENDIMENTO ENCERRADO COM SUCESSO NA BASE PULSAR', 'rgb(82, 190, 128, 1)', 3000);
-      });
+      })
+        .catch(function () {
+          toast(settoast, 'ERRO DE CONEXÃO, REINICIANDO APLICAÇÃO.', 'black', 5000);
+          setTimeout(() => {
+            setpagina(0);
+            history.push('/');
+          }, 5000);
+        });
       return null;
     });
   }
 
   // excluir um atendimento.
-  const deleteAtendimento = (id) => { axios.get(html + 'delete_atendimento/' + id) }
+  const deleteAtendimento = (id) => {
+    axios.get(html + 'delete_atendimento/' + id)
+      .catch(function () {
+        toast(settoast, 'ERRO DE CONEXÃO, REINICIANDO APLICAÇÃO.', 'black', 5000);
+        setTimeout(() => {
+          setpagina(0);
+          history.push('/');
+        }, 5000);
+      });
+  }
 
   // componente para inserir novo paciente.
   const [viewnewpaciente, setviewnewpaciente] = useState(0);
-  function InsertPaciente() {
+  const InsertPaciente = useCallback(() => {
     return (
       <div className='fundo'
         style={{ display: viewnewpaciente == 1 ? 'flex' : 'none' }}
@@ -186,15 +259,18 @@ function Cadastro() {
               <input
                 autoComplete="off"
                 placeholder="NOME DO PACIENTE"
-                className="input"
+                className="textarea"
                 type="text"
                 id="inputNovoNomePaciente"
                 onFocus={(e) => (e.target.placeholder = '')}
                 onBlur={(e) => (e.target.placeholder = 'NOME DO PACIENTE')}
                 defaultValue={paciente.nome_paciente}
                 style={{
-                  flexDirection: 'center', justifyContent: 'center', alignSelf: 'center',
-                  width: window.innerWidth > 425 ? '30vw' : '70vw',
+                  flexDirection: 'row', justifyContent: 'center', alignSelf: 'center',
+                  width: window.innerWidth > 425 ? '30vw' : '70vw', alignContent: 'center',
+                  height: 40, minHeight: 40, maxHeight: 40,
+                  borderStyle: 'none',
+                  textAlign: 'center',
                 }}
               ></input>
             </div>
@@ -203,7 +279,7 @@ function Cadastro() {
               <input
                 autoComplete="off"
                 placeholder="DATA DE NASCIMENTO"
-                className="input"
+                className="textarea"
                 type="text"
                 id="inputNovaDn"
                 onFocus={(e) => (e.target.placeholder = '')}
@@ -221,8 +297,11 @@ function Cadastro() {
                 }}
                 defaultValue={moment(paciente.dn_paciente).format('DD/MM/YY')}
                 style={{
-                  flexDirection: 'center', justifyContent: 'center', alignSelf: 'center',
+                  flexDirection: 'row', justifyContent: 'center', alignSelf: 'center',
                   width: window.innerWidth > 425 ? '10vw' : '70vw',
+                  height: 40, minHeight: 40, maxHeight: 40,
+                  borderStyle: 'none',
+                  textAlign: 'center',
                 }}
               ></input>
             </div>
@@ -231,15 +310,18 @@ function Cadastro() {
               <input
                 autoComplete="off"
                 placeholder="NOME DA MÃE"
-                className="input"
+                className="textarea"
                 type="text"
                 id="inputNovoNomeMae"
                 onFocus={(e) => (e.target.placeholder = '')}
                 onBlur={(e) => (e.target.placeholder = 'NOME DA MÃE')}
                 defaultValue={paciente.nome_mae_paciente}
                 style={{
-                  flexDirection: 'center', justifyContent: 'center', alignSelf: 'center',
-                  width: window.innerWidth > 425 ? '30vw' : '70vw',
+                  flexDirection: 'row', justifyContent: 'center', alignSelf: 'center',
+                  width: window.innerWidth > 425 ? '30vw' : '70vw', alignContent: 'center',
+                  height: 40, minHeight: 40, maxHeight: 40,
+                  borderStyle: 'none',
+                  textAlign: 'center',
                 }}
               ></input>
             </div>
@@ -325,7 +407,7 @@ function Cadastro() {
         </div>
       </div>
     )
-  }
+  }, [viewnewpaciente, paciente, settoast]);
 
   const [filterpaciente, setfilterpaciente] = useState('');
   var timeout = null;

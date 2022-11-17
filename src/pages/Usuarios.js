@@ -476,6 +476,7 @@ function Usuarios() {
       id_usuario: selectedusuario.id_usuario,
       boss: boss,
     }
+    console.log('LOUCURA: ' + selectedusuario.id_usuario);
     axios.post(html + 'insert_acesso', obj).then(() => {
       loadAcessos();
       setselectedusuario(0);

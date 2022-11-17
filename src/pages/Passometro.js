@@ -102,21 +102,21 @@ function Passometro() {
       loadAtendimentos();
       console.log('LISTA DE PACIENTES CARREGADA.');
     })
-    .catch(function (error) {
-      if (error.response == undefined) {
-        toast(settoast, 'ERRO DE CONEXÃO, REINICIANDO APLICAÇÃO.', 'black', 3000);
-        setTimeout(() => {
-          setpagina(0);
-          history.push('/');
-        }, 3000);
-      } else {
-        toast(settoast, error.response.data.message + ' REINICIANDO APLICAÇÃO.', 'black', 3000);
-        setTimeout(() => {
-          setpagina(0);
-          history.push('/');
-        }, 3000);
-      }
-    });
+      .catch(function (error) {
+        if (error.response == undefined) {
+          toast(settoast, 'ERRO DE CONEXÃO, REINICIANDO APLICAÇÃO.', 'black', 3000);
+          setTimeout(() => {
+            setpagina(0);
+            history.push('/');
+          }, 3000);
+        } else {
+          toast(settoast, error.response.data.message + ' REINICIANDO APLICAÇÃO.', 'black', 3000);
+          setTimeout(() => {
+            setpagina(0);
+            history.push('/');
+          }, 3000);
+        }
+      });
   }
 
   // carregar lista de atendimentos ativos para a unidade selecionada.
@@ -196,14 +196,15 @@ function Passometro() {
   function BtnOptions() {
     return (
       <div style={{
-        position: 'absolute',
+        position: window.innerWidth > 425 ? 'absolute' : '',
         top: window.innerWidth < 426 ? 65 : 10,
         right: window.innerWidth < 426 ? 0 : 25,
+        width: window.innerWidth < 426 ? '90vw' : '',
         display: 'flex', flexDirection: 'row', justifyContent: 'center',
       }}>
         <div className='button cor1hover'
           style={{
-            minWidth: 25, maxWidth: 25, minHeight: 25, maxHeight: 25, marginRight: 0
+            minWidth: 25, maxWidth: 25, minHeight: 25, maxHeight: 25,
           }}
           title={'CONFIGURAÇÕES'}
           onClick={() => { setpagina(4); history.push('/settings'); }}
@@ -220,7 +221,9 @@ function Passometro() {
         </div>
         <div className='button cor1hover'
           style={{
+            display: window.innerWidth < 426 ? 'none' : 'flex',
             minWidth: 25, maxWidth: 25, minHeight: 25, maxHeight: 25,
+            marginLeft: 0
           }}
           title={'IMPRIMIR'}
           onClick={() => { setpagina(6); history.push('/pdf'); }}
@@ -696,13 +699,14 @@ function Passometro() {
   const [busyatb, setbusyatb] = useState(0);
   const [busyinterconsultas, setbusyinterconsultas] = useState(0);
 
-  function Busy() {
+  const loading = (chave) => {
     return (
-      <div className='destaque' style={{ marginTop: 20 }}>
+      <div className='destaque' style={{ marginTop: 20, display: chave == 1 ? 'flex' : 'none' }}>
         <Logo height={20} width={20}></Logo>
       </div>
     )
-  }
+  };
+
   // função para renderização dos cards fechados.
   let yellow = '#F1C40F';
   const cartao = (sinal, titulo, opcao, setting, busy) => {
@@ -966,7 +970,7 @@ function Passometro() {
           alignContent: 'center', alignItems: 'center',
           alignSelf: 'center',
         }}>
-          <Busy></Busy>
+          {loading(busy)}
         </div>
       </div>
     )
@@ -1010,6 +1014,7 @@ function Passometro() {
           scrollBehavior: 'smooth',
         }}>
         <ViewPaciente></ViewPaciente>
+        <BtnOptions></BtnOptions>
         <div style={{ pointerEvents: 'none' }}>
           {cartao(null, 'DIAS DE INTERNAÇÃO: ' + atendimentos.filter(item => item.id_atendimento == atendimento).map(item => moment().diff(item.data_inicio, 'days')), null, carddiasinternacao, 0)}
         </div>
@@ -1081,7 +1086,6 @@ function Passometro() {
         }}>
         <div className='text1' style={{ opacity: 0.5 }}>{'SELECIONE UM PACIENTE DA LISTA PRIMEIRO'}</div>
       </div>
-      <BtnOptions></BtnOptions>
     </div >
   );
 }

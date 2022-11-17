@@ -506,7 +506,10 @@ function Cadastro() {
               flexDirection: 'column', justifyContent: 'center',
             }}>
             <div className='row'
-              style={{ justifyContent: window.innerWidth > 425 ? 'space-between' : 'center', flex: 6 }}
+              style={{
+                justifyContent: window.innerWidth > 425 ? 'space-between' : 'center',
+                flex: 6, margin: 0,
+              }}
               onClick={() => {
                 setpaciente(item.id_paciente);
                 setTimeout(() => {
@@ -517,7 +520,7 @@ function Cadastro() {
             >
               <div className='button'
                 style={{
-                  flex: window.innerWidth < 426 ? 6 : 2,
+                  flex: window.innerWidth < 426 ? 6 : 2
                 }}>
                 {item.nome_paciente}
               </div>
@@ -736,9 +739,9 @@ function Cadastro() {
           <div id="status de atendimento"
             className='card cor7'
             style={{
-              position: 'sticky', top: 10,
+              position: window.innerWidth > 426 ? 'sticky' : '', top: 10,
               display: 'flex', flexDirection: 'column', justifyContent: 'center', height: '50vh',
-              marginTop: window.innerWidth > 425 ? 0 : 10,
+              marginTop: window.innerWidth > 426 ? 0 : 10, marginBottom: 20
             }}>
             <div id="paciente sem atendimento ativo"
               style={{

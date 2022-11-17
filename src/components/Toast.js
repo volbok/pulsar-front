@@ -9,19 +9,21 @@ function Toast() {
   } = useContext(Context)
 
   return (
-    <div className="toasty"
+    <div
       style={{
-        display: window.innerWidth < 426 ? 'none' : 'flex',
+        display: toast.display,
         zIndex: 999, position: 'fixed',
-        bottom: 20,
-        left: window.innerWidth > 768 ? '' : 20,
-        right: window.innerWidth > 768 ? 20 : 20,
+        bottom: window.innerWidth > 426 ? 20 : '',
+        top: window.innerWidth > 426 ? '' : 20,
+        left: window.innerWidth > 426 ? '' : 20,
+        right: window.innerWidth > 426 ? 20 : 20,
         flexDirection: 'column', justifyContent: 'center',
         alignContent: 'center', alignItems: 'center',
       }}>
       <div
+        className='toasty'
         style={{
-          display: toast.display,
+          display: 'flex',
           alignItems: 'center',
           textAlign: 'center',
           backgroundColor: toast.cor,

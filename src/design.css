@@ -200,9 +200,9 @@ body {
 
 /* TOAST */
 .toasty {
-  opacity: 1;
   animation-name: fadeinout;
   animation-duration: 3s;
+  animation-delay: 0ms;
 }
 
 @keyframes fadeinout {
@@ -210,17 +210,20 @@ body {
     opacity: 0;
     transform: rotate(0deg);
   }
+  2% {
+    opacity: 0.5;
+    transform: rotate(2deg);
+  }
+  4% {
+    opacity: 0.8;
+    transform: rotate(-2deg);
+  }
   10% {
     opacity: 1;
-    transform: rotate(5deg);
-  }
-  90% {
-    opacity: 1;
-    transform: rotate(5deg);
+    transform: rotate(0deg);
   }
   100% {
-    opacity: 0;
-    transform: rotate(0deg);
+    opacity: 1;
   }
 }
 
@@ -1122,7 +1125,7 @@ ESTILOS VARIÁVEIS CONFORME A RESPONSIVIDADE.
 /* CELULARES */
 @media only screen and (max-width: 480px) {
   .main {
-    justify-content: flex-start;
+    justify-content: center;
   }
   .textarea {
     font-size: 12px;
@@ -1175,7 +1178,7 @@ ESTILOS VARIÁVEIS CONFORME A RESPONSIVIDADE.
     flex-direction: row;
     justify-content: space-evenly;
     opacity: 1;
-    height: 230vh;
+    height: 240vh;
     margin: 5px;
     padding: 10px;
     border-radius: 5px;
@@ -1225,7 +1228,7 @@ ESTILOS VARIÁVEIS CONFORME A RESPONSIVIDADE.
     justify-content: space-evenly;
     opacity: 1;
     height: 180vh;
-    margin: 5px;
+    margin: 5px; 
     padding: 10px;
     border-radius: 5px;
     transition: 100ms, 300ms ease-in-out;

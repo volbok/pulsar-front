@@ -31,6 +31,7 @@ function Login() {
 
   useEffect(() => {
     if (pagina == 0) {
+      setusuario({});
       setviewlistaunidades(0);
       loadUnidades();
     }
@@ -129,14 +130,15 @@ function Login() {
         senha: password,
       }
       axios.post(html + 'checkusuario', obj).then((response) => {
-        var x = [0, 1];
+        var x = [];
         x = response.data;
+        console.log('RESPONSE: ' + JSON.stringify(x));
         // armazenando o token no localStorage.
         token = x.token;
-        console.log('TOKEN RECEBIDO DA API: ' + token);
+        // console.log('TOKEN RECEBIDO DA API: ' + JSON.stringify(x));
         localStorage.setItem("token", x.token);
 
-        console.log('DADOS DO USUÁRIO: ' + x.nome + ' - ' + x.dn + ' - ' + x.cpf + ' - ' + x.email);
+        // console.log('DADOS DO USUÁRIO: ' + x.nome + ' - ' + x.dn + ' - ' + x.cpf + ' - ' + x.email);
         // adicionando o token ao header.
         setAuthToken(x.token);
 
@@ -157,6 +159,7 @@ function Login() {
         } else {
           toast(settoast, 'USUÁRIO OU SENHA INCORRETOS', 'rgb(231, 76, 60, 1)', 3000);
         }
+
       }).catch(function () {
         toast(settoast, 'ERRO DE CONEXÃO, REINICIANDO APLICAÇÃO.', 'black', 5000);
         setTimeout(() => {
@@ -355,7 +358,6 @@ function Login() {
       <div className="text2"
         style={{
           display: window.innerWidth < 426 && viewalterarsenha == 1 ? 'none' : 'flex',
-          marginTop: 30
         }}>
         <Logo height={100} width={100}></Logo>
       </div>

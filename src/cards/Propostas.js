@@ -385,12 +385,13 @@ function Propostas() {
             className='row'
             style={{
               margin: 5,
+              alignContent: 'center', alignItems: 'center',
             }}
           >
             <div style={{
               display: 'flex', flexDirection: window.innerWidth < 426 ? 'column' : 'row',
-              justifyContent: 'center',
-              flex: 5,
+              justifyContent: 'center', alignContent: 'center',
+              flex: 5, alignItems: 'center',
             }}>
               <div id="identificador"
                 className={item.status == 1 ? 'button-green' : moment().startOf('day').add(1, 'day').diff(item.prazo, 'days') > -1 ? 'button-red' : 'button'}
@@ -399,11 +400,12 @@ function Propostas() {
                   flexDirection: window.innerWidth < 426 ? 'row' : 'column',
                   justifyContent: window.innerWidth < 426 ? 'space-between' : 'center',
                   alignSelf: 'center',
-                  margin: 5, padding: 5,
+                  margin: 0, padding: 5,
                   width: window.innerWidth < 426 ? '95%' : '',
                   height: window.innerWidth < 426 ? 60 : 130,
-                  marginBottom: window.innerWidth < 426 ? 0 : 5,
-                  marginRight: window.innerWidth < 426 ? 5 : 0,
+                  marginBottom: 0,
+                  marginRight: 0,
+                  marginLeft: 0,
                   borderTopLeftRadius: window.innerWidth < 426 ? 5 : 5,
                   borderTopRightRadius: window.innerWidth < 426 ? 5 : 0,
                   borderBottomLeftRadius: window.innerWidth < 426 ? 0 : 5,
@@ -446,21 +448,24 @@ function Propostas() {
                   display: 'flex', flexDirection: window.innerWidth < 426 ? 'column' : 'row',
                   justifyContent: 'center',
                   flex: 4,
-                  backgroundColor: 'blue',
+                  backgroundColor: 'white',
                   padding: 5,
-                  height: window.innerWidth < 426 ? 100 : 120,
+                  paddingBottom: window.innerWidth < 426 ? 10 : 5,
+                  height: window.innerWidth < 426 ? 100 : 130,
                   borderTopLeftRadius: window.innerWidth < 426 ? 0 : 0,
                   borderTopRightRadius: window.innerWidth < 426 ? 0 : 5,
                   borderBottomLeftRadius: window.innerWidth < 426 ? 5 : 0,
                   borderBottomRightRadius: window.innerWidth < 426 ? 5 : 5,
-                  marginTop: window.innerWidth < 426 ? 0 : 5,
-                  marginLeft: window.innerWidth < 426 ? 5 : 0,
-
+                  margin: 0,
+                  marginTop: 0,
+                  width: window.innerWidth < 426 ? '95%' : '',
                 }}>
                 <div style={{
                   display: 'flex', flexDirection: window.innerWidth < 426 ? 'column' : 'row',
                   flex: window.innerWidth < 426 ? 1 : 3,
                   display: 'flex',
+                  paddingRight: 10,
+                  alignItems: 'flex-end'
                 }}>
                   <textarea id={"inputProposta " + item.id_proposta}
                     className="textarea"
@@ -486,8 +491,10 @@ function Propostas() {
                     style={{
                       flex: window.innerWidth < 426 ? 1 : 3,
                       display: 'flex',
+                      margin: 0,
                       flexDirection: 'center', justifyContent: 'center', alignSelf: 'center',
                       whiteSpace: 'pre-wrap',
+                      height: 70,
                     }}
                     title="PROPOSTA."
                   >
@@ -495,78 +502,82 @@ function Propostas() {
                   <div id="prazo"
                     style={{
                       position: 'relative',
-                      display: 'flex', flexDirection: 'column', justifyContent: 'center',
-                      alignItems: 'center',
-                      backgroundColor: 'red',
+                      display: 'flex', flexDirection: 'row', justifyContent: 'center',
+                      alignItems: 'flex-end',
+                      alignSelf: 'center',
+                      padding: 10,
+                      backgroundColor: '#f2f2f2',
+                      borderRadius: 5,
+                      height: 90,
                     }}>
-                    <div className='text1'>PRAZO</div>
-                    <input id={"inputPrazo " + item.id_proposta}
-                      autoComplete="off"
-                      placeholder="DIAS..."
-                      className="input"
-                      type="text"
-                      onFocus={(e) => (e.target.placeholder = '')}
-                      onBlur={(e) => (e.target.placeholder = 'DIAS...')}
-                      maxLength={3}
-                      style={{
-                        pointerEvents: item.status == 1 ? 'none' : 'auto',
-                        width: 75,
-                        height: 50,
-                        backgroundColor: moment(item.prazo).diff(moment(), 'days') > 0 || item.status == 1 ? 'white' : 'rgb(231, 76, 60, 0.7)',
-                        color: moment(item.prazo).diff(moment(), 'days') > 0 || item.status == 1 ? '' : 'white',
-                      }}
-                      defaultValue={
-                        moment(item.prazo).diff(moment(), 'days') > 0 && item.status == 0 ? moment(item.prazo).diff(moment(), 'days') :
-                          moment(item.prazo).diff(moment(), 'days') < 1 && item.status == 0 ? 0 : moment(item.data_conclusao).diff(moment(item.data_proposta), 'days')}
-                      onClick={(e) => {
-                        setproposta(item);
-                        setselectedproposta("inputProposta " + item.id_proposta);
-                        setselectedprazo("inputPrazo " + item.id_proposta);
-                        e.stopPropagation()
-                      }}
-                      onKeyUp={(e) => {
-                        if (isNaN(e.target.value) == true || e.target.value == '') {
-                          document.getElementById("inputPrazo " + item.id_proposta).value = '';
-                          document.getElementById("inputPrazo " + item.id_proposta).focus();
-                          e.stopPropagation();
-                        } else {
-                          clearTimeout(timeout);
-                          timeout = setTimeout(() => {
-                            updateProposta(item, "inputProposta " + item.id_proposta, "inputPrazo " + item.id_proposta, item.status);
-                            e.stopPropagation();
-                          }, 500);
-                        }
-                      }}
-                    ></input>
-                    <div className='input-special' style={{ marginTop: -20, padding: 1 }}>
-                      <img
+                    <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
+                      <div className='text1' style={{ margin: 0 }}>PRAZO</div>
+                      <input id={"inputPrazo " + item.id_proposta}
+                        autoComplete="off"
+                        placeholder="DIAS..."
+                        className="input"
+                        type="text"
+                        onFocus={(e) => (e.target.placeholder = '')}
+                        onBlur={(e) => (e.target.placeholder = 'DIAS...')}
+                        maxLength={3}
+                        style={{
+                          pointerEvents: item.status == 1 ? 'none' : 'auto',
+                          width: 50,
+                          height: 50,
+                          backgroundColor: moment(item.prazo).diff(moment(), 'days') > 0 || item.status == 1 ? 'white' : 'rgb(231, 76, 60, 0.7)',
+                          color: moment(item.prazo).diff(moment(), 'days') > 0 || item.status == 1 ? '' : 'white',
+                        }}
+                        defaultValue={
+                          moment(item.prazo).diff(moment(), 'days') > 0 && item.status == 0 ? moment(item.prazo).diff(moment(), 'days') :
+                            moment(item.prazo).diff(moment(), 'days') < 1 && item.status == 0 ? 0 : moment(item.data_conclusao).diff(moment(item.data_proposta), 'days')}
                         onClick={(e) => {
                           setproposta(item);
                           setselectedproposta("inputProposta " + item.id_proposta);
                           setselectedprazo("inputPrazo " + item.id_proposta);
-                          if (item.status == 0) {
-                            setTimeout(() => {
-                              updateProposta(item, "inputProposta " + item.id_proposta, "inputPrazo " + item.id_proposta, 1);
-                            }, 500);
+                          e.stopPropagation()
+                        }}
+                        onKeyUp={(e) => {
+                          if (isNaN(e.target.value) == true || e.target.value == '') {
+                            document.getElementById("inputPrazo " + item.id_proposta).value = '';
+                            document.getElementById("inputPrazo " + item.id_proposta).focus();
+                            e.stopPropagation();
                           } else {
-                            updateProposta(item, "inputProposta " + item.id_proposta, "inputPrazo " + item.id_proposta, 0);
+                            clearTimeout(timeout);
+                            timeout = setTimeout(() => {
+                              updateProposta(item, "inputProposta " + item.id_proposta, "inputPrazo " + item.id_proposta, item.status);
+                              e.stopPropagation();
+                            }, 500);
                           }
-                          e.stopPropagation();
                         }}
-                        alt=""
-                        src={item.status == 1 ? flag : fail}
-                        className='cor2'
-                        style={{
-                          opacity: 1,
-                          margin: 10,
-                          padding: 5,
-                          height: 40,
-                          width: 40,
-                          backgroundColor: 'white',
-                          borderRadius: 5,
-                        }}
-                      ></img>
+                      ></input>
                     </div>
+                    <img
+                      onClick={(e) => {
+                        setproposta(item);
+                        setselectedproposta("inputProposta " + item.id_proposta);
+                        setselectedprazo("inputPrazo " + item.id_proposta);
+                        if (item.status == 0) {
+                          setTimeout(() => {
+                            updateProposta(item, "inputProposta " + item.id_proposta, "inputPrazo " + item.id_proposta, 1);
+                          }, 500);
+                        } else {
+                          updateProposta(item, "inputProposta " + item.id_proposta, "inputPrazo " + item.id_proposta, 0);
+                        }
+                        e.stopPropagation();
+                      }}
+                      alt=""
+                      src={item.status == 1 ? flag : fail}
+                      className='cor2'
+                      style={{
+                        opacity: 1,
+                        margin: 5,
+                        padding: 5,
+                        height: 40,
+                        width: 40,
+                        backgroundColor: 'white',
+                        borderRadius: 5,
+                      }}
+                    ></img>
                   </div>
                 </div>
               </div>

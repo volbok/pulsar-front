@@ -429,9 +429,9 @@ function Antibioticos() {
                   alignSelf: 'center', alignContent: 'center',
                   margin: 5,
                   padding: 5,
-                  height: window.innerWidth < 426 ? 60 : 200,
-                  width: window.innerWidth < 426 ? '95%' : '',
-                  marginBottom: window.innerWidth < 426 ? 0 : 5,
+                  height: window.innerWidth < 426 ? 60 : 225,
+                  width: window.innerWidth < 426 ? 'calc(95% + 10px)' : '',
+                  margin: 0,
                   marginRight: window.innerWidth < 426 ? 5 : 0,
                   borderTopLeftRadius: window.innerWidth < 426 ? 5 : 5,
                   borderTopRightRadius: window.innerWidth < 426 ? 5 : 0,
@@ -464,81 +464,50 @@ function Antibioticos() {
                   ></img>
                 </div>
               </div>
-              <div id="conteúdo do antibiótico" style={{
-                display: 'flex',
-                flexDirection: window.innerWidth < 426 ? 'column' : 'row',
-                justifyContent: 'center',
-                flex: window.innerWidth < 426 ? 1 : 4,
+              <div 
+              style={{
+                display: 'flex', flexDirection: 'column', justifyContent: 'center',
+                backgroundColor: 'white',
+                borderRadius: 5, padding: 10,
+                borderTopLeftRadius: window.innerWidth < 426 ? 0 : 0,
+                borderTopRightRadius: window.innerWidth < 426 ? 0 : 5,
+                borderBottomLeftRadius: window.innerWidth < 426 ? 5 : 0,
+                borderBottomRightRadius: window.innerWidth < 426 ? 5 : 5,
                 width: window.innerWidth < 426 ? '95%' : '',
+                paddingBottom: window.innerWidth < 426 ? 0 : 5,
+                marginTop: 0,
+                marginLeft: 0,
               }}>
-                <div id="antibiótico e datas" style={{
-                  flex: window.innerWidth < 426 ? 1 : 3,
-                  display: 'flex', flexDirection: 'column', justifyContent: 'center',
-                  alignSelf: 'center',
-                  margin: 5, padding: 5,
-                  borderTopLeftRadius: window.innerWidth < 426 ? 0 : 0,
-                  borderTopRightRadius: window.innerWidth < 426 ? 0 : 5,
-                  borderBottomLeftRadius: window.innerWidth < 426 ? 5 : 0,
-                  borderBottomRightRadius: window.innerWidth < 426 ? 5 : 5,
-                  marginTop: window.innerWidth < 426 ? 0 : 5,
-                  paddingBottom: window.innerWidth < 426 ? 0 : 5,
-                  marginLeft: window.innerWidth < 426 ? 5 : 0,
-                  backgroundColor: 'white',
-                  height: 200,
-                  width: window.innerWidth < 426 ? '100%' : '13vw',
+                <div id="conteúdo do antibiótico" style={{
+                  display: 'flex',
+                  flexDirection: window.innerWidth < 426 ? 'column' : 'row',
+                  justifyContent: 'center',
+                  flex: window.innerWidth < 426 ? 1 : 4,
+                  width: window.innerWidth < 426 ? '95%' : '',
                 }}>
-                  <input id={"inputAntibiotico " + item.id_antibiotico}
-                    className="input"
-                    placeholder='ANTIBIÓTICO...'
-                    onFocus={(e) => (e.target.placeholder = '')}
-                    onBlur={(e) => (e.target.placeholder = 'ANTIBIÓTICO...')}
-                    defaultValue={item.antibiotico}
-                    onClick={(e) => { setantibiotico(item); e.stopPropagation() }}
-                    onKeyUp={(e) => {
-                      clearTimeout(timeout);
-                      timeout = setTimeout(() => {
-                        var obj = {
-                          id_atendimento: item.id_atendimento,
-                          antibiotico: document.getElementById('inputAntibiotico ' + item.id_antibiotico).value.toUpperCase(),
-                          data_inicio: item.data_inicio,
-                          data_termino: item.data_termino,
-                          prazo: item.prazo,
-                        }
-                        axios.post(html + 'update_antibiotico/' + item.id_antibiotico, obj).then(() => {
-                          loadAntibioticos();
-                          toast(settoast, 'DADOS DO ANTIBIÓTICO ATUALIZADOS COM SUCESSO', 'rgb(82, 190, 128, 1)', 3000);
-                        });
-                        e.stopPropagation();
-                      }, 3000);
-                    }}
-                    style={{
-                      display: 'flex',
-                      flexDirection: 'center', justifyContent: 'center', alignSelf: 'center',
-                      width: 'calc(100% - 10px)',
-                      marginTop: 10,
-                    }}
-                    title="ANTIBIÓTICO."
-                  >
-                  </input>
-                  <input id={"inputInicio " + item.id_antibiotico}
-                    className="input"
-                    placeholder='INÍCIO...'
-                    onFocus={(e) => (e.target.placeholder = '')}
-                    onBlur={(e) => (e.target.placeholder = 'INÍCIO...')}
-                    defaultValue={moment(item.data_inicio).format('DD/MM/YY')}
-                    onClick={(e) => { e.stopPropagation() }}
-                    onKeyUp={(e) => {
-                      clearTimeout(timeout);
-                      timeout = setTimeout(() => {
-                        var date = moment(document.getElementById("inputInicio " + item.id_antibiotico).value, 'DD/MM/YY', true);
-                        if (date.isValid() == false) {
-                          toast(settoast, 'DATA INVÁLIDA', 'rgb(231, 76, 60, 1)', 3000);
-                          document.getElementById("inputInicio " + item.id_antibiotico).value = '';
-                        } else {
+                  <div id="antibiótico e datas" style={{
+                    flex: window.innerWidth < 426 ? 1 : 3,
+                    display: 'flex', flexDirection: 'column', justifyContent: 'center',
+                    alignSelf: 'center',
+                    margin: 5, padding: 5,
+                    backgroundColor: 'white',
+                    height: 200,
+                    width: window.innerWidth < 426 ? '100%' : '13vw',
+                  }}>
+                    <input id={"inputAntibiotico " + item.id_antibiotico}
+                      className="input"
+                      placeholder='ANTIBIÓTICO...'
+                      onFocus={(e) => (e.target.placeholder = '')}
+                      onBlur={(e) => (e.target.placeholder = 'ANTIBIÓTICO...')}
+                      defaultValue={item.antibiotico}
+                      onClick={(e) => { setantibiotico(item); e.stopPropagation() }}
+                      onKeyUp={(e) => {
+                        clearTimeout(timeout);
+                        timeout = setTimeout(() => {
                           var obj = {
                             id_atendimento: item.id_atendimento,
-                            antibiotico: item.antibiotico,
-                            data_inicio: moment(document.getElementById('inputInicio ' + item.id_antibiotico).value, 'DD/MM/YY'),
+                            antibiotico: document.getElementById('inputAntibiotico ' + item.id_antibiotico).value.toUpperCase(),
+                            data_inicio: item.data_inicio,
                             data_termino: item.data_termino,
                             prazo: item.prazo,
                           }
@@ -546,126 +515,165 @@ function Antibioticos() {
                             loadAntibioticos();
                             toast(settoast, 'DADOS DO ANTIBIÓTICO ATUALIZADOS COM SUCESSO', 'rgb(82, 190, 128, 1)', 3000);
                           });
-                        }
-                      }, 3000);
-                      e.stopPropagation();
-                    }}
-                    style={{
-                      display: 'flex',
-                      flexDirection: 'center', justifyContent: 'center', alignSelf: 'center',
-                      width: 'calc(100% - 10px)',
-                      backgroundColor: '#f2f2f2', borderColor: 'transparent',
-                      marginBottom: 0,
-                    }}
-                  >
-                  </input>
-                  <input id={"inputTermino " + item.id_antibiotico}
-                    className="input"
-                    placeholder='TÉRMINO...'
-                    onFocus={(e) => (e.target.placeholder = '')}
-                    onBlur={(e) => (e.target.placeholder = 'TÉRMINO...')}
-                    defaultValue={item.data_termino != null ? moment(item.data_termino).format('DD/MM/YY') : ''}
-                    onClick={(e) => { e.stopPropagation() }}
-                    onKeyUp={(e) => {
-                      clearTimeout(timeout);
-                      timeout = setTimeout(() => {
-                        var field = document.getElementById("inputTermino " + item.id_antibiotico).value;
-                        var date = moment(document.getElementById("inputTermino " + item.id_antibiotico).value, 'DD/MM/YY', true);
-                        if (field != '' && date.isValid() == false) {
-                          toast(settoast, 'DATA INVÁLIDA', 'rgb(231, 76, 60, 1)', 3000);
-                          document.getElementById("inputTermino " + item.id_antibiotico).value = '';
-                        } else {
-                          var obj = {
-                            id_atendimento: item.id_atendimento,
-                            antibiotico: item.antibiotico,
-                            data_inicio: item.data_inicio,
-                            data_termino: field == '' ? null : moment(document.getElementById('inputTermino ' + item.id_antibiotico).value, 'DD/MM/YY'),
-                            prazo: item.prazo,
-                          }
-                          axios.post(html + 'update_antibiotico/' + item.id_antibiotico, obj).then(() => {
-                            loadAntibioticos();
-                            toast(settoast, 'DADOS DO ANTIBIÓTICO ATUALIZADOS COM SUCESSO', 'rgb(82, 190, 128, 1)', 3000);
-                          });
-                        }
-                      }, 3000);
-                      e.stopPropagation();
-                    }}
-                    style={{
-                      display: 'flex',
-                      flexDirection: 'center', justifyContent: 'center', alignSelf: 'center',
-                      width: 'calc(100% - 10px)',
-                      backgroundColor: '#f2f2f2', borderColor: 'transparent',
-                    }}
-                  >
-                  </input>
-                </div>
-                <div id="prazo"
-                  style={{
-                    flex: 1,
-                    display: 'flex', flexDirection: 'column',
-                    justifyContent: 'center'
-                  }}>
-                  <div style={{
-                    display: 'flex', flexDirection: 'column', justifyContent: 'center',
-                    zIndex: 10,
-                  }}>
-                    <div className='text1' style={{ margin: 0 }}>PRAZO</div>
-                    <div className='input-special' style={{ width: 60, height: 60, alignSelf: 'center' }}>
-                      <input
-                        id={"inputDias " + item.id_antibiotico}
-                        title='DIAS DE USO DO ANTIBIÓTICO.'
-                        autoComplete="off"
-                        placeholder="DIAS..."
-                        className="input"
-                        type="text"
-                        onFocus={(e) => (e.target.placeholder = '')}
-                        onBlur={(e) => (e.target.placeholder = 'DIAS...')}
-                        defaultValue={moment(item.prazo).diff(moment(item.data_inicio), 'days')}
-                        onClick={(e) => { e.stopPropagation() }}
-                        onKeyUp={(e) => {
-                          clearTimeout(timeout);
-                          timeout = setTimeout(() => {
-                            var prazo = document.getElementById("inputDias " + item.id_antibiotico).value;
-                            if (isNaN(prazo) == true && parseInt(prazo) < 0) {
-                              toast(settoast, 'VALOR INVÁLIDO', 'rgb(231, 76, 60, 1)', 3000);
-                              document.getElementById("inputDias " + item.id_antibiotico).value = '';
-                            } else {
-                              var obj = {
-                                id_atendimento: item.id_atendimento,
-                                antibiotico: item.antibiotico,
-                                data_inicio: item.data_inicio,
-                                data_termino: item.data_termino,
-                                prazo: moment(item.data_inicio).add(prazo, 'days'),
-                              }
-                              axios.post(html + 'update_antibiotico/' + item.id_antibiotico, obj).then(() => {
-                                loadAntibioticos();
-                                toast(settoast, 'DADOS DO ANTIBIÓTICO ATUALIZADOS COM SUCESSO', 'rgb(82, 190, 128, 1)', 3000);
-                              });
-                            }
-                          }, 1000);
                           e.stopPropagation();
-                        }}
-                        maxLength={3}
-                        style={{
-                          width: 50,
-                          height: 50,
-                          alignSelf: 'center',
-                        }}
-                      ></input>
-                    </div>
+                        }, 3000);
+                      }}
+                      style={{
+                        display: 'flex',
+                        flexDirection: 'center', justifyContent: 'center', alignSelf: 'center',
+                        width: 'calc(100% - 10px)',
+                        marginTop: 10,
+                      }}
+                      title="ANTIBIÓTICO."
+                    >
+                    </input>
+                    <input id={"inputInicio " + item.id_antibiotico}
+                      className="input"
+                      placeholder='INÍCIO...'
+                      onFocus={(e) => (e.target.placeholder = '')}
+                      onBlur={(e) => (e.target.placeholder = 'INÍCIO...')}
+                      defaultValue={moment(item.data_inicio).format('DD/MM/YY')}
+                      onClick={(e) => { e.stopPropagation() }}
+                      onKeyUp={(e) => {
+                        clearTimeout(timeout);
+                        timeout = setTimeout(() => {
+                          var date = moment(document.getElementById("inputInicio " + item.id_antibiotico).value, 'DD/MM/YY', true);
+                          if (date.isValid() == false) {
+                            toast(settoast, 'DATA INVÁLIDA', 'rgb(231, 76, 60, 1)', 3000);
+                            document.getElementById("inputInicio " + item.id_antibiotico).value = '';
+                          } else {
+                            var obj = {
+                              id_atendimento: item.id_atendimento,
+                              antibiotico: item.antibiotico,
+                              data_inicio: moment(document.getElementById('inputInicio ' + item.id_antibiotico).value, 'DD/MM/YY'),
+                              data_termino: item.data_termino,
+                              prazo: item.prazo,
+                            }
+                            axios.post(html + 'update_antibiotico/' + item.id_antibiotico, obj).then(() => {
+                              loadAntibioticos();
+                              toast(settoast, 'DADOS DO ANTIBIÓTICO ATUALIZADOS COM SUCESSO', 'rgb(82, 190, 128, 1)', 3000);
+                            });
+                          }
+                        }, 3000);
+                        e.stopPropagation();
+                      }}
+                      style={{
+                        display: 'flex',
+                        flexDirection: 'center', justifyContent: 'center', alignSelf: 'center',
+                        width: 'calc(100% - 10px)',
+                        backgroundColor: '#f2f2f2', borderColor: 'transparent',
+                        marginBottom: 0,
+                      }}
+                    >
+                    </input>
+                    <input id={"inputTermino " + item.id_antibiotico}
+                      className="input"
+                      placeholder='TÉRMINO...'
+                      onFocus={(e) => (e.target.placeholder = '')}
+                      onBlur={(e) => (e.target.placeholder = 'TÉRMINO...')}
+                      defaultValue={item.data_termino != null ? moment(item.data_termino).format('DD/MM/YY') : ''}
+                      onClick={(e) => { e.stopPropagation() }}
+                      onKeyUp={(e) => {
+                        clearTimeout(timeout);
+                        timeout = setTimeout(() => {
+                          var field = document.getElementById("inputTermino " + item.id_antibiotico).value;
+                          var date = moment(document.getElementById("inputTermino " + item.id_antibiotico).value, 'DD/MM/YY', true);
+                          if (field != '' && date.isValid() == false) {
+                            toast(settoast, 'DATA INVÁLIDA', 'rgb(231, 76, 60, 1)', 3000);
+                            document.getElementById("inputTermino " + item.id_antibiotico).value = '';
+                          } else {
+                            var obj = {
+                              id_atendimento: item.id_atendimento,
+                              antibiotico: item.antibiotico,
+                              data_inicio: item.data_inicio,
+                              data_termino: field == '' ? null : moment(document.getElementById('inputTermino ' + item.id_antibiotico).value, 'DD/MM/YY'),
+                              prazo: item.prazo,
+                            }
+                            axios.post(html + 'update_antibiotico/' + item.id_antibiotico, obj).then(() => {
+                              loadAntibioticos();
+                              toast(settoast, 'DADOS DO ANTIBIÓTICO ATUALIZADOS COM SUCESSO', 'rgb(82, 190, 128, 1)', 3000);
+                            });
+                          }
+                        }, 3000);
+                        e.stopPropagation();
+                      }}
+                      style={{
+                        display: 'flex',
+                        flexDirection: 'center', justifyContent: 'center', alignSelf: 'center',
+                        width: 'calc(100% - 10px)',
+                        backgroundColor: '#f2f2f2', borderColor: 'transparent',
+                      }}
+                    >
+                    </input>
                   </div>
-                  <div
-                    className={moment(item.prazo).diff(moment(), 'days') < 1 && item.datatermino == null ? 'button-red' : 'button'}
+                  <div id="prazo"
                     style={{
+                      flex: 1,
+                      display: 'flex', flexDirection: 'column',
+                      justifyContent: 'center'
+                    }}>
+                    <div style={{
                       display: 'flex', flexDirection: 'column', justifyContent: 'center',
-                      padding: 10, paddingTop: 20, marginTop: -10,
-                      alignSelf: 'center',
-                      width: window.innerWidth < 426 ? '30vw' : '7vw',
-                    }}
-                  >
-                    {moment().diff(item.data_inicio, 'days') + '/' + moment(item.prazo).diff(item.data_inicio, 'days')}
-                    <div style={{ marginTop: 5 }}>{'FIM PREVISTO:'}</div>
-                    <div>{moment(item.prazo).format('DD/MM/YY')}</div>
+                      zIndex: 10,
+                    }}>
+                      <div className='text1' style={{ margin: 0 }}>PRAZO</div>
+                      <div className='input-special' style={{ width: 60, height: 60, alignSelf: 'center' }}>
+                        <input
+                          id={"inputDias " + item.id_antibiotico}
+                          title='DIAS DE USO DO ANTIBIÓTICO.'
+                          autoComplete="off"
+                          placeholder="DIAS..."
+                          className="input"
+                          type="text"
+                          onFocus={(e) => (e.target.placeholder = '')}
+                          onBlur={(e) => (e.target.placeholder = 'DIAS...')}
+                          defaultValue={moment(item.prazo).diff(moment(item.data_inicio), 'days')}
+                          onClick={(e) => { e.stopPropagation() }}
+                          onKeyUp={(e) => {
+                            clearTimeout(timeout);
+                            timeout = setTimeout(() => {
+                              var prazo = document.getElementById("inputDias " + item.id_antibiotico).value;
+                              if (isNaN(prazo) == true && parseInt(prazo) < 0) {
+                                toast(settoast, 'VALOR INVÁLIDO', 'rgb(231, 76, 60, 1)', 3000);
+                                document.getElementById("inputDias " + item.id_antibiotico).value = '';
+                              } else {
+                                var obj = {
+                                  id_atendimento: item.id_atendimento,
+                                  antibiotico: item.antibiotico,
+                                  data_inicio: item.data_inicio,
+                                  data_termino: item.data_termino,
+                                  prazo: moment(item.data_inicio).add(prazo, 'days'),
+                                }
+                                axios.post(html + 'update_antibiotico/' + item.id_antibiotico, obj).then(() => {
+                                  loadAntibioticos();
+                                  toast(settoast, 'DADOS DO ANTIBIÓTICO ATUALIZADOS COM SUCESSO', 'rgb(82, 190, 128, 1)', 3000);
+                                });
+                              }
+                            }, 1000);
+                            e.stopPropagation();
+                          }}
+                          maxLength={3}
+                          style={{
+                            width: 50,
+                            height: 50,
+                            alignSelf: 'center',
+                          }}
+                        ></input>
+                      </div>
+                    </div>
+                    <div
+                      className={moment(item.prazo).diff(moment(), 'days') < 1 && item.datatermino == null ? 'button-red' : 'button'}
+                      style={{
+                        display: 'flex', flexDirection: 'column', justifyContent: 'center',
+                        padding: 10, paddingTop: 20, marginTop: -10,
+                        alignSelf: 'center',
+                        width: window.innerWidth < 426 ? '30vw' : '7vw',
+                      }}
+                    >
+                      {moment().diff(item.data_inicio, 'days') + '/' + moment(item.prazo).diff(item.data_inicio, 'days')}
+                      <div style={{ marginTop: 5 }}>{'FIM PREVISTO:'}</div>
+                      <div>{moment(item.prazo).format('DD/MM/YY')}</div>
+                    </div>
                   </div>
                 </div>
               </div>

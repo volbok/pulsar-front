@@ -992,7 +992,7 @@ function Passometro() {
           display: window.innerWidth < 426 && viewlista == 0 ? 'none' : 'flex',
           flexDirection: 'column', justifyContent: 'space-between',
           height: 'calc(100vh - 20px)',
-          flex: 1,
+          width: window.innerWidth < 426 ?  '95vw' : '',
           margin: 5, marginLeft: window.innerWidth < 426 ? 5 : 10,
         }}>
         <Usuario></Usuario>
@@ -1008,7 +1008,8 @@ function Passometro() {
           justifyContent: 'space-around',
           alignContent: 'flex-start',
           height: 'calc(100vh - 30px)',
-          flex: 4,
+          width: window.innerWidth < 426 ?  '95vw' : '80vw',
+          // flex: 4,
           margin: 5, marginRight: window.innerWidth < 426 ? 5 : 10,
           position: 'relative',
           scrollBehavior: 'smooth',
@@ -1080,7 +1081,8 @@ function Passometro() {
           display: window.innerWidth < 426 && viewlista == 1 ? 'none' : atendimento != null ? 'none' : 'flex',
           flexDirection: 'column', justifyContent: 'center',
           height: 'calc(100vh - 30px)',
-          flex: 4,
+          width: window.innerWidth < 426 ?  '95vw' : '80vw',
+          // flex: 4,
           margin: 5, marginRight: window.innerWidth < 426 ? 5 : 10,
           scrollBehavior: 'smooth',
         }}>

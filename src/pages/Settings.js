@@ -17,7 +17,7 @@ function Settings() {
     pagina, setpagina,
     settings,
 
-    settema,
+    settema, tema,
     carddiasinternacao, setcarddiasinternacao,
     cardalergias, setcardalergias,
     cardanamnese, setcardanamnese,
@@ -70,7 +70,7 @@ function Settings() {
     console.log('ID: ' + id);
     var obj = {
       id_usuario: id,
-      tema: 1,
+      tema: tema,
       card_diasinternacao: carddiasinternacao,
       card_alergias: cardalergias,
       card_anamnese: cardanamnese,
@@ -92,6 +92,39 @@ function Settings() {
       setpagina(0);
       history.push('/')
     });
+  }
+
+  // função para seleção de esquemas de cores (temas) da aplicação.
+  const changeTema = (tema) => {
+    settema(tema);
+    if (tema == 1) { // tema AZUL.
+      document.documentElement.style.setProperty('--cor1', 'rgba(64, 74, 131, 0.7)');
+      document.documentElement.style.setProperty('--cor1hover', 'rgba(64, 74, 131, 1)');
+      document.documentElement.style.setProperty('--cor2', 'rgba(242, 242, 242)');
+      document.documentElement.style.setProperty('--cor3', 'rgba(215, 219, 221)');
+      document.documentElement.style.setProperty('--texto1', 'rgba(97, 99, 110, 1)');
+      document.documentElement.style.setProperty('--texto2', '#ffffff');
+      document.documentElement.style.setProperty('--texto3', 'rgba(64, 74, 131, 1)');
+      document.documentElement.style.setProperty('--placeholder', 'rgb(97, 99, 110, 0.6)');
+    } else if (tema == 2) { // tema VERDE.
+      document.documentElement.style.setProperty('--cor1', 'rgba(26, 188, 156, 0.7)');
+      document.documentElement.style.setProperty('--cor1hover', 'rgba(26, 188, 156, 1)');
+      document.documentElement.style.setProperty('--cor2', 'rgba(242, 242, 242)');
+      document.documentElement.style.setProperty('--cor3', 'rgba(215, 219, 221)');
+      document.documentElement.style.setProperty('--texto1', 'rgba(97, 99, 110, 1)');
+      document.documentElement.style.setProperty('--texto2', '#ffffff');
+      document.documentElement.style.setProperty('--texto3', '#48C9B0');
+      document.documentElement.style.setProperty('--placeholder', 'rgb(97, 99, 110, 0.6)');
+    } else { // tema PRETO.
+      document.documentElement.style.setProperty('--cor1', '#ABB2B9');
+      document.documentElement.style.setProperty('--cor1hover', '#808B96');
+      document.documentElement.style.setProperty('--cor2', '#212F3D');
+      document.documentElement.style.setProperty('--cor3', '#566573');
+      document.documentElement.style.setProperty('--texto1', '#ffffff');
+      document.documentElement.style.setProperty('--texto2', '#ffffff');
+      document.documentElement.style.setProperty('--texto3', '#ffffff');
+      document.documentElement.style.setProperty('--placeholder', 'rgb(255, 255, 255, 0.5)');
+    }
   }
 
   // construtor dos seletores para os cards.
@@ -120,7 +153,7 @@ function Settings() {
   }
 
   return (
-    <div className="main scroll" style={{ justifyContent: 'flex-start' }}>
+    <div className="main" style={{ justifyContent: 'flex-start' }}>
       <div className="text3">
         CONFIGURAÇÕES
       </div>
@@ -129,21 +162,21 @@ function Settings() {
         flexDirection: window.innerWidth < 426 ? 'column' : 'row',
         justifyContent: 'center', alignContent: 'center', alignItems: 'center',
       }}>
-        <div className='cor3' style={{ display: 'flex', flexDirection: 'column', borderRadius: 5 }}>
+        <div className='cor2' style={{ display: 'flex', flexDirection: 'column', borderRadius: 5 }}>
           <div className='text1'>TEMA</div>
           <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'center' }}>
             <div className='button'
-              onClick={() => settema(1)}
+              onClick={() => changeTema(1)}
             >
               {'AZUL'}
             </div>
             <div className='button'
-              onClick={() => settema(2)}
+              onClick={() => changeTema(2)}
             >
               {'VERDE'}
             </div>
             <div className='button'
-              onClick={() => settema(3)}
+              onClick={() => changeTema(3)}
             >
               {'PRETO'}
             </div>
@@ -160,11 +193,13 @@ function Settings() {
           CADASTRO DE USUARIOS
         </div>
       </div>
-      <div>
-        <div className='text1'>CARDS VISUALIZADOS</div>
+      <div className='text1'>CARDS VISUALIZADOS</div>
+      <div className='scroll' style={{
+        height: window.innerWidth < 426 ? '26vh' : '55vh',
+        width: window.innerWidth < 426 ? '88vw' : '90vw'
+      }}>
         <div style={{
           display: 'flex', flexDirection: 'row', justifyContent: 'center', flexWrap: 'wrap',
-          width: '90vw',
         }}>
           {cardSelector('TEMPO DE INTERNAÇÃO', carddiasinternacao, setcarddiasinternacao)}
           {cardSelector('ALERGIAS', cardalergias, setcardalergias)}
@@ -184,7 +219,7 @@ function Settings() {
           {cardSelector('INTERCONSULTAS', cardinterconsultas, setcardinterconsultas)}
         </div>
       </div>
-      <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'center', marginBottom: 10 }}>
+      <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'center', marginTop: 5 }}>
         <div id="botão de retorno"
           className="button-red"
           style={{

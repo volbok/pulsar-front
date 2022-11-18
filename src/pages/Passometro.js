@@ -331,10 +331,10 @@ function Passometro() {
     return (
       <div style={{
         display: 'flex', flexDirection: 'column', justifyContent: 'space-between',
-        width: 'calc(100% - 15px)', alignSelf: 'center',
+        width: 'calc(100% - 15px)',
+        alignSelf: 'center',
       }}>
-        <div className="text3"
-          style={{ marginBottom: 5 }}>
+        <div className="text3">
           {'LISTA DE PACIENTES - ' + unidades.filter(item => item.id_unidade == unidade).map(item => item.nome_unidade)}
         </div>
         <div
@@ -343,7 +343,7 @@ function Passometro() {
           style={{
             display: arrayatendimentos.length > 0 ? 'flex' : 'none',
             justifyContent: 'flex-start',
-            height: 'calc(100vh - 130px)',
+            height: window.innerHeight - 140,
             width: window.innerWidth < 426 ? 'calc(95vw - 15px)' : '100%',
           }}>
           {arrayatendimentos.map(item => (
@@ -440,7 +440,7 @@ function Passometro() {
           style={{
             display: arrayatendimentos.length > 0 ? 'none' : 'flex',
             justifyContent: 'center',
-            height: 'calc(100vh - 130px)',
+            height: window.innerHeight - 150,
             width: window.innerWidth < 426 ? 'calc(95vw - 15px)' : '100%',
           }}>
           <div className='text3'
@@ -715,11 +715,11 @@ function Passometro() {
   const cartao = (sinal, titulo, opcao, setting, busy) => {
     return (
       <div
-        className='card-fechado'
+        className='card-fechado cor2'
         style={{
           display: card == '' && setting == 1 ? 'flex' : 'none',
-          backgroundColor: sinal != null && sinal.length > 0 ? yellow : 'rgb(215, 219, 221)',
-          borderColor: sinal != null && sinal.length > 0 ? yellow : 'rgb(215, 219, 221)',
+          backgroundColor: sinal != null && sinal.length > 0 ? yellow : '',
+          borderColor: sinal != null && sinal.length > 0 ? yellow : '',
         }}
         onClick={() => {
           if (card == opcao) {
@@ -981,7 +981,7 @@ function Passometro() {
 
   return (
     <div
-      className='main fadein cor7'
+      className='main fadein'
       style={{
         display: pagina == 1 ? 'flex' : 'none',
         flexDirection: window.innerWidth > 425 ? 'row' : 'column',
@@ -991,8 +991,9 @@ function Passometro() {
       <div id="lista de pacientes"
         style={{
           display: window.innerWidth < 426 && viewlista == 0 ? 'none' : 'flex',
-          flexDirection: 'column', justifyContent: 'center',
-          width: window.innerWidth < 426 ? 'calc(95vw - 15px)' : '25vw',
+          flexDirection: 'column', justifyContent: 'space-between',
+          width: window.innerWidth < 426 ? 'calc(95vw - 15px)' : '27vw',
+          height: window.innerHeight - 20,
           margin: 0,
         }}>
         <Usuario></Usuario>
@@ -1006,7 +1007,7 @@ function Passometro() {
           flexWrap: 'wrap',
           justifyContent: 'space-around',
           alignContent: 'flex-start',
-          height: 'calc(100vh - 30px)',
+          height: window.innerHeight - 30,
           width: window.innerWidth < 426 ? 'calc(95vw - 15px)' : '70vw',
           margin: 0,
           position: 'relative',
@@ -1075,7 +1076,7 @@ function Passometro() {
         style={{
           display: window.innerWidth < 426 && viewlista == 1 ? 'none' : atendimento != null ? 'none' : 'flex',
           flexDirection: 'column', justifyContent: 'center',
-          height: 'calc(100vh - 30px)',
+          height: window.innerHeight - 30,
           width: window.innerWidth < 426 ? 'calc(95vw - 15px)' : '70vw',
           margin: 0,
           scrollBehavior: 'smooth',

@@ -151,11 +151,12 @@ function Usuarios() {
         style={{ display: viewnewusuario == 1 || viewnewusuario == 2 ? 'flex' : 'none' }}
         onClick={() => setviewnewusuario(0)}
       >
-        <div className='janela' onClick={(e) => e.stopPropagation()}>
+        <div className={window.innerWidth < 426 ? 'janela scroll' : 'janela'} onClick={(e) => e.stopPropagation()}>
           <div id="cadastrar usuario"
             style={{
               flexDirection: 'row', justifyContent: 'center', flexWrap: 'wrap',
               marginRight: window.innerWidth > 425 ? 10 : 0, alignItems: 'center',
+              maxHeight: 0.8 * window.innerHeight,
             }}>
             <div id="nome do usuário" style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
               <div className='text1'>NOME DO USUÁRIO</div>
@@ -236,39 +237,39 @@ function Usuarios() {
                 }}
               ></input>
             </div>
-          </div>
-          <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'center' }}>
-            <div className='button-red'
-              onClick={(e) => {
-                setviewnewusuario(0); e.stopPropagation();
-              }}>
-              <img
-                alt=""
-                src={back}
-                style={{
-                  margin: 10,
-                  height: 25,
-                  width: 25,
-                }}
-              ></img>
-            </div>
-            <div className='button-green' id='btnusuario'
-              onClick={() => {
-                if (viewnewusuario == 1) {
-                  checkinput('input', settoast, ['inputNome', 'inputDn', 'inputContato', 'inputCpf'], 'btnusuario', insertUsuario, []);
-                } else {
-                  checkinput('input', settoast, ['inputNome', 'inputDn', 'inputContato', 'inputCpf'], 'btnusuario', updateUsuario, []);
-                }
-              }}>
-              <img
-                alt=""
-                src={novo}
-                style={{
-                  margin: 10,
-                  height: 25,
-                  width: 25,
-                }}
-              ></img>
+            <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'center' }}>
+              <div className='button-red'
+                onClick={(e) => {
+                  setviewnewusuario(0); e.stopPropagation();
+                }}>
+                <img
+                  alt=""
+                  src={back}
+                  style={{
+                    margin: 10,
+                    height: 25,
+                    width: 25,
+                  }}
+                ></img>
+              </div>
+              <div className='button-green' id='btnusuario'
+                onClick={() => {
+                  if (viewnewusuario == 1) {
+                    checkinput('input', settoast, ['inputNome', 'inputDn', 'inputContato', 'inputCpf'], 'btnusuario', insertUsuario, []);
+                  } else {
+                    checkinput('input', settoast, ['inputNome', 'inputDn', 'inputContato', 'inputCpf'], 'btnusuario', updateUsuario, []);
+                  }
+                }}>
+                <img
+                  alt=""
+                  src={novo}
+                  style={{
+                    margin: 10,
+                    height: 25,
+                    width: 25,
+                  }}
+                ></img>
+              </div>
             </div>
           </div>
         </div>
@@ -514,7 +515,7 @@ function Usuarios() {
           display: 'flex', flexDirection: 'column', justifyContent: 'center',
           alignContent: 'center', alignSelf: 'center', alignItems: 'center',
           width: window.innerWidth < 426 ? '90vw' : 'calc(100vw - 30px)',
-          height: window.innerWidth < 426 ? '75vh' : 'calc(100vh - 30px)',
+          height: window.innerWidth < 426 ? 250 : 'calc(100vh - 30px)',
           marginLeft: window.innerWidth < 426 ? 0 : 10
         }}>
         <div id='usuário com acesso' className='text3'
@@ -563,7 +564,7 @@ function Usuarios() {
         </div>
         <div id='usuário não selecionado' className='text3' style={{
           display: selectedusuario == 0 ? 'flex' : 'none',
-          flexDirection: 'row', justifyContent: 'center'
+          flexDirection: 'column', justifyContent: 'center', alignSelf: 'center',
         }}>
           {'SELECIONE UM USUÁRIO'}
         </div>
@@ -613,7 +614,7 @@ function Usuarios() {
           flexDirection: window.innerWidth < 426 ? 'column' : 'row',
           justifyContent: 'space-between',
           width: 'calc(100vw - 20px)',
-          height: 'calc(100vh - 20px)',
+          height: window.innerHeight - 20,
         }}>
         <div style={{
           display: 'flex', flexDirection: 'column', justifyContent: 'center',

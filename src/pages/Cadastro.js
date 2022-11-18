@@ -248,7 +248,7 @@ function Cadastro() {
         style={{ display: viewnewpaciente == 1 ? 'flex' : 'none' }}
         onClick={() => setviewnewpaciente(0)}
       >
-        <div className='janela scroll' onClick={(e) => e.stopPropagation()} style={{ height: '80vh' }}>
+        <div className='janela scroll' onClick={(e) => e.stopPropagation()} style={{ height: 0.8 * window.innerHeight }}>
           <div id="cadastrar paciente"
             style={{
               flexDirection: 'row', justifyContent: 'center', flexWrap: 'wrap',
@@ -496,7 +496,7 @@ function Cadastro() {
       <div className='scroll'
         style={{
           width: window.innerWidth < 426 ? '90vw' : 'calc(100vw - 30px)',
-          height: window.innerWidth < 426 ? '75vh' : 'calc(100vh - 80px)',
+          height: window.innerWidth < 426 ? window.innerHeight - 130 : window.innerHeight - 130,
         }}>
         {arraypacientes.map(item => (
           <div
@@ -929,7 +929,7 @@ function Cadastro() {
           flexDirection: 'column',
           justifyContent: 'space-between',
           width: 'calc(100vw - 20px)',
-          height: window.innerWidth < 426 ? 'calc(100% - 20px)' : 'calc(100% - 30px)',
+          // height: window.innerWidth < 426 ? '' : window.innerHeight,
         }}>
         <div id="botões e pesquisa"
           style={{

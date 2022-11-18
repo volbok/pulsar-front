@@ -92,6 +92,14 @@ function App() {
   const [vm, setvm] = useState([]);
   const [interconsultas, setinterconsultas] = useState([]);
 
+  // resolvendo a responsividade para high.
+  const documentHeight = () => {
+    const doc = document.documentElement
+    doc.style.setProperty('--doc-height', `${window.innerHeight}px`)
+  }
+  window.addEventListener('resize', documentHeight)
+  documentHeight()
+
   return (
     <Context.Provider
       value={{

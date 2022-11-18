@@ -331,7 +331,7 @@ function Passometro() {
     return (
       <div style={{
         display: 'flex', flexDirection: 'column', justifyContent: 'space-between',
-        height: '100%', width: 'calc(100% - 15px)', alignSelf: 'center',
+        width: 'calc(100% - 15px)', alignSelf: 'center',
       }}>
         <div className="text3"
           style={{ marginBottom: 5 }}>
@@ -343,7 +343,7 @@ function Passometro() {
           style={{
             display: arrayatendimentos.length > 0 ? 'flex' : 'none',
             justifyContent: 'flex-start',
-            height: 'calc(100% - 20px)',
+            height: 'calc(100vh - 130px)',
             width: window.innerWidth < 426 ? 'calc(95vw - 15px)' : '100%',
           }}>
           {arrayatendimentos.map(item => (
@@ -440,7 +440,7 @@ function Passometro() {
           style={{
             display: arrayatendimentos.length > 0 ? 'none' : 'flex',
             justifyContent: 'center',
-            height: 'calc(100% - 20px)',
+            height: 'calc(100vh - 130px)',
             width: window.innerWidth < 426 ? 'calc(95vw - 15px)' : '100%',
           }}>
           <div className='text3'
@@ -992,8 +992,7 @@ function Passometro() {
         style={{
           display: window.innerWidth < 426 && viewlista == 0 ? 'none' : 'flex',
           flexDirection: 'column', justifyContent: 'center',
-          height: 'calc(100% - 20px)',
-          width: window.innerWidth < 426 ? 'calc(95vw - 15px)' : '26vw',
+          width: window.innerWidth < 426 ? 'calc(95vw - 15px)' : '25vw',
           margin: 0,
         }}>
         <Usuario></Usuario>
@@ -1007,7 +1006,7 @@ function Passometro() {
           flexWrap: 'wrap',
           justifyContent: 'space-around',
           alignContent: 'flex-start',
-          height: 'calc(100% - 30px)',
+          height: 'calc(100vh - 30px)',
           width: window.innerWidth < 426 ? 'calc(95vw - 15px)' : '70vw',
           margin: 0,
           position: 'relative',
@@ -1076,7 +1075,7 @@ function Passometro() {
         style={{
           display: window.innerWidth < 426 && viewlista == 1 ? 'none' : atendimento != null ? 'none' : 'flex',
           flexDirection: 'column', justifyContent: 'center',
-          height: 'calc(100% - 30px)',
+          height: 'calc(100vh - 30px)',
           width: window.innerWidth < 426 ? 'calc(95vw - 15px)' : '70vw',
           margin: 0,
           scrollBehavior: 'smooth',

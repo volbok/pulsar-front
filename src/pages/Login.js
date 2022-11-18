@@ -119,7 +119,6 @@ function Login() {
   let user = null;
   let password = null;
   var timeout = null;
-  var token = null;
   const checkLogin = () => {
     clearTimeout(timeout);
     timeout = setTimeout(() => {
@@ -134,8 +133,6 @@ function Login() {
         x = response.data;
         console.log('RESPONSE: ' + JSON.stringify(x));
         // armazenando o token no localStorage.
-        token = x.token;
-        // console.log('TOKEN RECEBIDO DA API: ' + JSON.stringify(x));
         localStorage.setItem("token", x.token);
 
         // console.log('DADOS DO USUÁRIO: ' + x.nome + ' - ' + x.dn + ' - ' + x.cpf + ' - ' + x.email);

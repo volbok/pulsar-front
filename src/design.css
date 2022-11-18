@@ -1126,6 +1126,9 @@ ESTILOS VARIÁVEIS CONFORME A RESPONSIVIDADE.
 @media only screen and (max-width: 480px) {
   .main {
     justify-content: center;
+    height: 100vh;
+    padding: env(safe-area-inset-top, 20px) env(safe-area-inset-right, 20px)
+      env(safe-area-inset-bottom, 20px) env(safe-area-inset-left, 20px);
   }
   .textarea {
     font-size: 12px;
@@ -1164,8 +1167,8 @@ ESTILOS VARIÁVEIS CONFORME A RESPONSIVIDADE.
     display: flex;
     flex-direction: column;
     justify-content: center;
-    width: calc(40vw - 20px);
-    height: calc(40vw - 20px);
+    width: calc(38vw - 20px);
+    height: calc(38vw - 20px);
     opacity: 1;
     padding: 10px;
     border-radius: 5px;
@@ -1228,7 +1231,7 @@ ESTILOS VARIÁVEIS CONFORME A RESPONSIVIDADE.
     justify-content: space-evenly;
     opacity: 1;
     height: 180vh;
-    margin: 5px; 
+    margin: 5px;
     padding: 10px;
     border-radius: 5px;
     transition: 100ms, 300ms ease-in-out;

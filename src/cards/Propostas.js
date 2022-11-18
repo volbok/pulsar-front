@@ -463,7 +463,6 @@ function Propostas() {
                 <div style={{
                   display: 'flex', flexDirection: window.innerWidth < 426 ? 'column' : 'row',
                   flex: window.innerWidth < 426 ? 1 : 3,
-                  display: 'flex',
                   paddingRight: 10,
                   alignItems: 'flex-end'
                 }}>

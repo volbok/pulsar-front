@@ -1,5 +1,5 @@
 /* eslint eqeqeq: "off" */
-import React, { useEffect, useContext, useState } from 'react';
+import React, { useEffect, useContext } from 'react';
 import Context from './Context';
 import { useHistory } from 'react-router-dom';
 import { Page, Text, View, Document, PDFViewer, StyleSheet } from '@react-pdf/renderer';
@@ -8,7 +8,6 @@ import fontbold from '../fonts/Roboto-Bold.ttf';
 import moment from 'moment';
 // imagens.
 import back from '../images/back.svg';
-import Precaucoes from '../cards/Precaucoes';
 
 function Pdf() {
 
@@ -23,15 +22,12 @@ function Pdf() {
     alergias,
     antibioticos,
     invasoes,
-    lesoes,
     precaucoes,
     riscos,
     culturas,
-    dietas,
     evolucoes,
     infusoes,
     propostas,
-    sinaisvitais,
     vm,
     interconsultas,
 

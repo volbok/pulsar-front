@@ -427,7 +427,6 @@ function Antibioticos() {
                   flexDirection: window.innerWidth < 426 ? 'row' : 'column',
                   justifyContent: window.innerWidth < 426 ? 'space-between' : 'center',
                   alignSelf: 'center', alignContent: 'center',
-                  margin: 5,
                   padding: 5,
                   height: window.innerWidth < 426 ? 60 : 225,
                   width: window.innerWidth < 426 ? 'calc(95% + 10px)' : '',

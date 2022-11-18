@@ -21,6 +21,15 @@
   --doc-height: "100%";
 }
 
+body {
+  min-height: 100vh;
+  min-height: -webkit-fill-available;
+}
+
+html {
+  height: -webkit-fill-available;
+}
+
 /* OCULTANDO CABEÇALHO E RODAPÉ PARA IMPRESSÃO */
 @media print {
   #Header,
@@ -1128,10 +1137,7 @@ ESTILOS VARIÁVEIS CONFORME A RESPONSIVIDADE.
 /* CELULARES */
 @media only screen and (max-width: 480px) {
   .main {
-    position: fixed;
-    justify-content: center;
     min-height: 100vh;
-    min-height: fill-available;
     min-height: -webkit-fill-available;
   }
   .textarea {

@@ -165,17 +165,17 @@ function Settings() {
         <div className='cor2' style={{ display: 'flex', flexDirection: 'column', borderRadius: 5 }}>
           <div className='text1'>TEMA</div>
           <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'center' }}>
-            <div className='button'
+            <div className={tema == 1 ? 'button-red' : 'button'}
               onClick={() => changeTema(1)}
             >
               {'AZUL'}
             </div>
-            <div className='button'
+            <div className={tema == 2 ? 'button-red' : 'button'}
               onClick={() => changeTema(2)}
             >
               {'VERDE'}
             </div>
-            <div className='button'
+            <div className={tema == 3 ? 'button-red' : 'button'}
               onClick={() => changeTema(3)}
             >
               {'PRETO'}

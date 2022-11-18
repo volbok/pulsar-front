@@ -86,7 +86,7 @@ function Login() {
   // carregando o tema de cores da aplicação.
   // função para seleção de esquemas de cores (temas) da aplicação.
   const changeTema = (tema) => {
-    if (tema === 1) { // tema AZUL.
+    if (tema == 1) { // tema AZUL.
       document.documentElement.style.setProperty('--cor1', 'rgba(64, 74, 131, 0.7)');
       document.documentElement.style.setProperty('--cor1hover', 'rgba(64, 74, 131, 1)');
       document.documentElement.style.setProperty('--cor2', 'rgba(242, 242, 242)');
@@ -94,7 +94,7 @@ function Login() {
       document.documentElement.style.setProperty('--texto1', 'rgba(97, 99, 110, 1)');
       document.documentElement.style.setProperty('--texto2', '#ffffff');
       document.documentElement.style.setProperty('--texto3', 'rgba(64, 74, 131, 1)');
-    } else if (tema === 2) { // tema VERDE.
+    } else if (tema == 2) { // tema VERDE.
       document.documentElement.style.setProperty('--cor1', 'rgba(26, 188, 156, 0.7)');
       document.documentElement.style.setProperty('--cor1hover', 'rgba(26, 188, 156, 1)');
       document.documentElement.style.setProperty('--cor2', 'rgba(242, 242, 242)');

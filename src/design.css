@@ -1138,7 +1138,8 @@ ESTILOS VARIÁVEIS CONFORME A RESPONSIVIDADE.
 @media only screen and (max-width: 480px) {
   .main {
     min-height: 100vh;
-    min-height: -webkit-fill-available;
+    overflow-y: scroll;
+    justify-content: flex-start;
   }
   .textarea {
     font-size: 12px;

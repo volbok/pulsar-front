@@ -17,6 +17,8 @@
 
   --logo1: "green";
   --logo2: "yellow";
+
+  --doc-height: "100%";
 }
 
 /* OCULTANDO CABEÇALHO E RODAPÉ PARA IMPRESSÃO */
@@ -67,6 +69,7 @@ body {
   justify-content: center;
   align-items: center;
   height: 100vh;
+  overflow-y: scroll;
   width: 100vw;
   border-radius: 0px;
   margin: 0px;
@@ -1126,9 +1129,9 @@ ESTILOS VARIÁVEIS CONFORME A RESPONSIVIDADE.
 @media only screen and (max-width: 480px) {
   .main {
     justify-content: center;
-    height: 100vh;
-    padding: env(safe-area-inset-top, 20px) env(safe-area-inset-right, 20px)
-      env(safe-area-inset-bottom, 20px) env(safe-area-inset-left, 20px);
+    min-height: 100vh;
+    min-height: fill-available;
+    min-height: -webkit-fill-available;
   }
   .textarea {
     font-size: 12px;

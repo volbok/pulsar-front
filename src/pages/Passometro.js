@@ -248,7 +248,6 @@ function Passometro() {
       <div style={{
         display: 'flex', flexDirection: 'row',
         marginBottom: 10,
-        width: '100%'
       }}>
         <div className='button-red'
           style={{ margin: 0, marginRight: 10 }}
@@ -331,8 +330,8 @@ function Passometro() {
   const ListaDeAtendimentos = useCallback(() => {
     return (
       <div style={{
-        display: 'flex', flexDirection: 'column', justifyContent: 'space-between', flex: 1,
-        height: '100%',
+        display: 'flex', flexDirection: 'column', justifyContent: 'space-between',
+        height: '100%', width: 'calc(100% - 15px)', alignSelf: 'center',
       }}>
         <div className="text3"
           style={{ marginBottom: 5 }}>
@@ -342,8 +341,10 @@ function Passometro() {
           className="scroll"
           id="scroll atendimentos"
           style={{
-            display: arrayatendimentos.length > 0 ? 'flex' : 'none', flex: 1,
-            width: '100%', height: '100%',
+            display: arrayatendimentos.length > 0 ? 'flex' : 'none',
+            justifyContent: 'flex-start',
+            height: 'calc(100% - 20px)',
+            width: window.innerWidth < 426 ? 'calc(95vw - 15px)' : '100%',
           }}>
           {arrayatendimentos.map(item => (
             <div key={'pacientes' + item.id_atendimento}>
@@ -438,9 +439,9 @@ function Passometro() {
           className="scroll"
           style={{
             display: arrayatendimentos.length > 0 ? 'none' : 'flex',
-            justifyContent: 'center', flex: 1,
+            justifyContent: 'center',
             height: 'calc(100% - 20px)',
-            width: window.innerWidth < 426 ? 'calc(95vw - 15px)' : '',
+            width: window.innerWidth < 426 ? 'calc(95vw - 15px)' : '100%',
           }}>
           <div className='text3'
             style={{ opacity: 0.5 }}>
@@ -985,23 +986,20 @@ function Passometro() {
         display: pagina == 1 ? 'flex' : 'none',
         flexDirection: window.innerWidth > 425 ? 'row' : 'column',
         justifyContent: window.innerWidth > 425 ? 'space-evenly' : 'center',
-        alignContent: 'center', alignSelf: 'center',
         width: '100vw',
       }}>
-      <div
-        id="lista de pacientes"
+      <div id="lista de pacientes"
         style={{
           display: window.innerWidth < 426 && viewlista == 0 ? 'none' : 'flex',
-          flexDirection: 'column', justifyContent: 'space-between',
+          flexDirection: 'column', justifyContent: 'center',
           height: 'calc(100% - 20px)',
-          width: window.innerWidth < 426 ? 'calc(95vw - 15px)' : '',
-          margin: 5,
+          width: window.innerWidth < 426 ? 'calc(95vw - 15px)' : '26vw',
+          margin: 0,
         }}>
         <Usuario></Usuario>
         <ListaDeAtendimentos></ListaDeAtendimentos>
       </div>
-      <div
-        id="conteúdo"
+      <div id="conteúdo cheio"
         className='scroll'
         style={{
           display: window.innerWidth < 426 && viewlista == 1 ? 'none' : atendimento == null ? 'none' : 'flex',
@@ -1010,8 +1008,8 @@ function Passometro() {
           justifyContent: 'space-around',
           alignContent: 'flex-start',
           height: 'calc(100% - 30px)',
-          width: window.innerWidth < 426 ? 'calc(95vw - 15px)' : '80vw',
-          margin: 5,
+          width: window.innerWidth < 426 ? 'calc(95vw - 15px)' : '70vw',
+          margin: 0,
           position: 'relative',
           scrollBehavior: 'smooth',
         }}>
@@ -1071,16 +1069,16 @@ function Passometro() {
         <Riscos></Riscos>
         <Alertas></Alertas>
         <Interconsultas></Interconsultas>
+
       </div>
-      <div
-        id="conteúdo"
+      <div id="conteúdo vazio"
         className='scroll'
         style={{
           display: window.innerWidth < 426 && viewlista == 1 ? 'none' : atendimento != null ? 'none' : 'flex',
           flexDirection: 'column', justifyContent: 'center',
           height: 'calc(100% - 30px)',
-          width: window.innerWidth < 426 ? 'calc(95vw - 15px)' : '80vw',
-          margin: 5, marginRight: window.innerWidth < 426 ? 5 : 10,
+          width: window.innerWidth < 426 ? 'calc(95vw - 15px)' : '70vw',
+          margin: 0,
           scrollBehavior: 'smooth',
         }}>
         <div className='text1' style={{ opacity: 0.5 }}>{'SELECIONE UM PACIENTE DA LISTA PRIMEIRO'}</div>

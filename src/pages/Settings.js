@@ -124,21 +124,11 @@ function Settings() {
       <div className="text3">
         CONFIGURAÇÕES
       </div>
-      <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'center' }}>
-        <div className='button-red'
-          style={{ margin: 0, marginRight: 10, width: 50, height: 50, alignSelf: 'center' }}
-          title={'VOLTAR PARA O SETUP'}
-          onClick={() => { setpagina(1); history.push('/passometro') }}>
-          <img
-            alt=""
-            src={back}
-            style={{
-              margin: 0,
-              height: 30,
-              width: 30,
-            }}
-          ></img>
-        </div>
+      <div style={{
+        display: 'flex',
+        flexDirection: window.innerWidth < 426 ? 'column' : 'row',
+        justifyContent: 'center', alignContent: 'center', alignItems: 'center',
+      }}>
         <div className='cor3' style={{ display: 'flex', flexDirection: 'column', borderRadius: 5 }}>
           <div className='text1'>TEMA</div>
           <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'center' }}>

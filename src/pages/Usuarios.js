@@ -349,7 +349,7 @@ function Usuarios() {
         style={{
           width: window.innerWidth < 426 ? '90vw' : 'calc(40vw - 10px)',
           maxWidth: window.innerWidth < 426 ? '90vw' : 'calc(40vw - 10px)',
-          height: window.innerWidth < 426 ? '75vh' : 'calc(100vh - 80px)',
+          height: window.innerWidth < 426 ? '50vh' : 'calc(100vh - 80px)',
         }}>
         {arrayusuarios.map(item => (
           <div

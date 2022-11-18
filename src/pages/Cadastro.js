@@ -929,7 +929,7 @@ function Cadastro() {
           flexDirection: 'column',
           justifyContent: 'space-between',
           width: 'calc(100vw - 20px)',
-          height: 'calc(100vh - 20px)',
+          height: window.innerWidth < 426 ? 'calc(100% - 20px)' : 'calc(100% - 30px)',
         }}>
         <div id="botões e pesquisa"
           style={{

@@ -246,7 +246,9 @@ function Passometro() {
   function Usuario() {
     return (
       <div style={{
-        display: 'flex', flexDirection: 'row', marginBottom: 10,
+        display: 'flex', flexDirection: 'row',
+        marginBottom: 10,
+        width: '100%'
       }}>
         <div className='button-red'
           style={{ margin: 0, marginRight: 10 }}
@@ -341,8 +343,7 @@ function Passometro() {
           id="scroll atendimentos"
           style={{
             display: arrayatendimentos.length > 0 ? 'flex' : 'none', flex: 1,
-            width: window.innerWidth < 426 ? 'calc(95vw - 10px)' : 'calc(30vw - 10px)',
-            height: window.innerWidth < 426 ? '75vh' : 'calc(100vh - 1000px)',
+            width: '100%', height: '100%',
           }}>
           {arrayatendimentos.map(item => (
             <div key={'pacientes' + item.id_atendimento}>
@@ -438,7 +439,8 @@ function Passometro() {
           style={{
             display: arrayatendimentos.length > 0 ? 'none' : 'flex',
             justifyContent: 'center', flex: 1,
-            width: window.innerWidth < 426 ? '90vw' : 'calc(30vw - 10px)',
+            height: 'calc(100% - 20px)',
+            width: window.innerWidth < 426 ? 'calc(95vw - 15px)' : '',
           }}>
           <div className='text3'
             style={{ opacity: 0.5 }}>
@@ -454,13 +456,13 @@ function Passometro() {
   function ViewPaciente() {
     return (
       <div style={{
-        position: 'sticky', top: 0,
+        position: 'sticky', marginTop: -5, top: 0,
         display: window.innerWidth < 426 ? 'flex' : 'none',
         flexDirection: 'row', justifyContent: 'center',
         flex: 1,
         backgroundColor: '#f2f2f2', borderColor: '#f2f2f2', borderRadius: 5,
         zIndex: 30,
-        width: '90vw', minWidth: '90vw',
+        width: 'calc(90vw - 10px)',
       }}>
         <div id="botão de retorno"
           className="button-red"
@@ -984,16 +986,16 @@ function Passometro() {
         flexDirection: window.innerWidth > 425 ? 'row' : 'column',
         justifyContent: window.innerWidth > 425 ? 'space-evenly' : 'center',
         alignContent: 'center', alignSelf: 'center',
-        height: '100vh', width: '100vw',
+        width: '100vw',
       }}>
       <div
         id="lista de pacientes"
         style={{
           display: window.innerWidth < 426 && viewlista == 0 ? 'none' : 'flex',
           flexDirection: 'column', justifyContent: 'space-between',
-          height: 'calc(100vh - 20px)',
-          width: window.innerWidth < 426 ?  '95vw' : '',
-          margin: 5, 
+          height: 'calc(100% - 20px)',
+          width: window.innerWidth < 426 ? 'calc(95vw - 15px)' : '',
+          margin: 5,
         }}>
         <Usuario></Usuario>
         <ListaDeAtendimentos></ListaDeAtendimentos>
@@ -1007,8 +1009,8 @@ function Passometro() {
           flexWrap: 'wrap',
           justifyContent: 'space-around',
           alignContent: 'flex-start',
-          height: 'calc(100vh - 30px)',
-          width: window.innerWidth < 426 ?  '95vw' : '80vw',
+          height: 'calc(100% - 30px)',
+          width: window.innerWidth < 426 ? 'calc(95vw - 15px)' : '80vw',
           margin: 5,
           position: 'relative',
           scrollBehavior: 'smooth',
@@ -1021,12 +1023,10 @@ function Passometro() {
         {cartao(alergias, 'ALERGIAS', 'card-alergias', cardalergias, busyalergias)}
         {cartao(null, 'ANAMNESE', 'card-anamnese', cardanamnese)}
         {cartao(null, 'EVOLUÇÕES', 'card-evolucoes', cardevolucoes)}
-
         {cartao(propostas.filter(item => item.status == 0), 'PROPOSTAS', 'card-propostas', cardpropostas, busypropostas)}
         {cartao(precaucoes, 'PRECAUÇÕES', 'card-precaucoes', cardprecaucoes)}
         {cartao(riscos, 'RISCOS', 'card-riscos', cardriscos, busyriscos)}
         {cartao(null, 'ALERTAS', 'card-alertas', cardalertas)}
-
         {cartao(null, 'SINAIS VITAIS', 'card-sinaisvitais', cardsinaisvitais, busysinaisvitais)}
         <div id='boneco' className="card-fechado"
           style={{ display: card == '' && cardbody == 1 ? 'flex' : 'none' }}
@@ -1051,7 +1051,6 @@ function Passometro() {
         </div>
         {cartao(null, 'VENTILAÇÃO MECÂNICA', 'card-vm', cardvm, busyvm)}
         {cartao(null, 'INFUSÕES', 'card-infusoes', cardinfusoes, busyinfusoes)}
-
         {cartao(null, 'DIETA', 'card-dietas', carddieta, busydieta)}
         {cartao(culturas.filter(item => item.data_resultado == null), 'CULTURAS', 'card-culturas', cardculturas, busyculturas)}
         {cartao(antibioticos.filter(item => moment().diff(item.prazo, 'days') > 0 && item.data_termino == null), 'ANTIBIÓTICOS', 'card-antibioticos', cardatb, busyatb)}
@@ -1079,9 +1078,8 @@ function Passometro() {
         style={{
           display: window.innerWidth < 426 && viewlista == 1 ? 'none' : atendimento != null ? 'none' : 'flex',
           flexDirection: 'column', justifyContent: 'center',
-          height: 'calc(100vh - 30px)',
-          width: window.innerWidth < 426 ?  '95vw' : '80vw',
-          // flex: 4,
+          height: 'calc(100% - 30px)',
+          width: window.innerWidth < 426 ? 'calc(95vw - 15px)' : '80vw',
           margin: 5, marginRight: window.innerWidth < 426 ? 5 : 10,
           scrollBehavior: 'smooth',
         }}>

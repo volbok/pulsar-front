@@ -94,6 +94,8 @@ function Login() {
       document.documentElement.style.setProperty('--texto1', 'rgba(97, 99, 110, 1)');
       document.documentElement.style.setProperty('--texto2', '#ffffff');
       document.documentElement.style.setProperty('--texto3', 'rgba(64, 74, 131, 1)');
+      document.documentElement.style.setProperty('--placeholder', 'rgb(97, 99, 110, 0.6)');
+      document.documentElement.style.setProperty('--cor0', 'white');
     } else if (tema == 2) { // tema VERDE.
       document.documentElement.style.setProperty('--cor1', 'rgba(26, 188, 156, 0.7)');
       document.documentElement.style.setProperty('--cor1hover', 'rgba(26, 188, 156, 1)');
@@ -102,6 +104,8 @@ function Login() {
       document.documentElement.style.setProperty('--texto1', 'rgba(97, 99, 110, 1)');
       document.documentElement.style.setProperty('--texto2', '#ffffff');
       document.documentElement.style.setProperty('--texto3', '#48C9B0');
+      document.documentElement.style.setProperty('--placeholder', 'rgb(97, 99, 110, 0.6)');
+      document.documentElement.style.setProperty('--cor0', 'white');
     } else { // tema PRETO.
       document.documentElement.style.setProperty('--cor1', '#ABB2B9');
       document.documentElement.style.setProperty('--cor1hover', '#808B96');
@@ -110,6 +114,8 @@ function Login() {
       document.documentElement.style.setProperty('--texto1', '#ffffff');
       document.documentElement.style.setProperty('--texto2', '#ffffff');
       document.documentElement.style.setProperty('--texto3', '#ffffff');
+      document.documentElement.style.setProperty('--placeholder', 'rgb(255, 255, 255, 0.5)');
+      document.documentElement.style.setProperty('--cor0', '#212F3D');
     }
   }
 

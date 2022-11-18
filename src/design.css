@@ -1,6 +1,7 @@
 :root {
   --cor1: rgba(64, 74, 131, 0.7);
   --cor1hover: rgb(64, 74, 131, 1);
+  --cor0: white;
   --cor2: rgba(242, 242, 242);
   --cor3: rgb(215, 219, 221);
   --cor4: rgb(229, 126, 52, 0.7);
@@ -409,9 +410,9 @@ body {
   text-align: center;
   text-transform: uppercase;
   font-weight: bold;
-  background-color: var(--cor2);
+  background-color: var(--cor0);
   border: 0px;
-  border-color: var(--cor2);
+  border-color: var(--cor0);
   color: var(--texto1);
   border-radius: 5px;
   outline: 0px;
@@ -455,9 +456,9 @@ input[type="date"]::-webkit-calendar-picker-indicator {
   font-weight: bold;
   text-transform: uppercase;
   color: var(--texto1);
-  background-color: var(--cor2);
+  background-color: var(--cor0);
   border-width: 5px;
-  border-color: var(--cor2);
+  border-color: var(--cor0);
   border-radius: 5px;
   outline: 0px;
   margin: 5px;

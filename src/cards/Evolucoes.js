@@ -98,13 +98,16 @@ function Evolucoes() {
       useLegacyResults: false
     })
     return (
-      <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'center' }}>
+      <div style={{
+        display: 'flex', flexDirection: 'column', justifyContent: 'center',
+        alignItems: 'center', marginTop: 15
+      }}>
         <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'center' }}>
           <div id="botão de retorno"
             className="button-red"
             style={{
               display: 'flex',
-              alignSelf: 'center',
+              width: 50, height: 50,
             }}
             onClick={() => setcard('')}>
             <img
@@ -121,7 +124,7 @@ function Evolucoes() {
                   if (isRecording == true) {
                     stopSpeechToText();
                     setbtngravavoz("button-green");
-                    document.getElementById("inputEvolucao").value = results.map(result => result.transcript.toString().toUpperCase() + '.');
+                    document.getElementById("inputEvolucao").value = results.map(result => result.transcript.toString().toUpperCase());
                     insertEvolucao();
                     e.stopPropagation();
                   } else {
@@ -155,55 +158,55 @@ function Evolucoes() {
                 }}
               ></img>
             </div>
-            <div id="lista de resultados"
-              className="button"
+          </div>
+          <div id="btnsalvarevolucao"
+            className='button-green'
+            style={{ width: 50, height: 50 }}
+            onClick={(e) => {
+              setviewinsertevolucao(1);
+              e.stopPropagation();
+            }}
+          >
+            <img
+              alt=""
+              src={novo}
               style={{
-                display: btngravavoz == "gravando" ? 'flex' : 'none',
-                flexDirection: 'column', justifyContent: 'center', width: 150
-              }}>
-              {results.map(item => (
-                <div key={item.timestamp}>
-                  {item.transcript.toUpperCase()}
-                </div>
-              ))}
-              <div className='button-red'
-                style={{ width: 25, minWidth: 25, height: 25, minHeight: 25 }}
-                onClick={(e) => {
-                  stopSpeechToText();
-                  setResults([]);
-                  setbtngravavoz("button-green");
-                  e.stopPropagation();
-                }}>
-                <img
-                  alt=""
-                  src={deletar}
-                  style={{
-                    margin: 10,
-                    height: 25,
-                    width: 25,
-                  }}
-                ></img>
-              </div>
-            </div>
+                margin: 10,
+                height: 30,
+                width: 30,
+              }}
+            ></img>
           </div>
         </div>
-        <div id="btnsalvarevolucao"
-          className='button-green'
-          style={{ width: 50, height: 50 }}
-          onClick={(e) => {
-            setviewinsertevolucao(1);
-            e.stopPropagation();
-          }}
-        >
-          <img
-            alt=""
-            src={novo}
-            style={{
-              margin: 10,
-              height: 30,
-              width: 30,
-            }}
-          ></img>
+        <div id="lista de resultados"
+          className="button"
+          style={{
+            display: btngravavoz == "gravando" ? 'flex' : 'none',
+            flexDirection: 'column', justifyContent: 'center', width: 150
+          }}>
+          {results.map(item => (
+            <div key={item.timestamp}>
+              {item.transcript.toUpperCase()}
+            </div>
+          ))}
+          <div className='button-red'
+            style={{ width: 25, minWidth: 25, height: 25, minHeight: 25 }}
+            onClick={(e) => {
+              stopSpeechToText();
+              setResults([]);
+              setbtngravavoz("button-green");
+              e.stopPropagation();
+            }}>
+            <img
+              alt=""
+              src={deletar}
+              style={{
+                margin: 10,
+                height: 25,
+                width: 25,
+              }}
+            ></img>
+          </div>
         </div>
       </div>
     );

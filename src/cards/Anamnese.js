@@ -82,7 +82,7 @@ function Anamnese() {
       useLegacyResults: false
     });
     return (
-      <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'center', marginTop: 15 }}>
+      <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', marginTop: 15 }}>
         <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'center' }}>
           <div id="botão de retorno"
             className="button-red"
@@ -97,69 +97,68 @@ function Anamnese() {
               style={{ width: 30, height: 30 }}
             ></img>
           </div>
-          <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
-            <div id="btngravavoz" className={btngravavoz}
-              style={{ display: 'flex', width: 50, height: 50 }}
-              onClick={(e) => {
-                if (selectedinput != null) {
-                  if (isRecording == true) {
-                    stopSpeechToText();
-                    setbtngravavoz("button-green");
-                    document.getElementById(selectedinput).value = document.getElementById(selectedinput).value + ' ' + results.map(result => result.transcript.toString().toUpperCase() + '.');
-                    updatePaciente(pacientes.filter(item => item.id_paciente == paciente));
-                    updateAtendimento();
-                    e.stopPropagation();
-                  } else {
-                    setbtngravavoz("gravando");
-                    startSpeechToText();
-                    e.stopPropagation();
-                  }
+          <div id="btngravavoz" className={btngravavoz}
+            style={{ display: 'flex', width: 50, height: 50 }}
+            onClick={(e) => {
+              if (selectedinput != null) {
+                if (isRecording == true) {
+                  stopSpeechToText();
+                  setbtngravavoz("button-green");
+                  document.getElementById(selectedinput).value = document.getElementById(selectedinput).value + ' ' + results.map(result => result.transcript.toString().toUpperCase() + '.');
+                  updatePaciente(pacientes.filter(item => item.id_paciente == paciente));
+                  updateAtendimento();
+                  e.stopPropagation();
                 } else {
-                  toast(settoast, 'SELECIONE UM CAMPO PRIMEIRO', 'rgb(231, 76, 60, 1)', 3000);
+                  setbtngravavoz("gravando");
+                  startSpeechToText();
                   e.stopPropagation();
                 }
-              }}
-            >
-              <img
-                alt=""
-                src={microfone}
-                style={{
-                  margin: 10,
-                  height: 30,
-                  width: 30,
-                }}
-              ></img>
-            </div>
-            <div id="lista de resultados"
-              className="button"
+              } else {
+                toast(settoast, 'SELECIONE UM CAMPO PRIMEIRO', 'rgb(231, 76, 60, 1)', 3000);
+                e.stopPropagation();
+              }
+            }}
+          >
+            <img
+              alt=""
+              src={microfone}
               style={{
-                display: btngravavoz == "gravando" ? 'flex' : 'none',
-                flexDirection: 'column', justifyContent: 'center', width: 150
-              }}>
-              {results.map(item => (
-                <div key={item.timestamp}>
-                  {item.transcript.toUpperCase()}
-                </div>
-              ))}
-              <div className='button-red'
-                style={{ width: 25, minWidth: 25, height: 25, minHeight: 25 }}
-                onClick={(e) => {
-                  stopSpeechToText();
-                  setResults([]);
-                  setbtngravavoz("button-green");
-                  e.stopPropagation();
-                }}>
-                <img
-                  alt=""
-                  src={deletar}
-                  style={{
-                    margin: 10,
-                    height: 25,
-                    width: 25,
-                  }}
-                ></img>
-              </div>
+                margin: 10,
+                height: 30,
+                width: 30,
+              }}
+            ></img>
+          </div>
+        </div>
+        <div id="lista de resultados"
+          className="button"
+          style={{
+            display: btngravavoz == "gravando" ? 'flex' : 'none',
+            flexDirection: 'column', justifyContent: 'center', width: 150,
+            alignSelf: 'center',
+          }}>
+          {results.map(item => (
+            <div key={item.timestamp}>
+              {item.transcript.toUpperCase()}
             </div>
+          ))}
+          <div className='button-red'
+            style={{ width: 25, minWidth: 25, height: 25, minHeight: 25 }}
+            onClick={(e) => {
+              stopSpeechToText();
+              setResults([]);
+              setbtngravavoz("button-green");
+              e.stopPropagation();
+            }}>
+            <img
+              alt=""
+              src={deletar}
+              style={{
+                margin: 10,
+                height: 25,
+                width: 25,
+              }}
+            ></img>
           </div>
         </div>
       </div>

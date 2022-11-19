@@ -414,11 +414,12 @@ function Passometro() {
                     id='list_interconsultas'
                     className='button'
                     onClick={(e) => {
+                      setatendimento(item.id_atendimento);
                       setshowinterconsultas(0);
                       e.stopPropagation();
                     }}
                     style={{
-                      display: showinterconsultas == 1 ? 'flex' : 'none',
+                      display: showinterconsultas == 1 && atendimento == item.id_atendimento ? 'flex' : 'none',
                       position: 'absolute', top: 20, right: 10,
                       zIndex: 20,
                       borderRadius: 5,
@@ -961,7 +962,7 @@ function Passometro() {
                   className='textcard'
                   style={{ margin: 0, padding: 0 }}
                 >
-                  {item.risco}
+                  {item.especialidade}
                 </div>
               ))}
             </div>

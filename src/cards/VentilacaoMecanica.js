@@ -384,7 +384,10 @@ function VentilacaoMecanica() {
 
             <div id="indicador do sinal vital"
               className='button-yellow'
-              style={{ padding: 20, margin: 10, fontSize: 16 }}>
+              style={{
+                display: results.length > 4 ? 'none' : 'flex',
+                padding: 20, margin: 10, fontSize: 16
+              }}>
               <div>
                 {
                   results.length == 0 ? 'INFORME O VALOR PARA MODO' :

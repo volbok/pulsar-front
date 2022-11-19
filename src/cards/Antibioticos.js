@@ -109,94 +109,60 @@ function Antibioticos() {
       useLegacyResults: false
     })
     return (
-      <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'center', margin: 5 }}>
+      <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', margin: 5 }}>
         <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'center' }}>
-          <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'center' }}>
-            <div id="botão de retorno"
-              className="button-red"
+          <div id="botão de retorno"
+            className="button-red"
+            style={{
+              display: 'flex',
+              alignSelf: 'center',
+            }}
+            onClick={() => setcard('')}>
+            <img
+              alt=""
+              src={back}
+              style={{ width: 30, height: 30 }}
+            ></img>
+          </div>
+          <div id="btngravavoz" className={btngravavoz}
+            style={{ display: 'flex', width: 50, height: 50 }}
+            onClick={(e) => {
+              if (antibiotico == 0) {
+                if (isRecording == true) {
+                  stopSpeechToText();
+                  setbtngravavoz("button-green");
+                  document.getElementById("inputAntibiotico").value = results.slice(0, 1).map(result => result.transcript.toString().toUpperCase());
+                  insertAntibiotico();
+                  e.stopPropagation();
+                } else {
+                  setbtngravavoz("gravando");
+                  startSpeechToText();
+                  e.stopPropagation();
+                }
+              } else {
+                if (isRecording == true) {
+                  stopSpeechToText();
+                  setbtngravavoz("button-green");
+                  document.getElementById("inputAntibiotico " + antibiotico.id_antibiotico).value = results.slice(0, 1).map(result => result.transcript.toString().toUpperCase());
+                  updateAntibiotico(antibiotico);
+                  e.stopPropagation();
+                } else {
+                  setbtngravavoz("gravando");
+                  startSpeechToText();
+                  e.stopPropagation();
+                }
+              }
+            }}
+          >
+            <img
+              alt=""
+              src={microfone}
               style={{
-                display: 'flex',
-                alignSelf: 'center',
+                margin: 10,
+                height: 30,
+                width: 30,
               }}
-              onClick={() => setcard('')}>
-              <img
-                alt=""
-                src={back}
-                style={{ width: 30, height: 30 }}
-              ></img>
-            </div>
-            <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
-              <div id="btngravavoz" className={btngravavoz}
-                style={{ display: 'flex', width: 50, height: 50 }}
-                onClick={(e) => {
-                  if (viewinsertantibiotico == 1) {
-                    if (isRecording == true) {
-                      stopSpeechToText();
-                      setbtngravavoz("button-green");
-                      document.getElementById("inputAntibiotico").value = results.slice(0, 1).map(result => result.transcript.toString().toUpperCase());
-                      insertAntibiotico();
-                      e.stopPropagation();
-                    } else {
-                      setbtngravavoz("gravando");
-                      startSpeechToText();
-                      e.stopPropagation();
-                    }
-                  } else {
-                    if (isRecording == true) {
-                      stopSpeechToText();
-                      setbtngravavoz("button-green");
-                      document.getElementById("inputAntibiotico " + antibiotico.id_antibiotico).value = results.slice(0, 1).map(result => result.transcript.toString().toUpperCase());
-                      updateAntibiotico(antibiotico);
-                      e.stopPropagation();
-                    } else {
-                      setbtngravavoz("gravando");
-                      startSpeechToText();
-                      e.stopPropagation();
-                    }
-                  }
-                }}
-              >
-                <img
-                  alt=""
-                  src={microfone}
-                  style={{
-                    margin: 10,
-                    height: 30,
-                    width: 30,
-                  }}
-                ></img>
-              </div>
-              <div id="lista de resultados"
-                className="button"
-                style={{
-                  display: btngravavoz == "gravando" && results.length < 3 ? 'flex' : 'none',
-                  flexDirection: 'column', justifyContent: 'center', width: 150
-                }}>
-                {results.slice(-1).map(item => (
-                  <div key={item.timestamp}>
-                    {item.transcript.toUpperCase()}
-                  </div>
-                ))}
-                <div className='button-red'
-                  style={{ width: 25, minWidth: 25, height: 25, minHeight: 25 }}
-                  onClick={(e) => {
-                    stopSpeechToText();
-                    setResults([]);
-                    setbtngravavoz("button-green");
-                    e.stopPropagation();
-                  }}>
-                  <img
-                    alt=""
-                    src={deletar}
-                    style={{
-                      margin: 10,
-                      height: 25,
-                      width: 25,
-                    }}
-                  ></img>
-                </div>
-              </div>
-            </div>
+            ></img>
           </div>
           <div id="btnsalvarcultura"
             className='button-green'
@@ -213,6 +179,37 @@ function Antibioticos() {
                 margin: 10,
                 height: 30,
                 width: 30,
+              }}
+            ></img>
+          </div>
+        </div>
+        <div id="lista de resultados"
+          className="button"
+          style={{
+            display: btngravavoz == "gravando" && results.length < 3 ? 'flex' : 'none',
+            flexDirection: 'column', justifyContent: 'center', width: 150,
+            alignSelf: 'center',
+          }}>
+          {results.slice(-1).map(item => (
+            <div key={item.timestamp}>
+              {item.transcript.toUpperCase()}
+            </div>
+          ))}
+          <div className='button-red'
+            style={{ width: 25, minWidth: 25, height: 25, minHeight: 25 }}
+            onClick={(e) => {
+              stopSpeechToText();
+              setResults([]);
+              setbtngravavoz("button-green");
+              e.stopPropagation();
+            }}>
+            <img
+              alt=""
+              src={deletar}
+              style={{
+                margin: 10,
+                height: 25,
+                width: 25,
               }}
             ></img>
           </div>
@@ -463,20 +460,20 @@ function Antibioticos() {
                   ></img>
                 </div>
               </div>
-              <div 
-              style={{
-                display: 'flex', flexDirection: 'column', justifyContent: 'center',
-                backgroundColor: 'white',
-                borderRadius: 5, padding: 10,
-                borderTopLeftRadius: window.innerWidth < 426 ? 0 : 0,
-                borderTopRightRadius: window.innerWidth < 426 ? 0 : 5,
-                borderBottomLeftRadius: window.innerWidth < 426 ? 5 : 0,
-                borderBottomRightRadius: window.innerWidth < 426 ? 5 : 5,
-                width: window.innerWidth < 426 ? '95%' : '',
-                paddingBottom: window.innerWidth < 426 ? 0 : 5,
-                marginTop: 0,
-                marginLeft: 0,
-              }}>
+              <div
+                style={{
+                  display: 'flex', flexDirection: 'column', justifyContent: 'center',
+                  backgroundColor: 'white',
+                  borderRadius: 5, padding: 10,
+                  borderTopLeftRadius: window.innerWidth < 426 ? 0 : 0,
+                  borderTopRightRadius: window.innerWidth < 426 ? 0 : 5,
+                  borderBottomLeftRadius: window.innerWidth < 426 ? 5 : 0,
+                  borderBottomRightRadius: window.innerWidth < 426 ? 5 : 5,
+                  width: window.innerWidth < 426 ? '95%' : '',
+                  paddingBottom: window.innerWidth < 426 ? 0 : 5,
+                  marginTop: 0,
+                  marginLeft: 0,
+                }}>
                 <div id="conteúdo do antibiótico" style={{
                   display: 'flex',
                   flexDirection: window.innerWidth < 426 ? 'column' : 'row',

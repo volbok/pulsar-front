@@ -135,7 +135,10 @@ function Alergias() {
       useLegacyResults: false
     });
     return (
-      <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', marginTop: 15 }}>
+      <div style={{
+        display: 'flex', flexDirection: 'column', justifyContent: 'center',
+        alignItems: 'center', marginTop: 15
+      }}>
         <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'center' }}>
           <div id="botão de retorno"
             className="button-red"

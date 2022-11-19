@@ -32,6 +32,7 @@ function Culturas() {
   useEffect(() => {
     if (card == 'card-culturas') {
       loadCulturas();
+      setcultura(0);
     }
     // eslint-disable-next-line
   }, [card]);
@@ -77,10 +78,11 @@ function Culturas() {
       id_atendimento: atendimento,
       material: document.getElementById("inputMaterial").value.toUpperCase(),
       resultado: document.getElementById("inputResultado").value.toUpperCase() != '' ? document.getElementById("inputMaterial").value.toUpperCase() : null,
-      data_pedido: document.getElementById("inputDataPedido").value,
+      data_pedido: moment(document.getElementById("inputDataPedido").value, 'DD/MM/YY'),
       data_resultado: null,
     }
-    axios.post(html + 'insert_cultura', obj).then(() => {
+    axios.post(html + 'insert_cultura', obj).then((response) => {
+      console.log(JSON.stringify(obj + response));
       loadCulturas();
       setviewinsertcultura(0);
       toast(settoast, 'CULTURA REGISTRADA COM SUCESSO', 'rgb(82, 190, 128, 1)', 3000);
@@ -109,120 +111,121 @@ function Culturas() {
       useLegacyResults: false
     })
     return (
-      <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'center', margin: 5 }}>
-        <div id="botão de retorno"
-          className="button-red"
-          style={{
-            display: 'flex',
-            alignSelf: 'center',
-          }}
-          onClick={() => setcard('')}>
-          <img
-            alt=""
-            src={back}
-            style={{ width: 30, height: 30 }}
-          ></img>
-        </div>
+      <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
         <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'center' }}>
-          <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
-            <div id="btngravavoz" className={btngravavoz}
-              style={{ display: 'flex', width: 50, height: 50 }}
-              onClick={(e) => {
-                if (viewinsertcultura == 1) {
-                  if (isRecording == true) {
-                    stopSpeechToText();
-                    setbtngravavoz("button-green");
-                    document.getElementById("inputMaterial").value = results.slice(0, 1).map(result => result.transcript.toString().toUpperCase());
-                    document.getElementById("inputResultado").value = results.slice(1, 2).map(result => result.transcript.toString().toUpperCase());
-                    insertCultura();
-                    e.stopPropagation();
-                  } else {
-                    setbtngravavoz("gravando");
-                    startSpeechToText();
-                    e.stopPropagation();
-                  }
-                } else {
-                  if (isRecording == true) {
-                    stopSpeechToText();
-                    setbtngravavoz("button-green");
-                    document.getElementById("inputMaterial " + cultura.id_cultura).value = results.slice(0, 1).map(result => result.transcript.toString().toUpperCase());
-                    document.getElementById("inputResultado " + cultura.id_cultura).value = results.slice(1, 2).map(result => result.transcript.toString().toUpperCase());
-                    console.log('CULTURA: ' + cultura.id_cultura);
-                    updateCultura(cultura);
-                    e.stopPropagation();
-                  } else {
-                    setbtngravavoz("gravando");
-                    startSpeechToText();
-                    e.stopPropagation();
-                  }
-                }
-              }}
-            >
-              <img
-                alt=""
-                src={microfone}
-                style={{
-                  margin: 10,
-                  height: 30,
-                  width: 30,
-                }}
-              ></img>
-            </div>
-            <div id="lista de resultados"
-              className="button"
-              style={{
-                display: btngravavoz == "gravando" && results.length < 3 ? 'flex' : 'none',
-                flexDirection: 'column', justifyContent: 'center', width: 150
-              }}>
-              <div className='button-yellow' style={{ display: results.length > 1 ? 'none' : 'flex' }}>
-                {results.length == 0 ? 'INFORME MATERIAL' : results.length == 1 ? 'INFORME RESULTADO' : ''}
-              </div>
-              <div>
-                {results.length == 1 ? 'MATERIAL: ' : results.length == 2 ? 'RESULTADO: ' : ''}
-              </div>
-              {results.slice(-1).map(item => (
-                <div key={item.timestamp}>
-                  {item.transcript.toUpperCase()}
-                </div>
-              ))}
-              <div className='button-red'
-                style={{ width: 25, minWidth: 25, height: 25, minHeight: 25 }}
-                onClick={(e) => {
+          <div id="botão de retorno"
+            className="button-red"
+            style={{
+              display: 'flex',
+              alignSelf: 'center',
+            }}
+            onClick={() => setcard('')}>
+            <img
+              alt=""
+              src={back}
+              style={{ width: 30, height: 30 }}
+            ></img>
+          </div>
+          <div id="btngravavoz" className={btngravavoz}
+            style={{ display: 'flex', width: 50, height: 50 }}
+            onClick={(e) => {
+              if (cultura == 0) {
+                if (isRecording == true) {
                   stopSpeechToText();
-                  setResults([]);
                   setbtngravavoz("button-green");
+                  console.log(results);
+                  document.getElementById("inputMaterial").value = results.slice(-2).map(result => result.transcript.toString().toUpperCase());
+                  document.getElementById("inputResultado").value = results.slice(-1).map(result => result.transcript.toString().toUpperCase());
+                  moment();
+                  insertCultura();
                   e.stopPropagation();
-                }}>
-                <img
-                  alt=""
-                  src={deletar}
-                  style={{
-                    margin: 10,
-                    height: 25,
-                    width: 25,
-                  }}
-                ></img>
-              </div>
-            </div>
+                } else {
+                  setbtngravavoz("gravando");
+                  startSpeechToText();
+                  e.stopPropagation();
+                }
+              } else {
+                if (isRecording == true) {
+                  stopSpeechToText();
+                  setbtngravavoz("button-green");
+                  document.getElementById("inputMaterial " + cultura.id_cultura).value = results.slice(0, 1).map(result => result.transcript.toString().toUpperCase());
+                  document.getElementById("inputResultado " + cultura.id_cultura).value = results.slice(1, 2).map(result => result.transcript.toString().toUpperCase());
+                  console.log('CULTURA: ' + cultura.id_cultura);
+                  updateCultura(cultura);
+                  e.stopPropagation();
+                } else {
+                  setbtngravavoz("gravando");
+                  startSpeechToText();
+                  e.stopPropagation();
+                }
+              }
+            }}
+          >
+            <img
+              alt=""
+              src={microfone}
+              style={{
+                margin: 10,
+                height: 30,
+                width: 30,
+              }}
+            ></img>
+          </div>
+          <div id="btnsalvarcultura"
+            className='button-green'
+            style={{ width: 50, height: 50 }}
+            onClick={(e) => {
+              setviewinsertcultura(1);
+              e.stopPropagation();
+            }}
+          >
+            <img
+              alt=""
+              src={novo}
+              style={{
+                margin: 10,
+                height: 30,
+                width: 30,
+              }}
+            ></img>
           </div>
         </div>
-        <div id="btnsalvarcultura"
-          className='button-green'
-          style={{ width: 50, height: 50 }}
-          onClick={(e) => {
-            setviewinsertcultura(1);
-            e.stopPropagation();
-          }}
-        >
-          <img
-            alt=""
-            src={novo}
-            style={{
-              margin: 10,
-              height: 30,
-              width: 30,
-            }}
-          ></img>
+        <div id="lista de resultados"
+          className="button"
+          style={{
+            display: btngravavoz == "gravando" && results.length < 3 ? 'flex' : 'none',
+            flexDirection: 'column', justifyContent: 'center', width: 150,
+            alignSelf: 'center',
+          }}>
+          <div className='button-yellow' style={{ display: results.length > 1 ? 'none' : 'flex', pading: 10 }}>
+            {results.length == 0 ? 'INFORME MATERIAL' : results.length == 1 ? 'INFORME RESULTADO' : ''}
+          </div>
+          <div>
+            {results.length == 1 ? 'MATERIAL: ' : results.length == 2 ? 'RESULTADO: ' : ''}
+          </div>
+          {results.slice(-1).map(item => (
+            <div key={item.timestamp}>
+              {item.transcript.toUpperCase()}
+            </div>
+          ))}
+          <div className='button-red'
+            style={{ width: 25, minWidth: 25, height: 25, minHeight: 25 }}
+            onClick={(e) => {
+              stopSpeechToText();
+              setResults([]);
+              setbtngravavoz("button-green");
+              e.stopPropagation();
+            }}>
+            <img
+              alt=""
+              src={deletar}
+              style={{
+                margin: 10,
+                height: 25,
+                width: 25,
+              }}
+            ></img>
+          </div>
         </div>
       </div>
     );

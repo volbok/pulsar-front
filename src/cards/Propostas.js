@@ -107,13 +107,16 @@ function Propostas() {
       useLegacyResults: false
     })
     return (
-      <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'center' }}>
+      <div style={{
+        display: 'flex', flexDirection: 'column', justifyContent: 'center',
+        alignItems: 'center', marginTop: 15
+      }}>
         <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'center' }}>
           <div id="botão de retorno"
             className="button-red"
             style={{
               display: 'flex',
-              alignSelf: 'center',
+              width: 50, height: 50
             }}
             onClick={() => setviewinsertproposta(0)}>
             <img
@@ -122,98 +125,96 @@ function Propostas() {
               style={{ width: 30, height: 30 }}
             ></img>
           </div>
-          <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
-            <div id="btngravavoz" className={btngravavoz}
-              style={{ display: 'flex', width: 50, height: 50 }}
-              onClick={(e) => {
-                if (selectedproposta == null) {
-                  if (isRecording == true) {
-                    stopSpeechToText();
-                    setbtngravavoz("button-green");
-                    document.getElementById("inputProposta").value = results.map(result => result.transcript.toString().toUpperCase() + '.');
-                    insertProposta();
-                    e.stopPropagation();
-                  } else {
-                    setbtngravavoz("gravando");
-                    startSpeechToText();
-                    e.stopPropagation();
-                  }
-                } else {
-                  if (isRecording == true) {
-                    stopSpeechToText();
-                    setbtngravavoz("button-green");
-                    document.getElementById(selectedproposta).value = document.getElementById(selectedproposta).value + ' ' + results.map(result => result.transcript.toString().toUpperCase() + '.');
-                    updateProposta(proposta, selectedproposta, selectedprazo, item.status);
-                    setselectedproposta(null);
-                    setselectedprazo(null);
-                    e.stopPropagation();
-                  } else {
-                    setbtngravavoz("gravando");
-                    startSpeechToText();
-                    e.stopPropagation();
-                  }
-                }
-              }}
-            >
-              <img
-                alt=""
-                src={microfone}
-                style={{
-                  margin: 10,
-                  height: 30,
-                  width: 30,
-                }}
-              ></img>
-            </div>
-            <div id="lista de resultados"
-              className="button"
-              style={{
-                display: btngravavoz == "gravando" ? 'flex' : 'none',
-                flexDirection: 'column', justifyContent: 'center', width: 150
-              }}>
-              {results.map(item => (
-                <div key={item.timestamp}>
-                  {item.transcript.toUpperCase()}
-                </div>
-              ))}
-              <div className='button-red'
-                style={{ width: 25, minWidth: 25, height: 25, minHeight: 25 }}
-                onClick={(e) => {
+          <div id="btngravavoz" className={btngravavoz}
+            style={{ display: 'flex', width: 50, height: 50 }}
+            onClick={(e) => {
+              if (selectedproposta == null) {
+                if (isRecording == true) {
                   stopSpeechToText();
-                  setResults([]);
                   setbtngravavoz("button-green");
+                  document.getElementById("inputProposta").value = results.map(result => result.transcript.toString().toUpperCase() + '.');
+                  insertProposta();
                   e.stopPropagation();
-                }}>
-                <img
-                  alt=""
-                  src={deletar}
-                  style={{
-                    margin: 10,
-                    height: 25,
-                    width: 25,
-                  }}
-                ></img>
-              </div>
-            </div>
+                } else {
+                  setbtngravavoz("gravando");
+                  startSpeechToText();
+                  e.stopPropagation();
+                }
+              } else {
+                if (isRecording == true) {
+                  stopSpeechToText();
+                  setbtngravavoz("button-green");
+                  document.getElementById(selectedproposta).value = document.getElementById(selectedproposta).value + ' ' + results.map(result => result.transcript.toString().toUpperCase() + '.');
+                  updateProposta(proposta, selectedproposta, selectedprazo, item.status);
+                  setselectedproposta(null);
+                  setselectedprazo(null);
+                  e.stopPropagation();
+                } else {
+                  setbtngravavoz("gravando");
+                  startSpeechToText();
+                  e.stopPropagation();
+                }
+              }
+            }}
+          >
+            <img
+              alt=""
+              src={microfone}
+              style={{
+                margin: 10,
+                height: 30,
+                width: 30,
+              }}
+            ></img>
+          </div>
+          <div id="btnsalvarevolucao"
+            className='button-green'
+            style={{ width: 50, height: 50 }}
+            onClick={(e) => {
+              setviewinsertproposta(1);
+              e.stopPropagation();
+            }}
+          >
+            <img
+              alt=""
+              src={novo}
+              style={{
+                margin: 10,
+                height: 30,
+                width: 30,
+              }}
+            ></img>
           </div>
         </div>
-        <div id="btnsalvarevolucao"
-          className='button-green'
-          style={{ width: 50, height: 50 }}
-          onClick={(e) => {
-            setviewinsertproposta(1);
-            e.stopPropagation();
-          }}
-        >
-          <img
-            alt=""
-            src={novo}
-            style={{
-              margin: 10,
-              height: 30,
-              width: 30,
-            }}
-          ></img>
+        <div id="lista de resultados"
+          className="button"
+          style={{
+            display: btngravavoz == "gravando" ? 'flex' : 'none',
+            flexDirection: 'column', justifyContent: 'center', width: 150
+          }}>
+          {results.map(item => (
+            <div key={item.timestamp}>
+              {item.transcript.toUpperCase()}
+            </div>
+          ))}
+          <div className='button-red'
+            style={{ width: 25, minWidth: 25, height: 25, minHeight: 25 }}
+            onClick={(e) => {
+              stopSpeechToText();
+              setResults([]);
+              setbtngravavoz("button-green");
+              e.stopPropagation();
+            }}>
+            <img
+              alt=""
+              src={deletar}
+              style={{
+                margin: 10,
+                height: 25,
+                width: 25,
+              }}
+            ></img>
+          </div>
         </div>
       </div>
     );

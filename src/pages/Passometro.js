@@ -873,7 +873,7 @@ function Passometro() {
               justifyContent: 'center',
             }}>
             <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
-              {infusoes.filter(item => item.data_termino == null).slice(-3).map(item => (
+              {infusoes.filter(item => item.data_termino == null).slice(-2).map(item => (
                 <div
                   key={'infusão ' + item.id_infusao}
                   className='textcard'
@@ -882,7 +882,7 @@ function Passometro() {
                   {item.droga + ' - ' + item.velocidade + 'ml/h'}
                 </div>
               ))}
-              <div style={{ display: infusoes.filter(item => item.data_termino == null).length > 3 ? 'flex' : 'none', alignSelf: 'center' }}>...</div>
+              <div style={{ display: infusoes.filter(item => item.data_termino == null).length > 2 ? 'flex' : 'none', alignSelf: 'center' }}>...</div>
             </div>
           </div>
           <div id='RESUMO PROPOSTAS'

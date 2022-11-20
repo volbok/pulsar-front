@@ -739,9 +739,9 @@ function Cadastro() {
           <div id="status de atendimento"
             className='card cor7'
             style={{
-              position: window.innerWidth > 426 ? 'sticky' : '', top: 10,
+              position: window.innerWidth > 425 ? 'sticky' : '', top: 10,
               display: 'flex', flexDirection: 'column', justifyContent: 'center', height: 345,
-              marginTop: window.innerWidth > 426 ? 0 : 10, marginBottom: 20,
+              marginTop: window.innerWidth > 425 ? 0 : 10, marginBottom: 20,
             }}>
             <div id="paciente sem atendimento ativo"
               style={{

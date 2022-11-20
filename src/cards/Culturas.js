@@ -133,11 +133,22 @@ function Culturas() {
                 if (isRecording == true) {
                   stopSpeechToText();
                   setbtngravavoz("button-green");
-                  console.log(results);
-                  document.getElementById("inputMaterial").value = results.slice(-2).map(result => result.transcript.toString().toUpperCase());
-                  document.getElementById("inputResultado").value = results.slice(-1).map(result => result.transcript.toString().toUpperCase());
-                  moment();
-                  insertCultura();
+                  document.getElementById("inputMaterial").value = results.slice(0, 1).map(result => result.transcript.toString().toUpperCase());
+                  document.getElementById("inputResultado").value = results.slice(1, 2).map(result => result.transcript.toString().toUpperCase());
+                  
+                  var obj = {
+                    id_atendimento: atendimento,
+                    material: results.slice(0, 1).map(result => result.transcript.toString().toUpperCase()).pop(),
+                    resultado: results.slice(1, 2).map(result => result.transcript.toString().toUpperCase()).pop(),
+                    data_pedido: moment(),
+                    data_resultado: null,
+                  }
+                  axios.post(html + 'insert_cultura', obj).then((response) => {
+                    loadCulturas();
+                    setviewinsertcultura(0);
+                    toast(settoast, 'CULTURA REGISTRADA COM SUCESSO', 'rgb(82, 190, 128, 1)', 3000);
+                  })
+                  
                   e.stopPropagation();
                 } else {
                   setbtngravavoz("gravando");

@@ -731,7 +731,11 @@ function Passometro() {
         }}
       >
         <div className='text3'>{titulo}</div>
-        <div style={{ display: busy == 1 ? 'none' : 'flex', flexDirection: 'row', justifyContent: 'center', flexWrap: 'wrap' }}>
+        <div style={{
+          display: busy == 1 ? 'none' : 'flex',
+          flexDirection: 'row', justifyContent: 'center', flexWrap: 'wrap',
+
+        }}>
           <div id='RESUMO PRECAUÇÕES'
             style={{ display: opcao == 'card-precaucoes' ? 'flex' : 'none' }}>
             <img
@@ -741,8 +745,9 @@ function Passometro() {
                 display: precaucoes.filter(item => item.precaucao == 'PADRÃO').length > 0 ? 'flex' : 'none',
                 flexDirection: 'column',
                 justifyContent: 'center',
-                height: window.innerWidth < 426 ? 30 : 50,
-                width: window.innerWidth < 426 ? 30 : 50,
+                height: window.innerWidth < 426 ? 20 : 40,
+                width: window.innerWidth < 426 ? 20 : 40,
+                padding: 5,
               }}
             ></img>
             <img
@@ -840,7 +845,7 @@ function Passometro() {
               display: opcao == 'card-antibioticos' ? 'flex' : 'none', flexDirection: 'column',
               justifyContent: 'center',
             }}>
-            <div>
+            <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
               {antibioticos.filter(item => item.data_termino == null).slice(-3).map(item => (
                 <div
                   key={'atb resumo ' + item.id_antibiotico}
@@ -850,6 +855,7 @@ function Passometro() {
                   {item.antibiotico}
                 </div>
               ))}
+              <div className='textcard' style={{ display: antibioticos.filter(item => item.data_termino == null).length > 3 ? 'flex' : 'none', alignSelf: 'center', textAlign: 'center' }}>...</div>
             </div>
           </div>
           <div id='RESUMO CULTURAS'
@@ -866,7 +872,7 @@ function Passometro() {
               display: opcao == 'card-infusoes' ? 'flex' : 'none', flexDirection: 'column',
               justifyContent: 'center',
             }}>
-            <div>
+            <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
               {infusoes.filter(item => item.data_termino == null).slice(-3).map(item => (
                 <div
                   key={'infusão ' + item.id_infusao}
@@ -876,6 +882,7 @@ function Passometro() {
                   {item.droga + ' - ' + item.velocidade + 'ml/h'}
                 </div>
               ))}
+              <div style={{ display: infusoes.filter(item => item.data_termino == null).length > 3 ? 'flex' : 'none', alignSelf: 'center' }}>...</div>
             </div>
           </div>
           <div id='RESUMO PROPOSTAS'
@@ -955,7 +962,7 @@ function Passometro() {
             </div>
           </div>
           <div id='RESUMO INTERCONSULTAS' style={{ display: opcao == 'card-interconsultas' ? 'flex' : 'none' }}>
-            <div>
+            <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
               {interconsultas.map(item => (
                 <div
                   key={'interconsultas ' + item.id_interconsulta}
@@ -965,6 +972,7 @@ function Passometro() {
                   {item.especialidade}
                 </div>
               ))}
+              <div className='textcard' style={{ display: interconsultas.length > 3 ? 'flex' : 'none', alignSelf: 'center' }}>...</div>
             </div>
           </div>
         </div>

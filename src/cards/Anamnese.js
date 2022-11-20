@@ -28,6 +28,7 @@ function Anamnese() {
 
   useEffect(() => {
     if (card == 'card-anamnese') {
+      setselectedinput(null);
       setanamnese(pacientes.filter(item => item.id_paciente == paciente));
       setselectedatendimento(atendimentos.filter(item => item.id_atendimento == atendimento));
     }

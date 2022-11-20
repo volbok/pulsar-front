@@ -62,7 +62,7 @@ function Alertas() {
 
   function AlertaInvasoes() {
     return (
-      <div style={{ display: 'flex', flexDirection: 'row' }}>
+      <div id='alerta_invasoes' style={{ display: 'flex', flexDirection: 'row' }}>
         {invasoes.filter(item => item.data_retirada == null && moment().diff(item.data_implante, 'days') > 15).map(item => (
           <div className='button-red' key={'invasoes ' + item.id_invasao}
             style={{
@@ -77,7 +77,7 @@ function Alertas() {
   }
   function AlertaPavm() {
     return (
-      <div>
+      <div id='alerta_pavm'>
         {invasoes.filter(item => item.data_retirada == null && (item.dispositivo == 'TOT' || item.dispositivo == 'TQT')).map(item => (
           <div className='button-red'
             style={{
@@ -94,7 +94,8 @@ function Alertas() {
   function AlertaSepse() {
     if (pam < 70 && (fc > 100 || fr > 22 || tax < 36 || tax > 38 || diurese < 500)) {
       return (
-        <div className='button-red'
+        <div id='alerta_sepse'
+          className='button-red'
           style={{
             height: 150, width: 150, padding: 20,
             backgroundColor: 'red',
@@ -120,12 +121,13 @@ function Alertas() {
   }
   function AlertaDadosVitais() {
     return (
-      <div className='button-red'
+      <div id='alerta_dados'
+        className='button-red'
         style={{
           height: 150, width: 150, padding: 20,
-          display:
-            pam < 70 || pam > 100 || fc < 50 || fc > 130 || fr < 15 || fr > 24 || tax < 35 || tax > 38 || sao2 < 90 ?
-              'flex' : 'none',
+          display: sinaisvitais.length > 0 && (
+            pam < 70 || pam > 100 || fc < 50 || fc > 130 || fr < 15 || fr > 24 || tax < 35 || tax > 38 || sao2 < 90) ?
+            'flex' : 'none',
           flexDirection: 'column',
           backgroundColor: yellow,
         }}
@@ -150,12 +152,13 @@ function Alertas() {
   }
   function AlertaDiureseBalanco() {
     return (
-      <div className='button-red'
+      <div id='alerta_diurese&balanco'
+        className='button-red'
         style={{
           height: 150, width: 150, padding: 20,
-          display:
-            diurese < 500 || diurese > 3000 || balanco < -3000 || balanco > 2000 ?
-              'flex' : 'none',
+          display: sinaisvitais.length > 0 && (
+            diurese < 500 || diurese > 3000 || balanco < -3000 || balanco > 2000) ?
+            'flex' : 'none',
           flexDirection: 'column',
           backgroundColor: yellow,
         }}
@@ -174,12 +177,13 @@ function Alertas() {
   }
   function AlertaEstaseEvacuacao() {
     return (
-      <div className='button-red'
+      <div id='alerta_estase&evacuacao'
+        className='button-red'
         style={{
           height: 150, width: 150, padding: 20,
-          display:
-            estase > 200 || evacuacao.length == 0 ?
-              'flex' : 'none',
+          display: sinaisvitais.length > 0 && (
+            estase > 200 || evacuacao.length == 0) ?
+            'flex' : 'none',
           flexDirection: 'column',
           backgroundColor: yellow,
         }}
@@ -197,7 +201,8 @@ function Alertas() {
   }
   function AlertaDietaVm() {
     return (
-      <div className='button-red'
+      <div id='alerta_vm'
+        className='button-red'
         style={{
           height: 150, width: 150, padding: 20,
           display:
@@ -214,7 +219,8 @@ function Alertas() {
   }
   function AlertaCulturas() {
     return (
-      <div className='button-red'
+      <div id='alerta_culturas'
+        className='button-red'
         style={{
           height: 150, width: 150, padding: 20,
           flexDirection: 'column',
@@ -234,10 +240,11 @@ function Alertas() {
   }
   function AlertaAntibioticos() {
     return (
-      <div style={{
-        display: antibioticos.filter(item => item.data_termino == null && moment().diff(moment(item.data_inicio), 'days') > 7).length > 0 ? 'flex' : 'none',
-        flexDirection: 'row', flexWrap: 'wrap',
-      }}>
+      <div id='alerta_antibioticos'
+        style={{
+          display: antibioticos.filter(item => item.data_termino == null && moment().diff(moment(item.data_inicio), 'days') > 7).length > 0 ? 'flex' : 'none',
+          flexDirection: 'row', flexWrap: 'wrap',
+        }}>
         {antibioticos.filter(item => item.data_termino == null && moment().diff(moment(item.data_inicio), 'days') > 7)
           .map(item => (
             <div className='button-red' key={'alertaatb ' + item.id_antibiotico}
@@ -261,10 +268,11 @@ function Alertas() {
   }
   function AlertaCgp() {
     return (
-      <div style={{
-        display: culturas.filter(item => JSON.stringify(item.resultado).includes('CGP') || JSON.stringify(item.resultado).includes('COCOS GRAM-POSITIVOS')).length > 0 ? 'flex' : 'none',
-        flexDirection: 'row', flexWrap: 'wrap',
-      }}>
+      <div id='alerta_cgp'
+        style={{
+          display: culturas.filter(item => JSON.stringify(item.resultado).includes('CGP') || JSON.stringify(item.resultado).includes('COCOS GRAM-POSITIVOS')).length > 0 ? 'flex' : 'none',
+          flexDirection: 'row', flexWrap: 'wrap',
+        }}>
         {culturas.filter(item => JSON.stringify(item.resultado).includes('CGP') || JSON.stringify(item.resultado).includes('COCOS GRAM-POSITIVOS') || JSON.stringify(item.resultado).includes('STREPTO') || JSON.stringify(item.resultado).includes('STAPHYLO'))
           .map(item => (
             <div

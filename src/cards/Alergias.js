@@ -272,7 +272,7 @@ function Alergias() {
       </div>
       <Botoes></Botoes>
       <InsertAlergia></InsertAlergia>
-    </div >
+    </div>
   )
 }
 

@@ -221,7 +221,7 @@ function Passometro() {
         </div>
         <div className='button cor1hover'
           style={{
-            display: window.innerWidth < 426 ? 'none' : 'flex',
+            display: atendimento == null || window.innerWidth < 426 ? 'none' : 'flex',
             minWidth: 25, maxWidth: 25, minHeight: 25, maxHeight: 25,
             marginLeft: 0
           }}
@@ -783,7 +783,7 @@ function Passometro() {
             </div>
             <div className='textcard'
               style={{
-                display: dietas.map(item => item.tipo != 'ORAL' && item.tipo != 'NÃO DEFINIDA') ? 'flex' : 'none',
+                display: dietas.map(item => item.tipo != 'ORAL') ? 'flex' : 'none',
                 margin: 0, padding: 0,
               }}>
               {dietas.map(item => item.infusao + ' ml/h')}
@@ -1090,6 +1090,7 @@ function Passometro() {
           margin: 0,
           scrollBehavior: 'smooth',
         }}>
+        <BtnOptions></BtnOptions>
         <div className='text1' style={{ opacity: 0.5 }}>{'SELECIONE UM PACIENTE DA LISTA PRIMEIRO'}</div>
       </div>
     </div >

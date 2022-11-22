@@ -8,6 +8,7 @@ import toast from '../functions/toast';
 // imagens.
 import salvar from '../images/salvar.svg';
 import refresh from '../images/refresh.svg';
+import back from '../images/back.svg';
 import body from '../images/body.svg';
 import dorso from '../images/dorso.svg';
 import calendario from '../images/calendario.svg';
@@ -333,8 +334,8 @@ function Boneco() {
             onClick={(e) => e.stopPropagation()}
             style={{
               position: 'relative',
-              height: window.innerWidth < 426 ? '100vh' : '80vh',
               width: window.innerWidth < 426 ? '90vw' : '',
+              height: '80vh',
               borderRadius: window.innerWidth < 426 ? 0 : 5,
               padding: 10,
             }}>
@@ -390,35 +391,35 @@ function Boneco() {
               <div
                 className={grau == 1 ? "button-red" : "button"}
                 onClick={() => setgrau(1)}
-                style={{ flex: 1, minWidth: 100 }}
+                style={{ flex: 1, minWidth: 100, height: 50 }}
               >
                 ESTÁGIO 1
               </div>
               <div
                 className={grau == 2 ? "button-red" : "button"}
                 onClick={() => setgrau(2)}
-                style={{ flex: 1, minWidth: 100 }}
+                style={{ flex: 1, minWidth: 100, height: 50 }}
               >
                 ESTÁGIO 2
               </div>
               <div
                 className={grau == 3 ? "button-red" : "button"}
                 onClick={() => setgrau(3)}
-                style={{ flex: 1, minWidth: 100 }}
+                style={{ flex: 1, minWidth: 100, height: 50 }}
               >
                 ESTÁGIO 3
               </div>
               <div
                 className={grau == 4 ? "button-red" : "button"}
                 onClick={() => setgrau(4)}
-                style={{ flex: 1, minWidth: 100 }}
+                style={{ flex: 1, minWidth: 100, height: 50 }}
               >
                 ESTÁGIO 4
               </div>
               <div
                 className={grau == 5 ? "button-red" : "button"}
                 onClick={() => setgrau(5)}
-                style={{ flex: 1, minWidth: 100 }}
+                style={{ flex: 1, minWidth: 100, height: 50 }}
               >
                 NÃO CLASSIFICÁVEL
               </div>
@@ -457,6 +458,20 @@ function Boneco() {
             <div id="botões para salvar ou excluir"
               style={{ display: 'flex', flexDirection: 'row', justifyContent: 'center' }}>
               <div
+                className="button-red"
+                onClick={() => { setshowinfolesoes(0) }}
+              >
+                <img
+                  alt=""
+                  src={deletar}
+                  style={{
+                    margin: 10,
+                    height: 30,
+                    width: 30,
+                  }}
+                ></img>
+              </div>
+              <div
                 className="button-green"
                 onClick={(e) => {
                   updateLesoes();
@@ -466,20 +481,6 @@ function Boneco() {
                 <img
                   alt=""
                   src={salvar}
-                  style={{
-                    margin: 10,
-                    height: 30,
-                    width: 30,
-                  }}
-                ></img>
-              </div>
-              <div
-                className="button-red"
-                onClick={() => { setshowinfolesoes(0) }}
-              >
-                <img
-                  alt=""
-                  src={deletar}
                   style={{
                     margin: 10,
                     height: 30,
@@ -735,37 +736,54 @@ function Boneco() {
           <Lesao local='ORELHA DIREITA' top='8%' bottom='' left='55%' right='' tamanho={20}></Lesao>
           <Lesao local='ORELHA ESQUERDA' top='8%' bottom='' left='' right='55%' tamanho={20}></Lesao>
         </div>
-        <button
-          id="botão alternador invasão x lesão"
-          className="button"
-          style={{
-            position: 'absolute', top: 5,
-            right: window.innerWidth < 426 ? -10 : -30,
-            padding: 10,
-            display: 'flex', flexDirection: 'column', justifyContent: 'center'
-          }}
-          title={randombody == 1 ? "VER LESÕES" : "VER INVASÕES"}
-          onClick={(e) => {
-            if (randombody == 1) {
-              setrandombody(2); e.stopPropagation();
-            } else {
-              setrandombody(1); e.stopPropagation();
-            }
-          }}
-        >
-          <div id="legenda">
-            {randombody == 1 ? 'INVASÕES' : 'LESÕES'}
-          </div>
-          <img
-            alt=""
-            src={refresh}
+        <div style={{
+          display: 'flex', flexDirection: 'row', justifyContent: 'center',
+          position: 'absolute', top: 5,
+          right: window.innerWidth < 426 ? -80 : -100,
+        }}>
+          <button
+            id="botão alternador invasão x lesão"
+            className="button"
             style={{
-              margin: 0,
-              height: 20,
-              width: 20,
+              padding: 10,
+              display: 'flex', flexDirection: 'column', justifyContent: 'center'
             }}
-          ></img>
-        </button>
+            title={randombody == 1 ? "VER LESÕES" : "VER INVASÕES"}
+            onClick={(e) => {
+              if (randombody == 1) {
+                setrandombody(2); e.stopPropagation();
+              } else {
+                setrandombody(1); e.stopPropagation();
+              }
+            }}
+          >
+            <div id="legenda">
+              {randombody == 1 ? 'INVASÕES' : 'LESÕES'}
+            </div>
+            <img
+              alt=""
+              src={refresh}
+              style={{
+                margin: 0,
+                height: 20,
+                width: 20,
+              }}
+            ></img>
+          </button>
+          <div id="botão de retorno"
+            className="button-red"
+            style={{
+              display: 'flex',
+              alignSelf: 'center',
+            }}
+            onClick={() => setcard('')}>
+            <img
+              alt=""
+              src={back}
+              style={{ width: 30, height: 30 }}
+            ></img>
+          </div>
+        </div>
       </div>
     );
   };

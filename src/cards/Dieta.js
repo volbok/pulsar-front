@@ -152,7 +152,7 @@ function Dieta() {
           >
             {tipodieta}
           </div>
-          <div className='text1'>INFUSÃO</div>
+          <div className='text1' style={{ display: tipodieta == 'ORAL' ? 'none' : 'flex' }}>INFUSÃO</div>
           <input
             className="input"
             autoComplete="off"
@@ -170,7 +170,7 @@ function Dieta() {
             id="inputInfusao"
             maxLength={3}
           ></input>
-          <div className='text1'>OBJETIVO</div>
+          <div className='text1' style={{ display: tipodieta == 'ORAL' ? 'none' : 'flex' }}>OBJETIVO</div>
           <input
             className="input"
             autoComplete="off"

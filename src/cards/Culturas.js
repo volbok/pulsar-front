@@ -77,8 +77,8 @@ function Culturas() {
     var obj = {
       id_atendimento: atendimento,
       material: document.getElementById("inputMaterial").value.toUpperCase(),
-      resultado: document.getElementById("inputResultado").value.toUpperCase() != '' ? document.getElementById("inputMaterial").value.toUpperCase() : null,
-      data_pedido: moment(document.getElementById("inputDataPedido").value, 'DD/MM/YY'),
+      resultado: document.getElementById("inputResultado").value.toUpperCase(),
+      data_pedido: moment(document.getElementById("inputDataPedido").value + ' - ' + moment().format('HH:mm'), 'DD/MM/YY - HH:mm'),
       data_resultado: null,
     }
     axios.post(html + 'insert_cultura', obj).then((response) => {
@@ -332,7 +332,7 @@ function Culturas() {
                 ></img>
               </div>
               <div id='btnsalvarcultura' className='button-green' style={{ maxWidth: 50, alignSelf: 'center' }}
-                onClick={() => checkinput('input', settoast, ['inputDataPedido', 'inputMaterial'], "btnsalvarcultura", insertCultura, [])}
+                onClick={() => checkinput('input', settoast, ['inputDataPedido'], "btnsalvarcultura", insertCultura, [])}
               >
                 <img
                   alt=""

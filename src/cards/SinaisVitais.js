@@ -300,7 +300,7 @@ function SinaisVitais() {
                 className="input"
                 autoComplete="off"
                 placeholder="DIURESE"
-                onKeyUp={() => checkNumberInput("inputPas", 0, 8000)}
+                onKeyUp={() => checkNumberInput("inputDiurese", 0, 8000)}
                 onFocus={(e) => (e.target.placeholder = '')}
                 onBlur={(e) => (e.target.placeholder = 'DIURESE')}
                 style={{

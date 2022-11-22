@@ -31,7 +31,14 @@ function Login() {
 
   useEffect(() => {
     if (pagina == 0) {
-      setusuario({});
+      setusuario(
+        {
+          id: 0,
+          nome_usuario: 'LOGOFF',
+          dn_usuario: null,
+          cpf_usuario: null,
+          email_usuario: null,
+        });
       setviewlistaunidades(0);
       loadUnidades();
     }
@@ -188,6 +195,8 @@ function Login() {
               email_usuario: x.email
             }
           );
+          // armazenando o context na localStorage.
+          localStorage.setItem('usuario', usuario);
           loadAcessos(x.id);
           loadSettings(x.id);
 
@@ -407,7 +416,7 @@ function Login() {
       <ListaDeAcessos></ListaDeAcessos>
       <div className='text1'
         style={{
-          display: usuario.id != null ? 'flex' : 'none',
+          display: usuario.id != 0 ? 'flex' : 'none',
           textDecoration: 'underline',
           color: 'white',
           marginTop: window.innerWidth < 426 && viewalterarsenha == 1 ? 20 : 0,

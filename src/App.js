@@ -17,6 +17,7 @@ import DatePicker from './components/DatePicker';
 // router.
 import {
   // BrowserRouter as Router, >> pode usar fora do githubPages.
+  useHistory,
   HashRouter as Router,
   Switch,
   Route,
@@ -92,13 +93,36 @@ function App() {
   const [vm, setvm] = useState([]);
   const [interconsultas, setinterconsultas] = useState([]);
 
-  // resolvendo a responsividade para high.
+  // resolvendo a responsividade para o innerHeight nos celulares.
   const documentHeight = () => {
     const doc = document.documentElement
     doc.style.setProperty('--doc-height', `${window.innerHeight}px`)
   }
   window.addEventListener('resize', documentHeight)
-  documentHeight()
+  documentHeight();
+
+  // atualizando a aplicação.
+  let history = useHistory();
+
+  /*
+  const refreshApp = () => {
+    /*
+    setusuario(
+      {
+        id: 0,
+        nome_usuario: 'LOGOFF',
+        dn_usuario: null,
+        cpf_usuario: null,
+        email_usuario: null,
+      });
+    setpagina(0);
+    history.push('/');
+    console.log('PORRA');
+  }
+  setTimeout(() => {
+    window.addEventListener('load', refreshApp);
+  }, 1000);
+  */
 
   return (
     <Context.Provider

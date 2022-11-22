@@ -14,6 +14,7 @@ function Pdf() {
   // context.
   const {
     pagina,
+    setusuario,
     setpagina,
     paciente,
     pacientes,
@@ -35,6 +36,20 @@ function Pdf() {
 
   // history (router).
   let history = useHistory();
+
+  const refreshApp = () => {
+    setusuario(
+      {
+        id: 0,
+        nome_usuario: 'LOGOFF',
+        dn_usuario: null,
+        cpf_usuario: null,
+        email_usuario: null,
+      });
+    setpagina(0);
+    history.push('/');
+  }
+  window.addEventListener('load', refreshApp);
 
   useEffect(() => {
     if (pagina == 6) {

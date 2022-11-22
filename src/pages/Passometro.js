@@ -44,7 +44,7 @@ function Passometro() {
     html,
     unidade,
     unidades,
-    usuario,
+    usuario, setusuario,
 
     settoast,
     pagina, setpagina,
@@ -94,6 +94,20 @@ function Passometro() {
 
   // history (router).
   let history = useHistory();
+  
+  const refreshApp = () => {
+    setusuario(
+      {
+        id: 0,
+        nome_usuario: 'LOGOFF',
+        dn_usuario: null,
+        cpf_usuario: null,
+        email_usuario: null,
+      });
+    setpagina(0);
+    history.push('/');
+  }
+  window.addEventListener('load', refreshApp);
 
   // carregar lista de pacientes.
   const loadPacientes = () => {
@@ -251,7 +265,7 @@ function Passometro() {
       }}>
         <div className='button-red'
           style={{ margin: 0, marginRight: 10 }}
-          title={'USUÁRIO: ' + usuario.nome_usuario.split(' ', 1)}
+          // title={'USUÁRIO: ' + usuario.nome_usuario.split(' ', 1)}
           onClick={() => { setpagina(0); history.push('/'); }}>
           <img
             alt=""

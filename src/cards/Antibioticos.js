@@ -253,21 +253,22 @@ function Antibioticos() {
                 type="text"
                 maxLength={10}
                 id={"inputInicio"}
-                title="FORMATO: DD/MM/YY"
+                title="FORMATO: DDMMYYYY"
                 onFocus={(e) => (e.target.placeholder = '')}
                 onBlur={(e) => (e.target.placeholder = 'DATA')}
                 onKeyUp={() => {
                   clearTimeout(timeout);
-                  var date = moment(document.getElementById("inputInicio").value, 'DD/MM/YY', true);
-                  // eslint-disable-next-line
+                  var date = moment(document.getElementById("inputInicio").value, 'DDMMYYYY', true);
                   timeout = setTimeout(() => {
                     if (date.isValid() == false) {
                       toast(settoast, 'DATA INVÁLIDA', 'rgb(231, 76, 60, 1)', 3000);
                       document.getElementById("inputInicio").value = '';
+                    } else {
+                      document.getElementById("inputInicio").value = moment(date).format('DD/MM/YYYY');
                     }
                   }, 3000);
                 }}
-                defaultValue={moment().format('DD/MM/YY')}
+                defaultValue={moment().format('DD/MM/YYYY')}
                 style={{
                   flexDirection: 'center', justifyContent: 'center', alignSelf: 'center',
                   width: window.innerWidth < 426 ? '70vw' : '10vw',

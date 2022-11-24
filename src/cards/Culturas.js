@@ -135,7 +135,7 @@ function Culturas() {
                   setbtngravavoz("button-green");
                   document.getElementById("inputMaterial").value = results.slice(0, 1).map(result => result.transcript.toString().toUpperCase());
                   document.getElementById("inputResultado").value = results.slice(1, 2).map(result => result.transcript.toString().toUpperCase());
-                  
+
                   var obj = {
                     id_atendimento: atendimento,
                     material: results.slice(0, 1).map(result => result.transcript.toString().toUpperCase()).pop(),
@@ -148,7 +148,7 @@ function Culturas() {
                     setviewinsertcultura(0);
                     toast(settoast, 'CULTURA REGISTRADA COM SUCESSO', 'rgb(82, 190, 128, 1)', 3000);
                   })
-                  
+
                   e.stopPropagation();
                 } else {
                   setbtngravavoz("gravando");
@@ -276,26 +276,23 @@ function Culturas() {
                 className="input"
                 type="text"
                 maxLength={10}
-                id={"inputDataPedido"}
-                title="FORMATO: DD/MM/YY"
+                id="inputDataPedido"
+                title="FORMATO: DDMMYYYY"
                 onFocus={(e) => (e.target.placeholder = '')}
                 onBlur={(e) => (e.target.placeholder = 'DATA')}
                 onKeyUp={() => {
                   clearTimeout(timeout);
-                  var date = moment(document.getElementById("inputDataPedido").value, 'DD/MM/YY', true);
-                  // eslint-disable-next-line
+                  var date = moment(document.getElementById("inputDataPedido").value, 'DDMMYYYY', true);
                   timeout = setTimeout(() => {
                     if (date.isValid() == false) {
                       toast(settoast, 'DATA INVÁLIDA', 'rgb(231, 76, 60, 1)', 3000);
                       document.getElementById("inputDataPedido").value = '';
+                    } else {
+                      document.getElementById("inputDataPedido").value = moment(date).format('DD/MM/YYYY');
                     }
                   }, 3000);
                 }}
-                defaultValue={moment().format('DD/MM/YY')}
-                style={{
-                  flexDirection: 'center', justifyContent: 'center', alignSelf: 'center',
-                  width: window.innerWidth > 425 ? '10vw' : '70vw',
-                }}
+                defaultValue={moment().format('DD/MM/YYYY')}
               ></input>
             </div>
             <div id="resultado" style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>

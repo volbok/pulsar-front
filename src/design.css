@@ -1175,8 +1175,8 @@ ESTILOS VARIÁVEIS CONFORME A RESPONSIVIDADE.
     display: flex;
     flex-direction: column;
     justify-content: center;
-    width: calc(38vw - 20px);
-    height: calc(38vw - 20px);
+    width: calc(32vw);
+    height: calc(32vw);
     opacity: 1;
     padding: 10px;
     border-radius: 5px;

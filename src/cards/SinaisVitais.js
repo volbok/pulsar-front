@@ -142,7 +142,7 @@ function SinaisVitais() {
           style={{
             flexDirection: 'column',
             width: window.innerWidth < 426 ? '80vw' : '60vw',
-            height: window.innerWidth < 426 ? '90vh' : '',
+            height: window.innerWidth < 426 ? '80vh' : '',
             justifyContent: window.innerWidth < 426 ? 'flex-start' : 'center',
             alignContent: 'center',
           }}>

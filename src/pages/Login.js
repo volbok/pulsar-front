@@ -1,5 +1,5 @@
 /* eslint eqeqeq: "off" */
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useCallback, useContext, useEffect, useState } from 'react';
 import axios from 'axios';
 import Context from './Context';
 // funções.
@@ -224,7 +224,9 @@ function Login() {
   }
 
   // inputs para login e senha.
-  function Inputs() {
+  const [viewlistaunidades, setviewlistaunidades] = useState(0);
+  const [viewalterarsenha, setviewalterarsenha] = useState(0);
+  const Inputs = useCallback(() => {
     return (
       <div style={{
         display: viewlistaunidades == 1 ? 'none' : 'flex',
@@ -265,25 +267,24 @@ function Login() {
         ></input>
       </div>
     )
-  }
+  }, [viewlistaunidades, viewalterarsenha])
 
   // lista de unidades disponiveis para o usuário logado.
-  const [viewlistaunidades, setviewlistaunidades] = useState(0);
-  function ListaDeAcessos() {
+  const ListaDeAcessos = useCallback(() => {
     return (
       <div
         style={{
           display: viewlistaunidades == 1 && viewalterarsenha == 0 ? 'flex' : 'none',
           flexDirection: 'column',
           justifyContent: 'center',
-          width: window.innerWidth > 425 ? '40vw' : '70vw',
+          width: window.innerWidth > 425 ? '45vw' : '80vw',
           marginTop: 20
         }}
       >
         {acessos.map(item => (
           <div
             key={'ACESSO: ' + item.id_acesso}
-            className='button' style={{ flex: 1 }}
+            className='button' style={{ flex: 1, padding: 10 }}
             onClick={() => {
               sethospital(item.id_cliente);
               setunidade(item.id_unidade);
@@ -296,7 +297,7 @@ function Login() {
         ))}
       </div>
     )
-  }
+  }, [viewlistaunidades, viewalterarsenha]);
 
   // ## TROCA DE SENHA ## //
   // atualizar usuário.
@@ -333,7 +334,6 @@ function Login() {
   }
 
   // componente para alteração da senha:
-  const [viewalterarsenha, setviewalterarsenha] = useState(0);
   function AlterarSenha() {
     return (
       <div style={{

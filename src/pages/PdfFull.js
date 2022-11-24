@@ -1,5 +1,5 @@
 /* eslint eqeqeq: "off" */
-import React, { useEffect, useContext } from 'react';
+import React, { useEffect, useContext, useState } from 'react';
 import axios from 'axios';
 import Context from './Context';
 import { useHistory } from 'react-router-dom';
@@ -21,6 +21,19 @@ function PdfFull() {
     setpagina,
     pacientes,
     atendimentos,
+
+    setalergias, alergias,
+    setantibioticos, antibioticos,
+    setinvasoes, invasoes,
+    setprecaucoes, precaucoes,
+    setriscos, riscos,
+    setculturas, culturas,
+    setevolucoes, evolucoes,
+    setinfusoes, infusoes,
+    setpropostas, propostas,
+    setvm, vm,
+    setinterconsultas, interconsultas,
+
   } = useContext(Context);
 
   // history (router).
@@ -121,10 +134,10 @@ function PdfFull() {
   }
 
   // conteúdo de cada atendimento.
-  const pdfAtendimento = (item, paciente, atendimento) => {
-    var alergias = [];
-    axios.get(html + 'paciente_alergias/' + paciente).then((response) => {
-      alergias = response.data.rows;
+  const pdfAtendimento = (item) => {
+    // const [alergias, setalergias] = useState([]);
+    axios.get(html + 'paciente_alergias/' + item.id_paciente).then((response) => {
+      setalergias(response.data.rows);
     });
 
     /*
@@ -134,21 +147,24 @@ function PdfFull() {
     });
     */
 
-    var precaucoes = [];
-    axios.get(html + 'paciente_precaucoes/' + paciente).then((response) => {
-      precaucoes = response.data.rows;
+    //const [precaucoes, setprecaucoes] = useState([]);
+    axios.get(html + 'paciente_precaucoes/' + item.id_paciente).then((response) => {
+      setprecaucoes(response.data.rows);
     });
-    var riscos = [];
-    axios.get(html + 'paciente_riscos/' + paciente).then((response) => {
-      riscos = response.data.rows;
+
+    // const [riscos, setriscos] = useState([]);
+    axios.get(html + 'paciente_riscos/' + item.id_paciente).then((response) => {
+      setriscos(response.data.rows);
     });
-    var antibioticos = [];
-    axios.get(html + 'list_antibioticos/' + atendimento).then((response) => {
-      antibioticos = response.data.rows;
+
+    //const [antibioticos, setantibioticos] = useState([]);
+    axios.get(html + 'list_antibioticos/' + item.id_atendimento).then((response) => {
+      setantibioticos(response.data.rows);
     });
-    var culturas = [];
-    axios.get(html + 'list_culturas/' + atendimento).then((response) => {
-      culturas = response.data.rows;
+
+    //const [culturas, setculturas] = useState([]);
+    axios.get(html + 'list_culturas/' + item.id_atendimento).then((response) => {
+      setculturas(response.data.rows);
     });
 
     /*
@@ -158,21 +174,24 @@ function PdfFull() {
     });
     */
 
-    var evolucoes = [];
-    axios.get(html + 'list_evolucoes/' + atendimento).then((response) => {
-      evolucoes = response.data.rows;
+    //const [evolucoes, setevolucoes] = useState([]);
+    axios.get(html + 'list_evolucoes/' + item.id_atendimento).then((response) => {
+      setevolucoes(response.data.rows);
     });
-    var infusoes = [];
-    axios.get(html + 'list_infusoes/' + atendimento).then((response) => {
-      infusoes = response.data.rows;
+
+    //const [infusoes, setinfusoes] = useState([]);
+    axios.get(html + 'list_infusoes/' + item.id_atendimento).then((response) => {
+      setinfusoes(response.data.rows);
     });
-    var invasoes = [];
-    axios.get(html + 'list_invasoes/' + atendimento).then((response) => {
-      invasoes = response.data.rows;
+
+    //const [invasoes, setinvasoes] = useState([]);
+    axios.get(html + 'list_invasoes/' + item.id_atendimento).then((response) => {
+      setinvasoes(response.data.rows);
     });
-    var propostas = [];
-    axios.get(html + 'list_propostas/' + atendimento).then((response) => {
-      propostas = response.data.rows;
+
+    //const [propostas, setpropostas] = useState([]);
+    axios.get(html + 'list_propostas/' + item.id_atendimento).then((response) => {
+      setpropostas(response.data.rows);
     });
 
     /*
@@ -190,14 +209,16 @@ function PdfFull() {
     });
     */
 
-    var vm = [];
-    axios.get(html + 'list_vm/' + atendimento).then((response) => {
-      vm = response.data.rows;
+    //const [vm, setvm] = useState([]);
+    axios.get(html + 'list_vm/' + item.id_atendimento).then((response) => {
+      setvm(response.data.rows);
     });
-    var interconsultas = [];
-    axios.get(html + 'list_interconsultas/' + atendimento).then((response) => {
-      interconsultas = response.data.rows;
+
+    //const [interconsultas, setinterconsultas] = useState([]);
+    axios.get(html + 'list_interconsultas/' + item.id_atendimento).then((response) => {
+      setinterconsultas(response.data.rows);
     });
+
     return (
       <Page wrap={false} size="A4" style={{ padding: 10 }}>
         <View wrap={false} style={styles.view0}>
@@ -209,10 +230,10 @@ function PdfFull() {
               {'LEITO: ' + item.leito}
             </Text>
             <Text wrap={false} style={[styles.title2, { flex: 5.5 }]}>
-              {'NOME: ' + paciente.map(valor => valor.nome_paciente)}
+              {'NOME: ' + pacientes.filter(valor => valor.id_paciente == item.id_paciente).map(valor => valor.nome_paciente)}
             </Text>
             <Text wrap={false} style={[styles.title2, { flex: 1.5 }]}>
-              {'IDADE: ' + paciente.map(valor => moment().diff(valor.dn_paciente, 'years')) + ' ANOS'}
+              {'IDADE: ' + pacientes.filter(valor => valor.id_paciente == item.id_paciente).map(valor => moment().diff(valor.dn_paciente, 'years')) + ' ANOS'}
             </Text>
           </View>
           <View wrap={false} style={styles.view1}>
@@ -239,22 +260,22 @@ function PdfFull() {
           </View>
           <View wrap={false} style={styles.view2}>
             <Text wrap={false} style={styles.title2}>
-              {'ANTECEDENTES: ' + paciente.map(item => item.antecedentes_pessoais)}
+              {'ANTECEDENTES: ' + pacientes.filter(valor => valor.id_paciente == item.id_paciente).map(item => item.antecedentes_pessoais)}
             </Text>
             <Text wrap={false} style={styles.title2}>
-              {'MEDICAÇÕES DE USO CONTÍNUO: ' + paciente.map(item => item.medicacoes_previas)}
+              {'MEDICAÇÕES DE USO CONTÍNUO: ' + pacientes.filter(valor => valor.id_paciente == item.id_paciente).map(item => item.medicacoes_previas)}
             </Text>
             <Text wrap={false} style={styles.title2}>
-              {'EXAMES PRÉVIOS RELEVANTES: ' + paciente.map(item => item.exames_previos)}
+              {'EXAMES PRÉVIOS RELEVANTES: ' + pacientes.filter(valor => valor.id_paciente == item.id_paciente).map(item => item.exames_previos)}
             </Text>
             <Text wrap={false} style={styles.title2}>
-              {'LISTA DE PROBLEMAS: \n' + atendimentos.filter(item => item.id_atendimento == atendimento).map(item => item.problemas)}
+              {'LISTA DE PROBLEMAS: \n' + atendimentos.map(item => item.problemas)}
             </Text>
             <Text wrap={false} style={styles.title2}>
-              {'SITUAÇÃO: ' + atendimentos.filter(item => item.id_atendimento == atendimento).map(item => item.situacao)}
+              {'SITUAÇÃO: ' + atendimentos.map(item => item.situacao)}
             </Text>
             <Text wrap={false} style={styles.title2}>
-              {'EVOLUÇÕES:' + evolucoes.filter(item => item.id_atendimento == atendimento).slice(-10).map(item =>
+              {'EVOLUÇÕES:' + evolucoes.slice(-10).map(item =>
                 '\n' + moment(item.data_evolucao).format('DD/MM/YY') + ' - ' + item.evolucao)}
             </Text>
           </View>
@@ -307,7 +328,7 @@ function PdfFull() {
         }}>
         <Document>
           {
-            atendimentos.map(item => pdfAtendimento(item, pacientes.filter(valor => valor.id_paciente == item.id_paciente, item.id_atendimento)))
+            atendimentos.map(item => pdfAtendimento(item))
           }
         </Document>
       </PDFViewer>

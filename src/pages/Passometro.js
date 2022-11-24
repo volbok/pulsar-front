@@ -211,7 +211,7 @@ function Passometro() {
         top: window.innerWidth < 426 ? 65 : 10,
         right: window.innerWidth < 426 ? 0 : 25,
         width: window.innerWidth < 426 ? '90vw' : '',
-        display: 'flex', flexDirection: 'row', justifyContent: 'center',
+        display: window.innerWidth < 426 ? 'none' : 'flex', flexDirection: 'row', justifyContent: 'center',
       }}>
         <div className='button cor1hover'
           style={{
@@ -346,7 +346,7 @@ function Passometro() {
         alignSelf: 'center',
       }}>
         <div className="text3">
-          {'LISTA DE PACIENTES - ' + unidades.filter(item => item.id_unidade == unidade).map(item => item.nome_unidade)}
+          {window.innerWidth < 769 ? unidades.filter(item => item.id_unidade == unidade).map(item => item.nome_unidade) : 'LISTA DE PACIENTES - ' + unidades.filter(item => item.id_unidade == unidade).map(item => item.nome_unidade)}
         </div>
         <div
           className="scroll"
@@ -471,12 +471,13 @@ function Passometro() {
   function ViewPaciente() {
     return (
       <div style={{
-        position: 'sticky', marginTop: -5, top: 0,
+        position: 'sticky', marginTop: -5, top: 0, left: 0, right: 0,
         display: window.innerWidth < 426 ? 'flex' : 'none',
         flexDirection: 'row', justifyContent: 'center',
         flex: 1,
         backgroundColor: '#f2f2f2', borderColor: '#f2f2f2', borderRadius: 5,
         zIndex: 30,
+        minWidth: 'calc(90vw - 10px)',
         width: 'calc(90vw - 10px)',
       }}>
         <div id="botão de retorno"
@@ -796,7 +797,7 @@ function Passometro() {
             </div>
             <div className='textcard'
               style={{
-                display: dietas.filter(item => item.tipo != 'ORAL').length > 0 ? 'flex' : 'none',
+                display: dietas.filter(item => item.tipo != 'ORAL' && item.tipo != 'NÃO DEFINIDA').length > 0 ? 'flex' : 'none',
                 margin: 0, padding: 0,
               }}>
               {dietas.map(item => item.infusao + ' ml/h')}
@@ -1027,7 +1028,7 @@ function Passometro() {
           display: window.innerWidth < 426 && viewlista == 1 ? 'none' : atendimento == null ? 'none' : 'flex',
           flexDirection: 'row',
           flexWrap: 'wrap',
-          justifyContent: 'space-around',
+          justifyContent: 'flex-start',
           alignContent: 'flex-start',
           height: window.innerHeight - 30,
           width: window.innerWidth < 426 ? 'calc(95vw - 15px)' : '70vw',
@@ -1036,7 +1037,6 @@ function Passometro() {
           scrollBehavior: 'smooth',
         }}>
         <ViewPaciente></ViewPaciente>
-        <BtnOptions></BtnOptions>
         <div style={{ pointerEvents: 'none' }}>
           {cartao(null, 'DIAS DE INTERNAÇÃO: ' + atendimentos.filter(item => item.id_atendimento == atendimento).map(item => moment().diff(item.data_inicio, 'days')), null, carddiasinternacao, 0)}
         </div>
@@ -1099,13 +1099,14 @@ function Passometro() {
           display: window.innerWidth < 426 && viewlista == 1 ? 'none' : atendimento != null ? 'none' : 'flex',
           flexDirection: 'column', justifyContent: 'center',
           height: window.innerHeight - 30,
-          width: window.innerWidth < 426 ? 'calc(95vw - 15px)' : '70vw',
+          width: window.innerWidth < 426 ? 'calc(95vw - 15px)' : window.innerWidth > 425 && window.innerWidth < 769 ? 'calc(70vw - 20px)' : '70vw',
           margin: 0,
           scrollBehavior: 'smooth',
         }}>
         <BtnOptions></BtnOptions>
         <div className='text1' style={{ opacity: 0.5 }}>{'SELECIONE UM PACIENTE DA LISTA PRIMEIRO'}</div>
       </div>
+      <BtnOptions></BtnOptions>
     </div >
   );
 }

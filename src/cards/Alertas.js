@@ -24,6 +24,9 @@ function Alertas() {
     // alerta para solicitar cultura de controle se germe gram-positivo.
     culturas,
 
+    // alertas para vm.
+    vm,
+
     // alerta para antibióticos em uso por tempo prolongado.
     antibioticos,
 
@@ -222,8 +225,8 @@ function Alertas() {
           height: window.innerWidth < 426 ? heightmobile : height,
           width: window.innerWidth < 426 ? widthmobile : width,
           display:
-            dietas.filter(item => item.tipo == 'SUSPENSA' || item.tipo == 'ORAL').length > 0 &&
-              invasoes.filter(item => item.dispositivo == 'TOT' && item.data_retirada == null) ?
+            dietas.filter(item => item.tipo == 'SUSPENSA' || item.tipo == 'ORAL' || item.tipo == 'NÃO DEFINIDA').length > 0 &&
+              (invasoes.filter(item => item.dispositivo == 'TOT' && item.data_retirada == null).length > 0) ?
               'flex' : 'none',
           flexDirection: 'column',
           backgroundColor: yellow,

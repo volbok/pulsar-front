@@ -258,6 +258,7 @@ function Cadastro() {
   // componente para inserir novo paciente.
   const [viewnewpaciente, setviewnewpaciente] = useState(0);
   const InsertPaciente = useCallback(() => {
+    var timeout = null;
     return (
       <div className='fundo'
         style={{ display: viewnewpaciente == 1 ? 'flex' : 'none' }}
@@ -297,20 +298,22 @@ function Cadastro() {
                 className="textarea"
                 type="text"
                 id="inputNovaDn"
+                title="FORMATO: DDMMYYYY"
                 onFocus={(e) => (e.target.placeholder = '')}
                 onBlur={(e) => (e.target.placeholder = 'DATA DE NASCIMENTO')}
                 onKeyUp={() => {
                   clearTimeout(timeout);
-                  var date = moment(document.getElementById("inputNovaDn").value, 'DD/MM/YY', true);
-                  // eslint-disable-next-line
+                  var date = moment(document.getElementById("inputNovaDn").value, 'DDMMYYYY', true);
                   timeout = setTimeout(() => {
                     if (date.isValid() == false) {
                       toast(settoast, 'DATA INVÁLIDA', 'rgb(231, 76, 60, 1)', 3000);
                       document.getElementById("inputNovaDn").value = '';
+                    } else {
+                      document.getElementById("inputNovaDn").value = moment(date).format('DD/MM/YYYY');
                     }
                   }, 3000);
                 }}
-                defaultValue={moment(paciente.dn_paciente).format('DD/MM/YY')}
+                defaultValue={moment(paciente.dn_paciente).format('DD/MM/YYYY')}
                 style={{
                   flexDirection: 'row', justifyContent: 'center', alignSelf: 'center',
                   width: window.innerWidth > 425 ? '10vw' : '70vw',
@@ -422,6 +425,7 @@ function Cadastro() {
         </div>
       </div>
     )
+    // eslint-disable-next-line
   }, [viewnewpaciente, paciente, settoast]);
 
   const [filterpaciente, setfilterpaciente] = useState('');
@@ -550,7 +554,7 @@ function Cadastro() {
                 }}>
                 {item.nome_mae_paciente}
               </div>
-              <div className='button'
+              <div className={atendimentos.filter(valor => valor.id_paciente == item.id_paciente && valor.data_termino == null && valor.id_unidade == unidade).length > 0 ? 'button-green' : 'button'}
                 style={{ display: window.innerWidth > 425 ? 'flex' : 'none', flex: 1 }}>
                 {atendimentos.filter(valor => valor.id_paciente == item.id_paciente && valor.data_termino == null && valor.id_unidade == unidade).length > 0 ? 'EM ATENDIMENTO' : 'INICIAR ATENDIMENTO'}
               </div>
@@ -625,7 +629,7 @@ function Cadastro() {
                     if (date.isValid() == false) {
                       toast(settoast, 'DATA INVÁLIDA', 'rgb(231, 76, 60, 1)', 3000);
                       document.getElementById("inputDn " + paciente.id_paciente).value = '';
-                    } else{
+                    } else {
                       document.getElementById("inputDn " + paciente.id_paciente).value = moment(date).format('DD/MM/YYYY');
                     }
                   }, 3000);

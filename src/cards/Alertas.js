@@ -238,20 +238,14 @@ function Alertas() {
       <div id='alerta_culturas'
         className='button-red'
         style={{
+          display: culturas.filter(item => item.data_resultado == null).length > 0 ? 'flex' : 'none',
           height: window.innerWidth < 426 ? heightmobile : height,
           width: window.innerWidth < 426 ? widthmobile : width,
           flexDirection: 'column',
           backgroundColor: yellow,
         }}
       >
-        <div style={{
-          display: 'flex', flexDirection: 'row', justifyContent: 'center',
-          flexWrap: 'wrap', marginTop: 10
-        }}>
-          <div style={{ display: culturas.filter(item => item.data_resultado == null).length > 0 ? 'flex' : 'none' }}>
-            {'COBRAR CULTURAS EM ABERTO: ' + culturas.filter(item => item.data_resultado == null).length}
-          </div>
-        </div>
+        {'COBRAR CULTURAS EM ABERTO: ' + culturas.filter(item => item.data_resultado == null).length}
       </div>
     )
   }

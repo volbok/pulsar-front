@@ -564,7 +564,9 @@ function Infusoes() {
           </div>
         ))}
       </div>
-      {graficoInfusoes()}
+      <div style={{ display: infusoes.length > 0 ? 'flex' : 'none' }}>
+        {graficoInfusoes()}
+      </div>
       <InsertInfusao></InsertInfusao>
       <Botoes></Botoes>
     </div>

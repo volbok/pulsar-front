@@ -796,7 +796,7 @@ function Passometro() {
             </div>
             <div className='textcard'
               style={{
-                display: dietas.map(item => item.tipo != 'ORAL') ? 'flex' : 'none',
+                display: dietas.filter(item => item.tipo != 'ORAL').length > 0 ? 'flex' : 'none',
                 margin: 0, padding: 0,
               }}>
               {dietas.map(item => item.infusao + ' ml/h')}

@@ -1028,7 +1028,7 @@ function Passometro() {
           display: window.innerWidth < 426 && viewlista == 1 ? 'none' : atendimento == null ? 'none' : 'flex',
           flexDirection: 'row',
           flexWrap: 'wrap',
-          justifyContent: 'flex-start',
+          justifyContent: 'center',
           alignContent: 'flex-start',
           height: window.innerHeight - 30,
           width: window.innerWidth < 426 ? 'calc(95vw - 15px)' : '70vw',

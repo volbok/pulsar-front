@@ -149,7 +149,7 @@ function Settings() {
   const cardSelector = (titulo, estado, setestado) => {
     return (
       <div
-        className={estado == 1 ? 'button-red' : 'button'}
+        className='button'
         style={{
           minWidth: window.innerWidth < 426 ? '35vw' : 130,
           maxWidth: window.innerWidth < 426 ? '35vw' : 130,

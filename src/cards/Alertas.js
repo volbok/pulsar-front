@@ -196,7 +196,6 @@ function Alertas() {
         style={{
           height: window.innerWidth < 426 ? heightmobile : height,
           width: window.innerWidth < 426 ? widthmobile : width,
-          padding: 20,
           display: sinaisvitais.length > 0 && (
             estase > 200 || evacuacao.length == 0) ?
             'flex' : 'none',
@@ -222,7 +221,6 @@ function Alertas() {
         style={{
           height: window.innerWidth < 426 ? heightmobile : height,
           width: window.innerWidth < 426 ? widthmobile : width,
-          padding: 20,
           display:
             dietas.filter(item => item.tipo == 'SUSPENSA' || item.tipo == 'ORAL').length > 0 &&
               invasoes.filter(item => item.dispositivo == 'TOT' && item.data_retirada == null) ?
@@ -231,7 +229,7 @@ function Alertas() {
           backgroundColor: yellow,
         }}
       >
-        <div>{'PACIENTE INTUBADO E SEM DIETA ENTERAL PRESCRITA'}</div>
+        <div>{'PACIENTE EM VENTILAÇÃO MECÂNICA E SEM DIETA ENTERAL PRESCRITA'}</div>
       </div>
     )
   }
@@ -304,7 +302,6 @@ function Alertas() {
                 flexDirection: 'column', justifyContent: 'center',
                 height: window.innerWidth < 426 ? heightmobile : height,
                 width: window.innerWidth < 426 ? widthmobile : width,
-                padding: 20,
                 backgroundColor: yellow,
               }}>
               <div>{'COCOS GRAM-POSITIVOS ISOLADOS EM:'}</div>

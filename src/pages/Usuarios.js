@@ -87,7 +87,7 @@ function Usuarios() {
     var cpf = document.getElementById("inputCpf").value.toUpperCase();
     var obj = {
       nome_usuario: document.getElementById("inputNome").value.toUpperCase(),
-      dn_usuario: moment(document.getElementById("inputDn").value, 'DD/MM/YYYY'),
+      dn_usuario: moment(document.getElementById("inputDn").value, 'DDMMYYYY'),
       cpf_usuario: cpf,
       email_usuario: document.getElementById("inputContato").value,
       senha: cpf,
@@ -116,7 +116,7 @@ function Usuarios() {
   const updateUsuario = () => {
     var obj = {
       nome_usuario: document.getElementById("inputNome").value.toUpperCase(),
-      dn_usuario: moment(document.getElementById("inputDn").value, 'DD/MM/YYYY'),
+      dn_usuario: moment(document.getElementById("inputDn").value, 'DDMMYYYY'),
       cpf_usuario: document.getElementById("inputCpf").value.toUpperCase(),
       email_usuario: document.getElementById("inputContato").value,
       senha: selectedusuario.senha,
@@ -161,6 +161,7 @@ function Usuarios() {
   const [viewnewusuario, setviewnewusuario] = useState(0);
   const [selectedusuario, setselectedusuario] = useState(0);
   const InsertUsuario = useCallback(() => {
+    var timeout = null;
     return (
       <div className='fundo'
         style={{ display: viewnewusuario == 1 || viewnewusuario == 2 ? 'flex' : 'none' }}
@@ -202,16 +203,17 @@ function Usuarios() {
                 onBlur={(e) => (e.target.placeholder = 'DN')}
                 onKeyUp={() => {
                   clearTimeout(timeout);
-                  var date = moment(document.getElementById("inputDn").value, 'DD/MM/YY', true);
-                  // eslint-disable-next-line
+                  var date = moment(document.getElementById("inputDn").value, 'DDMMYYYY', true);
                   timeout = setTimeout(() => {
                     if (date.isValid() == false) {
                       toast(settoast, 'DATA INVÁLIDA', 'rgb(231, 76, 60, 1)', 3000);
                       document.getElementById("inputDn").value = '';
+                    } else{
+                      document.getElementById("inputDn").value = moment(date).format('DD/MM/YYYY');
                     }
                   }, 3000);
                 }}
-                defaultValue={viewnewusuario == 2 ? moment(selectedusuario.dn_usuario).format('DD/MM/YY') : ''}
+                defaultValue={viewnewusuario == 2 ? moment(selectedusuario.dn_usuario).format('DD/MM/YYYY') : ''}
                 style={{
                   flexDirection: 'center', justifyContent: 'center', alignSelf: 'center',
                   width: window.innerWidth > 425 ? '10vw' : '70vw',
@@ -290,6 +292,7 @@ function Usuarios() {
         </div>
       </div>
     )
+    // eslint-disable-next-line
   }, [viewnewusuario]);
 
   const [filterusuario, setfilterusuario] = useState('');

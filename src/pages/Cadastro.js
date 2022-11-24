@@ -122,7 +122,7 @@ function Cadastro() {
     var obj = {
       nome_paciente: document.getElementById("inputNomePaciente " + id).value.toUpperCase(),
       nome_mae_paciente: document.getElementById("inputNomeMae " + id).value.toUpperCase(),
-      dn_paciente: moment(document.getElementById("inputDn " + id).value, 'DD/MM/YYYY'),
+      dn_paciente: moment(document.getElementById("inputDn " + id).value, 'DDMMYYYY'),
       antecedentes_pessoais: document.getElementById("inputAntecedentesPessoais " + id).value.toUpperCase(),
       medicacoes_previas: document.getElementById("inputMedicacoesPrevias " + id).value.toUpperCase(),
       exames_previos: document.getElementById("inputExamesPrevios " + id).value.toUpperCase(),
@@ -192,7 +192,7 @@ function Cadastro() {
   const updateAtendimento = (atendimento) => {
     atendimento.map(item => {
       var obj = {
-        data_inicio: moment(),
+        data_inicio: item.data_inicio,
         data_termino: null,
         problemas: item.problemas,
         id_paciente: item.id_paciente,
@@ -615,20 +615,22 @@ function Cadastro() {
                 type="text"
                 maxLength={10}
                 id={"inputDn " + paciente.id_paciente}
-                title="FORMATO: DD/MM/YYYY"
+                title="FORMATO: DDMMYYYY"
                 onFocus={(e) => (e.target.placeholder = '')}
                 onBlur={(e) => (e.target.placeholder = 'DN')}
                 onKeyUp={() => {
                   clearTimeout(timeout);
-                  var date = moment(document.getElementById("inputDn " + paciente.id_paciente).value, 'DD/MM/YY', true);
+                  var date = moment(document.getElementById("inputDn " + paciente.id_paciente).value, 'DDMMYYYY', true);
                   timeout = setTimeout(() => {
                     if (date.isValid() == false) {
                       toast(settoast, 'DATA INVÁLIDA', 'rgb(231, 76, 60, 1)', 3000);
                       document.getElementById("inputDn " + paciente.id_paciente).value = '';
+                    } else{
+                      document.getElementById("inputDn " + paciente.id_paciente).value = moment(date).format('DD/MM/YYYY');
                     }
                   }, 3000);
                 }}
-                defaultValue={moment(paciente.dn_paciente).format('DD/MM/YY')}
+                defaultValue={moment(paciente.dn_paciente).format('DD/MM/YYYY')}
                 style={{
                   flexDirection: 'center', justifyContent: 'center', alignSelf: 'center',
                   width: window.innerWidth > 425 ? '10vw' : '70vw',

@@ -44,7 +44,7 @@ function Passometro() {
     html,
     unidade,
     unidades,
-    usuario, setusuario,
+    setusuario,
 
     settoast,
     pagina, setpagina,
@@ -94,7 +94,7 @@ function Passometro() {
 
   // history (router).
   let history = useHistory();
-  
+
   const refreshApp = () => {
     setusuario(
       {
@@ -175,9 +175,6 @@ function Passometro() {
     });
   }
 
-  // retornando todos os registros de interconsulta (para destaque na lista de atendimentos).
-  const [showinterconsultas, setshowinterconsultas] = useState();
-
   var timeout = null;
   useEffect(() => {
     if (pagina == 1) {
@@ -235,7 +232,7 @@ function Passometro() {
         </div>
         <div className='button cor1hover'
           style={{
-            display: atendimento == null || window.innerWidth < 426 ? 'none' : 'flex',
+            display: window.innerWidth < 426 ? 'none' : 'flex',
             minWidth: 25, maxWidth: 25, minHeight: 25, maxHeight: 25,
             marginLeft: 0
           }}
@@ -360,7 +357,7 @@ function Passometro() {
             height: window.innerHeight - 140,
             width: window.innerWidth < 426 ? 'calc(95vw - 15px)' : '100%',
           }}>
-          {arrayatendimentos.map(item => (
+          {arrayatendimentos.sort((a, b) => a.leito > b.leito ? 1 : -1).map(item => (
             <div key={'pacientes' + item.id_atendimento}>
               <div
                 className="row" style={{ padding: 0, flex: 4 }}
@@ -398,14 +395,21 @@ function Passometro() {
                     }
                   }}
                 >
-                  {window.innerWidth < 768 ?
-                    pacientes.filter(valor => valor.id_paciente == item.id_paciente).map(valor => valor.nome_paciente.substring(0, 20) + '...')
-                    :
-                    pacientes.filter(valor => valor.id_paciente == item.id_paciente).map(valor => valor.nome_paciente)
-                  }
+                  <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'flex-start' }}>
+                    {window.innerWidth < 768 ?
+                      pacientes.filter(valor => valor.id_paciente == item.id_paciente).map(valor => valor.nome_paciente.substring(0, 20) + '...')
+                      :
+                      pacientes.filter(valor => valor.id_paciente == item.id_paciente).map(valor => valor.nome_paciente)
+                    }
+                    <div>
+                      {moment().diff(moment(pacientes.filter(valor => valor.id_paciente == item.id_paciente).map(item => item.dn_paciente)), 'years') + ' ANOS'}
+                    </div>
+                  </div>
                   <div
+                    id={'btn_interconsultas' + item.id_atendimento}
                     className='button-yellow'
-                    onClick={() => setshowinterconsultas(1)}
+                    onMouseOver={() => document.getElementById('list_interconsultas ' + item.id_atendimento).style.display = 'flex'}
+                    onMouseLeave={() => document.getElementById('list_interconsultas ' + item.id_atendimento).style.display = 'none'}
                     style={{
                       display: window.innerWidth > 425 && allinterconsultas.filter(valor => valor.id_atendimento == item.id_atendimento && valor.status != 'ENCERRADA').length > 0 ? 'flex' : 'none',
                       position: 'absolute', top: -15, right: -15,
@@ -425,15 +429,10 @@ function Passometro() {
                     ></img>
                   </div>
                   <div
-                    id='list_interconsultas'
+                    id={'list_interconsultas ' + item.id_atendimento}
                     className='button'
-                    onClick={(e) => {
-                      setatendimento(item.id_atendimento);
-                      setshowinterconsultas(0);
-                      e.stopPropagation();
-                    }}
                     style={{
-                      display: showinterconsultas == 1 && atendimento == item.id_atendimento ? 'flex' : 'none',
+                      display: 'none',
                       position: 'absolute', top: 20, right: 10,
                       zIndex: 20,
                       borderRadius: 5,
@@ -441,7 +440,7 @@ function Passometro() {
                       backgroundColor: 'rgb(97, 99, 110, 1)',
                       padding: 20,
                     }}>
-                    {allinterconsultas.filter(valor => valor.id_atendimento == item.id_atendimento).map(item => (
+                    {allinterconsultas.filter(valor => valor.id_atendimento == item.id_atendimento && valor.status != 'ENCERRADA').map(item => (
                       <div key={'interconsulta ' + item.especialidade}>{item.especialidade}</div>
                     ))}
                   </div>
@@ -466,7 +465,7 @@ function Passometro() {
       </div >
     )
     // eslint-disable-next-line
-  }, [arrayatendimentos, allinterconsultas, showinterconsultas]);
+  }, [arrayatendimentos, allinterconsultas]);
 
   // identificação do paciente na versão mobile, na view dos cards.
   function ViewPaciente() {

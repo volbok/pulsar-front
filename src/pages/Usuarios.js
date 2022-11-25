@@ -200,6 +200,7 @@ function Usuarios() {
                 type="text"
                 id="inputDn"
                 inputMode='numeric'
+                onClick={() => document.getElementById("inputDn").value = ''}
                 onFocus={(e) => (e.target.placeholder = '')}
                 onBlur={(e) => (e.target.placeholder = 'DN')}
                 onKeyUp={() => {

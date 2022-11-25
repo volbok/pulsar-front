@@ -199,6 +199,7 @@ function Dieta() {
             inputMode='numeric'
             id={"inputDatainicio"}
             title="FORMATO: DD/MM/YYYY"
+            onClick={() => document.getElementById("inputDataInicio").value = ''}
             onFocus={(e) => (e.target.placeholder = '')}
             onBlur={(e) => (e.target.placeholder = 'INÍCIO')}
             defaultValue={moment(dieta.data_inicio).format('DD/MM/YYYY')}

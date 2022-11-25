@@ -299,15 +299,16 @@ function Cadastro() {
                 type="text"
                 id="inputNovaDn"
                 title="FORMATO: DD/MM/YYYY"
+                onClick={() => document.getElementById("inputNovaDn").value = ''}
                 onFocus={(e) => (e.target.placeholder = '')}
                 onBlur={(e) => (e.target.placeholder = 'DATA DE NASCIMENTO')}
                 onKeyUp={() => {
                   var x = document.getElementById("inputNovaDn").value;
-                  if (x.length == 2){
+                  if (x.length == 2) {
                     x = x + '/';
                     document.getElementById("inputNovaDn").value = x;
                   }
-                  if (x.length == 5){
+                  if (x.length == 5) {
                     x = x + '/'
                     document.getElementById("inputNovaDn").value = x;
                   }
@@ -631,15 +632,16 @@ function Cadastro() {
                 maxLength={10}
                 id={"inputDn " + paciente.id_paciente}
                 title="FORMATO: DD/MM/YYYY"
+                onClick={() => document.getElementById("inputDn " + paciente.id_paciente).value = ''}
                 onFocus={(e) => (e.target.placeholder = '')}
                 onBlur={(e) => (e.target.placeholder = 'DN')}
                 onKeyUp={() => {
                   var x = document.getElementById("inputDn " + paciente.id_paciente).value;
-                  if (x.length == 2){
+                  if (x.length == 2) {
                     x = x + '/';
                     document.getElementById("inputDn " + paciente.id_paciente).value = x;
                   }
-                  if (x.length == 5){
+                  if (x.length == 5) {
                     x = x + '/'
                     document.getElementById("inputDn " + paciente.id_paciente).value = x;
                   }

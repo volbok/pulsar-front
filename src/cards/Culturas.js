@@ -280,6 +280,7 @@ function Culturas() {
                 maxLength={10}
                 id="inputDataPedido"
                 title="FORMATO: DD/MM/YYYY"
+                onClick={() => document.getElementById("inputDataPedido").value = ''}
                 onFocus={(e) => (e.target.placeholder = '')}
                 onBlur={(e) => (e.target.placeholder = 'DATA')}
                 onKeyUp={() => {

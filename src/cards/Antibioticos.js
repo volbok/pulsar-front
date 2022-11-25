@@ -256,6 +256,7 @@ function Antibioticos() {
                 inputMode='numeric'
                 id={"inputInicio"}
                 title="FORMATO: DD/MM/YYYY"
+                onClick={() => document.getElementById("inputInicio").value = ''}
                 onFocus={(e) => (e.target.placeholder = '')}
                 onBlur={(e) => (e.target.placeholder = 'DATA')}
                 onKeyUp={() => {
@@ -542,7 +543,7 @@ function Antibioticos() {
                       onFocus={(e) => (e.target.placeholder = '')}
                       onBlur={(e) => (e.target.placeholder = 'INÍCIO...')}
                       defaultValue={moment(item.data_inicio).format('DD/MM/YYYY')}
-                      onClick={(e) => { e.stopPropagation() }}
+                      onClick={() => document.getElementById("inputInicio " + item.id_antibiotico).value = ''}
                       onKeyUp={(e) => {
                         clearTimeout(timeout);
                         timeout = setTimeout(() => {
@@ -580,10 +581,10 @@ function Antibioticos() {
                       type="text"
                       inputMode='numeric'
                       placeholder='TÉRMINO...'
+                      onClick={() => document.getElementById("inputTermino").value = ''}
                       onFocus={(e) => (e.target.placeholder = '')}
                       onBlur={(e) => (e.target.placeholder = 'TÉRMINO...')}
                       defaultValue={item.data_termino != null ? moment(item.data_termino).format('DD/MM/YYYY') : ''}
-                      onClick={(e) => { e.stopPropagation() }}
                       onKeyUp={(e) => {
                         var x = document.getElementById("inputTermino").value;
                         if (x.length == 2) {

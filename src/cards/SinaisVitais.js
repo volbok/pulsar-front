@@ -160,6 +160,7 @@ function SinaisVitais() {
                 className="input"
                 autoComplete="off"
                 placeholder="PAS"
+                inputMode='numeric'
                 onKeyUp={() => checkNumberInput("inputPas", 50, 250)}
                 onFocus={(e) => (e.target.placeholder = '')}
                 onBlur={(e) => (e.target.placeholder = 'PAS')}
@@ -179,6 +180,7 @@ function SinaisVitais() {
                 className="input"
                 autoComplete="off"
                 placeholder="PAD"
+                inputMode='numeric'
                 onKeyUp={() => checkNumberInput("inputPad", 30, 230)}
                 onFocus={(e) => (e.target.placeholder = '')}
                 onBlur={(e) => (e.target.placeholder = 'PAD')}
@@ -198,6 +200,7 @@ function SinaisVitais() {
                 className="input"
                 autoComplete="off"
                 placeholder="FC"
+                inputMode='numeric'
                 onKeyUp={() => checkNumberInput("inputFc", 20, 350)}
                 onFocus={(e) => (e.target.placeholder = '')}
                 onBlur={(e) => (e.target.placeholder = 'FC')}
@@ -217,6 +220,7 @@ function SinaisVitais() {
                 className="input"
                 autoComplete="off"
                 placeholder="FR"
+                inputMode='numeric'
                 onKeyUp={() => checkNumberInput("inputFr", 8, 60)}
                 onFocus={(e) => (e.target.placeholder = '')}
                 onBlur={(e) => (e.target.placeholder = 'FR')}
@@ -236,6 +240,7 @@ function SinaisVitais() {
                 className="input"
                 autoComplete="off"
                 placeholder="SAO2"
+                inputMode='numeric'
                 onKeyUp={() => checkNumberInput("inputSao2", 30, 101)}
                 onFocus={(e) => (e.target.placeholder = '')}
                 onBlur={(e) => (e.target.placeholder = 'SAO2')}
@@ -255,6 +260,7 @@ function SinaisVitais() {
                 className="input"
                 autoComplete="off"
                 placeholder="TAX"
+                inputMode='numeric'
                 onKeyUp={(e) => {
                   if (isNaN(e.target.value) == false && Number.isInteger(e.target.value) == false) {
                     console.log('VALOR VÁLIDO');
@@ -281,6 +287,7 @@ function SinaisVitais() {
                 className="input"
                 autoComplete="off"
                 placeholder="GLICEMIA"
+                inputMode='numeric'
                 onKeyUp={() => checkNumberInput("inputGlicemia", 0, 900)}
                 onFocus={(e) => (e.target.placeholder = '')}
                 onBlur={(e) => (e.target.placeholder = 'GLICEMIA')}
@@ -319,6 +326,7 @@ function SinaisVitais() {
                 className="input"
                 autoComplete="off"
                 placeholder="BH"
+                inputMode='numeric'
                 onKeyUp={() => checkNumberInput("inputBalanco", -8000, 8000)}
                 onFocus={(e) => (e.target.placeholder = '')}
                 onBlur={(e) => (e.target.placeholder = 'BH')}
@@ -357,6 +365,7 @@ function SinaisVitais() {
                 className="input"
                 autoComplete="off"
                 placeholder="ESTASE"
+                inputMode='numeric'
                 onKeyUp={() => checkNumberInput("inputEstase", 0, 2000)}
                 onFocus={(e) => (e.target.placeholder = '')}
                 onBlur={(e) => (e.target.placeholder = 'ESTASE')}

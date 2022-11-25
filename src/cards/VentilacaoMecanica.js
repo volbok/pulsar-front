@@ -166,6 +166,7 @@ function VentilacaoMecanica() {
               <input
                 className="input"
                 autoComplete="off"
+                inputMode='numeric'
                 placeholder="PRESSÃO"
                 onKeyUp={() => checkNumberInput("inputPressao", 14, 25)}
                 onFocus={(e) => (e.target.placeholder = '')}
@@ -185,6 +186,7 @@ function VentilacaoMecanica() {
               <input
                 className="input"
                 autoComplete="off"
+                inputMode='numeric'
                 placeholder="VOLUME"
                 onKeyUp={() => checkNumberInput("inputVolume", 200, 600)}
                 onFocus={(e) => (e.target.placeholder = '')}
@@ -205,6 +207,7 @@ function VentilacaoMecanica() {
                 className="input"
                 autoComplete="off"
                 placeholder="PEEP"
+                inputMode='numeric'
                 onKeyUp={() => checkNumberInput("inputPeep", 1, 20)}
                 onFocus={(e) => (e.target.placeholder = '')}
                 onBlur={(e) => (e.target.placeholder = 'PEEP')}
@@ -224,6 +227,7 @@ function VentilacaoMecanica() {
                 className="input"
                 autoComplete="off"
                 placeholder="FIO2"
+                inputMode='numeric'
                 onKeyUp={() => checkNumberInput("inputFio2", 21, 101)}
                 onFocus={(e) => (e.target.placeholder = '')}
                 onBlur={(e) => (e.target.placeholder = 'FIO2')}

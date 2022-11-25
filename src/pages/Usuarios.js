@@ -87,7 +87,7 @@ function Usuarios() {
     var cpf = document.getElementById("inputCpf").value.toUpperCase();
     var obj = {
       nome_usuario: document.getElementById("inputNome").value.toUpperCase(),
-      dn_usuario: moment(document.getElementById("inputDn").value, 'DDMMYYYY'),
+      dn_usuario: moment(document.getElementById("inputDn").value, 'DD/MM/YYYY'),
       cpf_usuario: cpf,
       email_usuario: document.getElementById("inputContato").value,
       senha: cpf,
@@ -116,7 +116,7 @@ function Usuarios() {
   const updateUsuario = () => {
     var obj = {
       nome_usuario: document.getElementById("inputNome").value.toUpperCase(),
-      dn_usuario: moment(document.getElementById("inputDn").value, 'DDMMYYYY'),
+      dn_usuario: moment(document.getElementById("inputDn").value, 'DD/MM/YYYY'),
       cpf_usuario: document.getElementById("inputCpf").value.toUpperCase(),
       email_usuario: document.getElementById("inputContato").value,
       senha: selectedusuario.senha,
@@ -199,16 +199,26 @@ function Usuarios() {
                 className="input"
                 type="text"
                 id="inputDn"
+                inputMode='numeric'
                 onFocus={(e) => (e.target.placeholder = '')}
                 onBlur={(e) => (e.target.placeholder = 'DN')}
                 onKeyUp={() => {
+                  var x = document.getElementById("inputDn").value;
+                  if (x.length == 2) {
+                    x = x + '/';
+                    document.getElementById("inputDn").value = x;
+                  }
+                  if (x.length == 5) {
+                    x = x + '/'
+                    document.getElementById("inputDn").value = x;
+                  }
                   clearTimeout(timeout);
-                  var date = moment(document.getElementById("inputDn").value, 'DDMMYYYY', true);
+                  var date = moment(document.getElementById("inputDn").value, 'DD/MM/YYYY', true);
                   timeout = setTimeout(() => {
                     if (date.isValid() == false) {
                       toast(settoast, 'DATA INVÁLIDA', 'rgb(231, 76, 60, 1)', 3000);
                       document.getElementById("inputDn").value = '';
-                    } else{
+                    } else {
                       document.getElementById("inputDn").value = moment(date).format('DD/MM/YYYY');
                     }
                   }, 3000);

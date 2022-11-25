@@ -244,6 +244,7 @@ function Culturas() {
 
   const [viewinsertcultura, setviewinsertcultura] = useState(0);
   const InsertCultura = useCallback(() => {
+    var timeout = null;
     return (
       <div className="fundo" style={{ display: viewinsertcultura == 1 ? 'flex' : 'none' }}
         onClick={(e) => { setviewinsertcultura(0); e.stopPropagation() }}>
@@ -275,14 +276,24 @@ function Culturas() {
                 placeholder="DATA"
                 className="input"
                 type="text"
+                inputMode='numeric'
                 maxLength={10}
                 id="inputDataPedido"
-                title="FORMATO: DDMMYYYY"
+                title="FORMATO: DD/MM/YYYY"
                 onFocus={(e) => (e.target.placeholder = '')}
                 onBlur={(e) => (e.target.placeholder = 'DATA')}
                 onKeyUp={() => {
+                  var x = document.getElementById("inputDataPedido").value;
+                  if (x.length == 2) {
+                    x = x + '/';
+                    document.getElementById("inputDataPedido").value = x;
+                  }
+                  if (x.length == 5) {
+                    x = x + '/'
+                    document.getElementById("inputDataPedido").value = x;
+                  }
                   clearTimeout(timeout);
-                  var date = moment(document.getElementById("inputDataPedido").value, 'DDMMYYYY', true);
+                  var date = moment(document.getElementById("inputDataPedido").value, 'DD/MM/YYYY', true);
                   timeout = setTimeout(() => {
                     if (date.isValid() == false) {
                       toast(settoast, 'DATA INVÁLIDA', 'rgb(231, 76, 60, 1)', 3000);

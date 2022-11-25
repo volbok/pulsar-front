@@ -241,6 +241,7 @@ function Login() {
           id="inputUsuario"
           onFocus={(e) => (e.target.placeholder = '')}
           onBlur={(e) => (e.target.placeholder = 'USUÁRIO')}
+          // eslint-disable-next-line
           onChange={(e) => (user = e.target.value)}
           style={{
             marginTop: 10,
@@ -257,6 +258,7 @@ function Login() {
           id="inputSenha"
           onFocus={(e) => (e.target.placeholder = '')}
           onBlur={(e) => (e.target.placeholder = 'SENHA')}
+          // eslint-disable-next-line
           onChange={(e) => { password = e.target.value; checkLogin() }}
           style={{
             marginTop: 10,
@@ -297,6 +299,7 @@ function Login() {
         ))}
       </div>
     )
+    // eslint-disable-next-line
   }, [viewlistaunidades, viewalterarsenha]);
 
   // ## TROCA DE SENHA ## //

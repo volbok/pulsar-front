@@ -52,16 +52,16 @@ function Antibioticos() {
       obj = {
         id_atendimento: item.id_atendimento,
         antibiotico: document.getElementById('inputAntibiotico').value.toUpperCase(),
-        data_inicio: moment(document.getElementById('inputInicio').value, 'DD/MM/YY'),
-        data_termino: moment(document.getElementById('inputTermino').value, 'DD/MM/YY'),
+        data_inicio: moment(document.getElementById('inputInicio').value, 'DD/MM/YYYY'),
+        data_termino: moment(document.getElementById('inputTermino').value, 'DD/MM/YYYY'),
         prazo: moment(moment().add(document.getElementById('inputDias').value), 'days'),
       }
     } else {
       obj = {
         id_atendimento: item.id_atendimento,
         antibiotico: document.getElementById('inputAntibiotico ' + antibiotico.id_antibiotico).value.toUpperCase(),
-        data_inicio: moment(document.getElementById('inputInicio ' + antibiotico.id_antibiotico).value, 'DD/MM/YY'),
-        data_termino: moment(document.getElementById('inputTermino ' + antibiotico.id_antibiotico).value, 'DD/MM/YY'),
+        data_inicio: moment(document.getElementById('inputInicio ' + antibiotico.id_antibiotico).value, 'DD/MM/YYYY'),
+        data_termino: moment(document.getElementById('inputTermino ' + antibiotico.id_antibiotico).value, 'DD/MM/YYYY'),
         prazo: moment(moment().add(document.getElementById('inputDias ' + antibiotico.id_antibiotico).value), 'days'),
       }
     }
@@ -76,7 +76,7 @@ function Antibioticos() {
     var obj = {
       id_atendimento: atendimento,
       antibiotico: document.getElementById('inputAntibiotico').value.toUpperCase(),
-      data_inicio: moment(document.getElementById('inputInicio').value, 'DD/MM/YY'),
+      data_inicio: moment(document.getElementById('inputInicio').value, 'DD/MM/YYYY'),
       data_termino: null,
       prazo: moment().add(document.getElementById('inputDias').value, 'days'),
     }
@@ -220,6 +220,7 @@ function Antibioticos() {
 
   const [viewinsertantibiotico, setviewinsertantibiotico] = useState(0);
   const InsertAntibiotico = useCallback(() => {
+    var timeout = null;
     return (
       <div className="fundo" style={{ display: viewinsertantibiotico == 1 ? 'flex' : 'none' }}
         onClick={(e) => { setviewinsertantibiotico(0); e.stopPropagation() }}>
@@ -252,13 +253,23 @@ function Antibioticos() {
                 className="input"
                 type="text"
                 maxLength={10}
+                inputMode='numeric'
                 id={"inputInicio"}
-                title="FORMATO: DDMMYYYY"
+                title="FORMATO: DD/MM/YYYY"
                 onFocus={(e) => (e.target.placeholder = '')}
                 onBlur={(e) => (e.target.placeholder = 'DATA')}
                 onKeyUp={() => {
+                  var x = document.getElementById("inputInicio").value;
+                  if (x.length == 2) {
+                    x = x + '/';
+                    document.getElementById("inputInicio").value = x;
+                  }
+                  if (x.length == 5) {
+                    x = x + '/'
+                    document.getElementById("inputInicio").value = x;
+                  }
                   clearTimeout(timeout);
-                  var date = moment(document.getElementById("inputInicio").value, 'DDMMYYYY', true);
+                  var date = moment(document.getElementById("inputInicio").value, 'DD/MM/YYYY', true);
                   timeout = setTimeout(() => {
                     if (date.isValid() == false) {
                       toast(settoast, 'DATA INVÁLIDA', 'rgb(231, 76, 60, 1)', 3000);
@@ -279,6 +290,9 @@ function Antibioticos() {
               <div className='text1'>DIAS DE USO</div>
               <input
                 className="input"
+                type="text"
+                inputMode='numeric'
+                maxLength={2}
                 autoComplete="off"
                 placeholder='DIAS...'
                 onFocus={(e) => (e.target.placeholder = '')}
@@ -441,7 +455,7 @@ function Antibioticos() {
                     style={{
                       color: '#ffffff'
                     }}>
-                    {moment(item.data_inicio).format('DD/MM/YY')}
+                    {moment(item.data_inicio).format('DD/MM/YYYY')}
                   </div>
                 </div>
                 <div className='button-red'
@@ -489,7 +503,7 @@ function Antibioticos() {
                     margin: 5, padding: 5,
                     backgroundColor: 'white',
                     height: 200,
-                    width: window.innerWidth < 426 ? '100%' : '13vw',
+                    width: window.innerWidth < 426 ? '100%' : '10vw',
                   }}>
                     <input id={"inputAntibiotico " + item.id_antibiotico}
                       className="input"
@@ -526,15 +540,17 @@ function Antibioticos() {
                     </input>
                     <input id={"inputInicio " + item.id_antibiotico}
                       className="input"
+                      type="text"
+                      inputMode='numeric'
                       placeholder='INÍCIO...'
                       onFocus={(e) => (e.target.placeholder = '')}
                       onBlur={(e) => (e.target.placeholder = 'INÍCIO...')}
-                      defaultValue={moment(item.data_inicio).format('DD/MM/YY')}
+                      defaultValue={moment(item.data_inicio).format('DD/MM/YYYY')}
                       onClick={(e) => { e.stopPropagation() }}
                       onKeyUp={(e) => {
                         clearTimeout(timeout);
                         timeout = setTimeout(() => {
-                          var date = moment(document.getElementById("inputInicio " + item.id_antibiotico).value, 'DD/MM/YY', true);
+                          var date = moment(document.getElementById("inputInicio " + item.id_antibiotico).value, 'DD/MM/YYYY', true);
                           if (date.isValid() == false) {
                             toast(settoast, 'DATA INVÁLIDA', 'rgb(231, 76, 60, 1)', 3000);
                             document.getElementById("inputInicio " + item.id_antibiotico).value = '';
@@ -542,7 +558,7 @@ function Antibioticos() {
                             var obj = {
                               id_atendimento: item.id_atendimento,
                               antibiotico: item.antibiotico,
-                              data_inicio: moment(document.getElementById('inputInicio ' + item.id_antibiotico).value, 'DD/MM/YY'),
+                              data_inicio: moment(document.getElementById('inputInicio ' + item.id_antibiotico).value, 'DD/MM/YYYY'),
                               data_termino: item.data_termino,
                               prazo: item.prazo,
                             }
@@ -565,16 +581,27 @@ function Antibioticos() {
                     </input>
                     <input id={"inputTermino " + item.id_antibiotico}
                       className="input"
+                      type="text"
+                      inputMode='numeric'
                       placeholder='TÉRMINO...'
                       onFocus={(e) => (e.target.placeholder = '')}
                       onBlur={(e) => (e.target.placeholder = 'TÉRMINO...')}
-                      defaultValue={item.data_termino != null ? moment(item.data_termino).format('DD/MM/YY') : ''}
+                      defaultValue={item.data_termino != null ? moment(item.data_termino).format('DD/MM/YYYY') : ''}
                       onClick={(e) => { e.stopPropagation() }}
                       onKeyUp={(e) => {
+                        var x = document.getElementById("inputTermino").value;
+                        if (x.length == 2) {
+                          x = x + '/';
+                          document.getElementById("inputTermino").value = x;
+                        }
+                        if (x.length == 5) {
+                          x = x + '/'
+                          document.getElementById("inputTermino").value = x;
+                        }
                         clearTimeout(timeout);
                         timeout = setTimeout(() => {
                           var field = document.getElementById("inputTermino " + item.id_antibiotico).value;
-                          var date = moment(document.getElementById("inputTermino " + item.id_antibiotico).value, 'DD/MM/YY', true);
+                          var date = moment(document.getElementById("inputTermino " + item.id_antibiotico).value, 'DD/MM/YYYY', true);
                           if (field != '' && date.isValid() == false) {
                             toast(settoast, 'DATA INVÁLIDA', 'rgb(231, 76, 60, 1)', 3000);
                             document.getElementById("inputTermino " + item.id_antibiotico).value = '';
@@ -583,7 +610,7 @@ function Antibioticos() {
                               id_atendimento: item.id_atendimento,
                               antibiotico: item.antibiotico,
                               data_inicio: item.data_inicio,
-                              data_termino: field == '' ? null : moment(document.getElementById('inputTermino ' + item.id_antibiotico).value, 'DD/MM/YY'),
+                              data_termino: field == '' ? null : moment(document.getElementById('inputTermino ' + item.id_antibiotico).value, 'DD/MM/YYYY'),
                               prazo: item.prazo,
                             }
                             axios.post(html + 'update_antibiotico/' + item.id_antibiotico, obj).then(() => {
@@ -620,8 +647,10 @@ function Antibioticos() {
                           title='DIAS DE USO DO ANTIBIÓTICO.'
                           autoComplete="off"
                           placeholder="DIAS..."
-                          className="input"
                           type="text"
+                          inputMode='numeric'
+                          maxLength={2}
+                          className="input"
                           onFocus={(e) => (e.target.placeholder = '')}
                           onBlur={(e) => (e.target.placeholder = 'DIAS...')}
                           defaultValue={moment(item.prazo).diff(moment(item.data_inicio), 'days')}
@@ -649,7 +678,6 @@ function Antibioticos() {
                             }, 1000);
                             e.stopPropagation();
                           }}
-                          maxLength={3}
                           style={{
                             width: 50,
                             height: 50,
@@ -669,7 +697,7 @@ function Antibioticos() {
                     >
                       {moment().diff(item.data_inicio, 'days') + '/' + moment(item.prazo).diff(item.data_inicio, 'days')}
                       <div style={{ marginTop: 5 }}>{'FIM PREVISTO:'}</div>
-                      <div>{moment(item.prazo).format('DD/MM/YY')}</div>
+                      <div>{moment(item.prazo).format('DD/MM/YYYY')}</div>
                     </div>
                   </div>
                 </div>

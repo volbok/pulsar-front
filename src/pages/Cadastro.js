@@ -122,7 +122,7 @@ function Cadastro() {
     var obj = {
       nome_paciente: document.getElementById("inputNomePaciente " + id).value.toUpperCase(),
       nome_mae_paciente: document.getElementById("inputNomeMae " + id).value.toUpperCase(),
-      dn_paciente: moment(document.getElementById("inputDn " + id).value, 'DDMMYYYY'),
+      dn_paciente: moment(document.getElementById("inputDn " + id).value, 'DD/MM/YYYY'),
       antecedentes_pessoais: document.getElementById("inputAntecedentesPessoais " + id).value.toUpperCase(),
       medicacoes_previas: document.getElementById("inputMedicacoesPrevias " + id).value.toUpperCase(),
       exames_previos: document.getElementById("inputExamesPrevios " + id).value.toUpperCase(),
@@ -298,12 +298,21 @@ function Cadastro() {
                 className="textarea"
                 type="text"
                 id="inputNovaDn"
-                title="FORMATO: DDMMYYYY"
+                title="FORMATO: DD/MM/YYYY"
                 onFocus={(e) => (e.target.placeholder = '')}
                 onBlur={(e) => (e.target.placeholder = 'DATA DE NASCIMENTO')}
                 onKeyUp={() => {
+                  var x = document.getElementById("inputNovaDn").value;
+                  if (x.length == 2){
+                    x = x + '/';
+                    document.getElementById("inputNovaDn").value = x;
+                  }
+                  if (x.length == 5){
+                    x = x + '/'
+                    document.getElementById("inputNovaDn").value = x;
+                  }
                   clearTimeout(timeout);
-                  var date = moment(document.getElementById("inputNovaDn").value, 'DDMMYYYY', true);
+                  var date = moment(document.getElementById("inputNovaDn").value, 'DD/MM/YYYY', true);
                   timeout = setTimeout(() => {
                     if (date.isValid() == false) {
                       toast(settoast, 'DATA INVÁLIDA', 'rgb(231, 76, 60, 1)', 3000);
@@ -312,6 +321,7 @@ function Cadastro() {
                       document.getElementById("inputNovaDn").value = moment(date).format('DD/MM/YYYY');
                     }
                   }, 3000);
+
                 }}
                 defaultValue={moment(paciente.dn_paciente).format('DD/MM/YYYY')}
                 style={{
@@ -617,14 +627,24 @@ function Cadastro() {
                 placeholder="DN"
                 className="textarea"
                 type="text"
+                inputMode='numeric'
                 maxLength={10}
                 id={"inputDn " + paciente.id_paciente}
-                title="FORMATO: DDMMYYYY"
+                title="FORMATO: DD/MM/YYYY"
                 onFocus={(e) => (e.target.placeholder = '')}
                 onBlur={(e) => (e.target.placeholder = 'DN')}
                 onKeyUp={() => {
+                  var x = document.getElementById("inputDn " + paciente.id_paciente).value;
+                  if (x.length == 2){
+                    x = x + '/';
+                    document.getElementById("inputDn " + paciente.id_paciente).value = x;
+                  }
+                  if (x.length == 5){
+                    x = x + '/'
+                    document.getElementById("inputDn " + paciente.id_paciente).value = x;
+                  }
                   clearTimeout(timeout);
-                  var date = moment(document.getElementById("inputDn " + paciente.id_paciente).value, 'DDMMYYYY', true);
+                  var date = moment(document.getElementById("inputDn " + paciente.id_paciente).value, 'DD/MM/YYYY', true);
                   timeout = setTimeout(() => {
                     if (date.isValid() == false) {
                       toast(settoast, 'DATA INVÁLIDA', 'rgb(231, 76, 60, 1)', 3000);

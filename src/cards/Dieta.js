@@ -157,6 +157,9 @@ function Dieta() {
             className="input"
             autoComplete="off"
             placeholder="INFUSÃO"
+            type="text"
+            inputMode='numeric'
+            maxLength={3}
             onKeyUp={() => checkNumberInput("inputInfusao", 10, 100)}
             onFocus={(e) => (e.target.placeholder = '')}
             onBlur={(e) => (e.target.placeholder = 'INFUSÃO')}
@@ -166,15 +169,16 @@ function Dieta() {
               width: window.innerWidth < 426 ? '70vw' : '10vw',
               margin: 5,
             }}
-            type="text"
             id="inputInfusao"
-            maxLength={3}
           ></input>
-          <div className='text1' style={{ display: tipodieta == 'ORAL'  || tipodieta == 'NÃO DEFINIDA' ? 'none' : 'flex' }}>OBJETIVO</div>
+          <div className='text1' style={{ display: tipodieta == 'ORAL' || tipodieta == 'NÃO DEFINIDA' ? 'none' : 'flex' }}>OBJETIVO</div>
           <input
             className="input"
             autoComplete="off"
             placeholder="GET"
+            type="text"
+            inputMode='numeric'
+            maxLength={3}
             onKeyUp={() => checkNumberInput("inputGet", 10, 100)}
             onFocus={(e) => (e.target.placeholder = '')}
             onBlur={(e) => (e.target.placeholder = 'GET')}
@@ -184,9 +188,7 @@ function Dieta() {
               width: window.innerWidth < 426 ? '70vw' : '10vw',
               margin: 5,
             }}
-            type="text"
             id="inputGet"
-            maxLength={3}
           ></input>
           <input
             autoComplete="off"
@@ -194,19 +196,30 @@ function Dieta() {
             className="input"
             type="text"
             maxLength={10}
+            inputMode='numeric'
             id={"inputDatainicio"}
-            title="FORMATO: DD/MM/YY"
+            title="FORMATO: DD/MM/YYYY"
             onFocus={(e) => (e.target.placeholder = '')}
             onBlur={(e) => (e.target.placeholder = 'INÍCIO')}
-            defaultValue={moment(dieta.data_inicio).format('DD/MM/YY')}
+            defaultValue={moment(dieta.data_inicio).format('DD/MM/YYYY')}
             onKeyUp={() => {
+              var x = document.getElementById("inputDataInicio").value;
+              if (x.length == 2) {
+                x = x + '/';
+                document.getElementById("inputDataInicio").value = x;
+              }
+              if (x.length == 5) {
+                x = x + '/'
+                document.getElementById("inputDataInicio").value = x;
+              }
               clearTimeout(timeout);
-              var date = moment(document.getElementById("inputDatainicio").value, 'DD/MM/YY', true);
-              // eslint-disable-next-line
+              var date = moment(document.getElementById("inputDataInicio").value, 'DD/MM/YYYY', true);
               timeout = setTimeout(() => {
                 if (date.isValid() == false) {
                   toast(settoast, 'DATA INVÁLIDA', 'rgb(231, 76, 60, 1)', 3000);
-                  document.getElementById("inputDatainicio").value = '';
+                  document.getElementById("inputDataInicio").value = '';
+                } else {
+                  document.getElementById("inputDataInicio").value = moment(date).format('DD/MM/YYYY');
                 }
               }, 3000);
             }}

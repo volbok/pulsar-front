@@ -24,9 +24,6 @@ function Alertas() {
     // alerta para solicitar cultura de controle se germe gram-positivo.
     culturas,
 
-    // alertas para vm.
-    vm,
-
     // alerta para antibióticos em uso por tempo prolongado.
     antibioticos,
 

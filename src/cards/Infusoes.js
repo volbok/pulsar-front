@@ -273,6 +273,8 @@ function Infusoes() {
             placeholder="VAZÃO..."
             className="input"
             type="text"
+            inputMode='numeric'
+            maxLength={4}
             id="inputVelocidade"
             title='VELOCIDADE DE INFUSÃO (ML/H).'
             onFocus={(e) => (e.target.placeholder = '')}
@@ -284,7 +286,6 @@ function Infusoes() {
                 e.stopPropagation();
               }
             }}
-            maxLength={4}
             style={{
               width: 75,
               height: 50,
@@ -481,6 +482,7 @@ function Infusoes() {
                   placeholder="VAZÃO..."
                   className="input"
                   type="text"
+                  inputMode='numeric'
                   title='VELOCIDADE DE INFUSÃO (ML/H).'
                   onFocus={(e) => (e.target.placeholder = '')}
                   onBlur={(e) => (e.target.placeholder = 'VAZÃO...')}

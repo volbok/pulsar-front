@@ -470,16 +470,18 @@ function Passometro() {
   // identificação do paciente na versão mobile, na view dos cards.
   function ViewPaciente() {
     return (
-      <div style={{
-        position: 'sticky', marginTop: -5, top: 0, left: 0, right: 0,
-        display: window.innerWidth < 426 ? 'flex' : 'none',
-        flexDirection: 'row', justifyContent: 'center',
-        flex: 1,
-        backgroundColor: '#f2f2f2', borderColor: '#f2f2f2', borderRadius: 5,
-        zIndex: 30,
-        minWidth: 'calc(90vw - 10px)',
-        width: 'calc(90vw - 10px)',
-      }}>
+      <div
+        id='mobile_pacientes'
+        style={{
+          position: 'sticky', marginTop: -5, top: 0, left: 0, right: 0,
+          display: window.innerWidth < 426 ? 'flex' : 'none',
+          flexDirection: 'row', justifyContent: 'center',
+          flex: 1,
+          backgroundColor: '#f2f2f2', borderColor: '#f2f2f2', borderRadius: 5,
+          zIndex: 30,
+          minWidth: 'calc(90vw - 10px)',
+          width: 'calc(90vw - 10px)',
+        }}>
         <div id="botão de retorno"
           className="button-red"
           style={{
@@ -735,6 +737,7 @@ function Passometro() {
           display: card == '' && setting == 1 ? 'flex' : 'none',
           backgroundColor: sinal != null && sinal.length > 0 ? yellow : '',
           borderColor: sinal != null && sinal.length > 0 ? yellow : '',
+          width: window.innerWidth > 425 && atendimento != null ? Math.ceil((document.getElementById("conteúdo vazio").offsetWidth / 4) - 43) : '',
         }}
         onClick={() => {
           if (card == opcao) {
@@ -1028,7 +1031,7 @@ function Passometro() {
           display: window.innerWidth < 426 && viewlista == 1 ? 'none' : atendimento == null ? 'none' : 'flex',
           flexDirection: 'row',
           flexWrap: 'wrap',
-          justifyContent: 'center',
+          justifyContent: window.innerWidth < 426 ? 'space-evenly' : 'center',
           alignContent: 'flex-start',
           height: window.innerHeight - 30,
           width: window.innerWidth < 426 ? 'calc(95vw - 15px)' : '70vw',
@@ -1049,7 +1052,10 @@ function Passometro() {
         {cartao(null, 'ALERTAS', 'card-alertas', cardalertas)}
         {cartao(null, 'SINAIS VITAIS', 'card-sinaisvitais', cardsinaisvitais, busysinaisvitais)}
         <div id='boneco' className="card-fechado"
-          style={{ display: card == '' && cardbody == 1 ? 'flex' : 'none' }}
+          style={{
+            display: card == '' && cardbody == 1 ? 'flex' : 'none',
+            width: window.innerWidth > 425 && atendimento != null ? Math.ceil((document.getElementById("conteúdo vazio").offsetWidth / 4) - 43) : '',
+          }}
           onClick={() => {
             if (card == 'card-boneco') {
               setcard('');

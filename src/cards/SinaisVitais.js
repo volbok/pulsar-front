@@ -615,14 +615,14 @@ function SinaisVitais() {
     return (
       <div id={nome} style={{
         display: 'flex', flexDirection: 'column', justifyContent: 'center',
-        alignSelf: window.innerWidth < 769 ? 'flex-start' : 'center',
+        alignSelf: window.innerWidth < 769 ? 'flex-start' : 'center', maxWidth: 100,
       }}>
         <div className='text2' style={{ marginBottom: 0 }}>
           {nome}
         </div>
         <div className='text2'
           style={{
-            width: window.innerWidth < 426 ? '50vw' : '8vw', marginTop: 0, paddingTop: 0,
+            marginTop: 0, paddingTop: 0,
             color: isNaN(item) == false && (item < min || item > max) ? '#F1948A' : '#ffffff',
           }}>
           {item + ' ' + unidade}

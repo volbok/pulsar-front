@@ -1034,6 +1034,7 @@ function Passometro() {
           justifyContent: window.innerWidth < 426 ? 'space-evenly' : 'center',
           alignContent: 'flex-start',
           height: window.innerHeight - 30,
+          minHeight: window.innerHeight - 30,
           width: window.innerWidth < 426 ? 'calc(95vw - 15px)' : '70vw',
           margin: 0,
           position: 'relative',

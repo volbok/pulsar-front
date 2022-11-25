@@ -131,7 +131,7 @@ function Alergias() {
       stopSpeechToText,
       setResults,
     } = useSpeechToText({
-      continuous: true,
+      continuous: false,
       useLegacyResults: false
     });
     return (

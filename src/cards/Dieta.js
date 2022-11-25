@@ -400,10 +400,6 @@ function Dieta() {
         display: card == 'card-dietas' ? 'flex' : 'none', flexDirection: 'column',
         width: '100%', height: '100%',
       }}
-      onClick={(e) => {
-        setcard('');
-        e.stopPropagation();
-      }}
     >
       <div className="text3">
         DIETA

@@ -417,10 +417,6 @@ function Culturas() {
     <div id="scroll-culturas"
       className='card-aberto'
       style={{ display: card == 'card-culturas' ? 'flex' : 'none', position: 'relative' }}
-      onClick={(e) => {
-        setcard('');
-        e.stopPropagation();
-      }}
     >
       <div className="text3">
         CULTURAS

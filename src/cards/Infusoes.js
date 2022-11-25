@@ -412,10 +412,6 @@ function Infusoes() {
   return (
     <div id="scroll-infusao" className='card-aberto'
       style={{ display: card == 'card-infusoes' ? 'flex' : 'none' }}
-      onClick={(e) => {
-        setcard('');
-        e.stopPropagation();
-      }}
     >
       <div className="text3">INFUSÕES</div>
       <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'center', flexWrap: 'wrap' }}>

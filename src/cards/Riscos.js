@@ -139,10 +139,6 @@ function Riscos() {
     <div id="scroll-riscos"
       className='card-aberto'
       style={{ display: card == 'card-riscos' ? 'flex' : 'none' }}
-      onClick={(e) => {
-        setcard('');
-        e.stopPropagation();
-      }}
     >
       <div className="text3">
         RISCOS

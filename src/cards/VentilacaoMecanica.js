@@ -614,10 +614,6 @@ function VentilacaoMecanica() {
     <div id="scroll-vm"
       className='card-aberto'
       style={{ display: card == 'card-vm' ? 'flex' : 'none' }}
-      onClick={(e) => {
-        setcard('');
-        e.stopPropagation();
-      }}
     >
       <div className="text3">
         VENTILAÇÃO MECÂNICA

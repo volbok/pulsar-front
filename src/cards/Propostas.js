@@ -118,7 +118,7 @@ function Propostas() {
               display: 'flex',
               width: 50, height: 50
             }}
-            onClick={() => setviewinsertproposta(0)}>
+            onClick={() => setcard('')}>
             <img
               alt=""
               src={back}
@@ -368,10 +368,6 @@ function Propostas() {
     <div id="scroll-propostas"
       className='card-aberto'
       style={{ display: card == 'card-propostas' ? 'flex' : 'none' }}
-      onClick={(e) => {
-        setcard('');
-        e.stopPropagation();
-      }}
     >
       <div
         style={{
@@ -464,8 +460,10 @@ function Propostas() {
                 <div style={{
                   display: 'flex', flexDirection: window.innerWidth < 426 ? 'column' : 'row',
                   flex: window.innerWidth < 426 ? 1 : 3,
-                  paddingRight: 10,
-                  alignItems: 'flex-end'
+                  width: window.innerWidth < 426 ? '95%' : '',
+                  paddingRight: window.innerWidth < 426 ? '' : 10,
+                  alignItems: 'center',
+                  alignSelf: 'center',
                 }}>
                   <textarea id={"inputProposta " + item.id_proposta}
                     className="textarea"
@@ -495,6 +493,7 @@ function Propostas() {
                       flexDirection: 'center', justifyContent: 'center', alignSelf: 'center',
                       whiteSpace: 'pre-wrap',
                       height: 70,
+                      width: '90%'
                     }}
                     title="PROPOSTA."
                   >

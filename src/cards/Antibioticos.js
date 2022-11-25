@@ -400,10 +400,6 @@ function Antibioticos() {
     <div id="scroll-antibioticos"
       className='card-aberto'
       style={{ display: card == 'card-antibioticos' ? 'flex' : 'none', position: 'relative' }}
-      onClick={(e) => {
-        setcard('');
-        e.stopPropagation();
-      }}
     >
       <div className="text3">
         ANTIBIÓTICOS

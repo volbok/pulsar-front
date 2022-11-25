@@ -313,10 +313,6 @@ function Alertas() {
     <div id="scroll-alertas"
       className='card-aberto'
       style={{ display: card == 'card-alertas' ? 'flex' : 'none' }}
-      onClick={(e) => {
-        setcard('');
-        e.stopPropagation();
-      }}
     >
       <div className="text3">
         ALERTAS

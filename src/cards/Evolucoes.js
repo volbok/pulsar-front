@@ -327,10 +327,6 @@ function Evolucoes() {
     <div id="scroll-evolucoes"
       className='card-aberto'
       style={{ display: card == 'card-evolucoes' ? 'flex' : 'none' }}
-      onClick={(e) => {
-        setcard('');
-        e.stopPropagation();
-      }}
     >
       <div className="text3">
         EVOLUÇÕES

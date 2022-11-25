@@ -171,10 +171,6 @@ function Anamnese() {
     <div id="scroll-anamnese"
       className='card-aberto'
       style={{ display: card == 'card-anamnese' ? 'flex' : 'none' }}
-      onClick={(e) => {
-        setcard('');
-        e.stopPropagation();
-      }}
     >
       <div
         style={{

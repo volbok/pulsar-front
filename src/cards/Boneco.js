@@ -737,9 +737,12 @@ function Boneco() {
           <Lesao local='ORELHA ESQUERDA' top='8%' bottom='' left='' right='55%' tamanho={20}></Lesao>
         </div>
         <div style={{
-          display: 'flex', flexDirection: 'row', justifyContent: 'center',
-          position: 'absolute', top: 5,
-          right: window.innerWidth < 426 ? -80 : -100,
+          display: 'flex',
+          flexDirection: window.innerWidth < 426 ? 'column' : 'row',
+          justifyContent: 'center',
+          position: 'absolute',
+          top: window.innerWidth < 426 ? -20 : 5,
+          right: window.innerWidth < 426 ? -25 : -100,
         }}>
           <button
             id="botão alternador invasão x lesão"
@@ -791,7 +794,6 @@ function Boneco() {
   return (
     <div id="boneco"
       className="card-aberto"
-      onClick={(e) => { setcard(''); e.stopPropagation() }}
       style={{
         display: card == 'card-boneco' ? 'flex' : 'none',
         flexDirection: 'column', justifyContent: 'center',

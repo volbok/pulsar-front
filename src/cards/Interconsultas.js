@@ -269,10 +269,6 @@ function Interconsultas() {
     <div id="scroll-interconsultas"
       className='card-aberto'
       style={{ display: card == 'card-interconsultas' ? 'flex' : 'none' }}
-      onClick={(e) => {
-        setcard('');
-        e.stopPropagation();
-      }}
     >
       <div className="text3">
         INTERCONSULTAS

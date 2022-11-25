@@ -232,10 +232,6 @@ function Alergias() {
     <div id="scroll-alergias"
       className='card-aberto'
       style={{ display: card == 'card-alergias' ? 'flex' : 'none' }}
-      onClick={(e) => {
-        setcard('');
-        e.stopPropagation();
-      }}
     >
       <div className="text3">
         ALERGIAS

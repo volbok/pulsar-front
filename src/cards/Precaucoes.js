@@ -246,10 +246,6 @@ function Precaucoes() {
     <div id="scroll-precaucoes"
       className='card-aberto'
       style={{ display: card == 'card-precaucoes' ? 'flex' : 'none' }}
-      onClick={(e) => {
-        setcard('');
-        e.stopPropagation();
-      }}
     >
       <div className="text3">
         PRECAUÇÕES

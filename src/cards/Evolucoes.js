@@ -3,19 +3,17 @@ import React, { useContext, useState, useEffect, useCallback } from 'react';
 import Context from '../pages/Context';
 import axios from 'axios';
 import moment from 'moment';
-import useSpeechToText from 'react-hook-speech-to-text';
 // funções.
 import toast from '../functions/toast';
-// import toast from '../functions/toast';
+import modal from '../functions/modal';
 import checkinput from '../functions/checkinput';
 // imagens.
 import deletar from '../images/deletar.svg';
 import salvar from '../images/salvar.svg';
 import novo from '../images/novo.svg';
-import microfone from '../images/microfone.svg';
 import back from '../images/back.svg';
-// funções.
-import modal from '../functions/modal';
+// componentes.
+import Gravador from '../components/Gravador';
 
 function Evolucoes() {
 
@@ -75,6 +73,21 @@ function Evolucoes() {
     })
   }
 
+  // inserindo uma evolução.
+  const insertVoiceEvolucao = ([evolucao]) => {
+    var obj = {
+      id_atendimento: atendimento,
+      evolucao: evolucao,
+      data_evolucao: moment(),
+      id_usuario: usuario.id,
+    }
+    axios.post(html + 'insert_evolucao', obj).then(() => {
+      loadEvolucoes();
+      setviewinsertevolucao(0);
+      toast(settoast, 'EVOLUÇÃO REGISTRADA COM SUCESSO', 'rgb(82, 190, 128, 1)', 3000);
+    })
+  }
+
   // excluir uma evolução.
   const deleteEvolucao = (evolucao) => {
     axios.get(html + 'delete_evolucao/' + evolucao.id_evolucao).then(() => {
@@ -86,127 +99,39 @@ function Evolucoes() {
   // registro de textarea por voz.
   const [selectedinput, setselectedinput] = useState(null);
   function Botoes() {
-    const [btngravavoz, setbtngravavoz] = useState("button-green");
-    const {
-      isRecording,
-      results,
-      setResults,
-      startSpeechToText,
-      stopSpeechToText,
-    } = useSpeechToText({
-      continuous: true,
-      useLegacyResults: false
-    })
     return (
-      <div style={{
-        display: 'flex', flexDirection: 'column', justifyContent: 'center',
-        alignItems: 'center', marginTop: 15
-      }}>
-        <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'center' }}>
-          <div id="botão de retorno"
-            className="button-red"
-            style={{
-              display: 'flex',
-              width: 50, height: 50,
-            }}
-            onClick={() => setcard('')}>
-            <img
-              alt=""
-              src={back}
-              style={{ width: 30, height: 30 }}
-            ></img>
-          </div>
-          <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
-            <div id="btngravavoz" className={btngravavoz}
-              style={{ display: 'flex', width: 50, height: 50 }}
-              onClick={(e) => {
-                if (selectedinput == null) {
-                  if (isRecording == true) {
-                    stopSpeechToText();
-                    setbtngravavoz("button-green");
-                    document.getElementById("inputEvolucao").value = results.map(result => result.transcript.toString().toUpperCase());
-                    insertEvolucao();
-                    e.stopPropagation();
-                  } else {
-                    setbtngravavoz("gravando");
-                    startSpeechToText();
-                    e.stopPropagation();
-                  }
-                } else {
-                  if (isRecording == true) {
-                    stopSpeechToText();
-                    setbtngravavoz("button-green");
-                    document.getElementById(selectedinput).value = document.getElementById(selectedinput).value + ' ' + results.map(result => result.transcript.toString().toUpperCase() + '.');
-                    updateEvolucao(evolucao);
-                    setselectedinput(null);
-                    e.stopPropagation();
-                  } else {
-                    setbtngravavoz("gravando");
-                    startSpeechToText();
-                    e.stopPropagation();
-                  }
-                }
-              }}
-            >
-              <img
-                alt=""
-                src={microfone}
-                style={{
-                  margin: 10,
-                  height: 30,
-                  width: 30,
-                }}
-              ></img>
-            </div>
-          </div>
-          <div id="btnsalvarevolucao"
-            className='button-green'
-            style={{ width: 50, height: 50 }}
-            onClick={(e) => {
-              setviewinsertevolucao(1);
-              e.stopPropagation();
-            }}
-          >
-            <img
-              alt=""
-              src={novo}
-              style={{
-                margin: 10,
-                height: 30,
-                width: 30,
-              }}
-            ></img>
-          </div>
-        </div>
-        <div id="lista de resultados"
-          className="button"
+      <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'center' }}>
+        <div id="botão de retorno"
+          className="button-red"
           style={{
-            display: btngravavoz == "gravando" ? 'flex' : 'none',
-            flexDirection: 'column', justifyContent: 'center', width: 150
-          }}>
-          {results.map(item => (
-            <div key={item.timestamp}>
-              {item.transcript.toUpperCase()}
-            </div>
-          ))}
-          <div className='button-red'
-            style={{ width: 25, minWidth: 25, height: 25, minHeight: 25 }}
-            onClick={(e) => {
-              stopSpeechToText();
-              setResults([]);
-              setbtngravavoz("button-green");
-              e.stopPropagation();
-            }}>
-            <img
-              alt=""
-              src={deletar}
-              style={{
-                margin: 10,
-                height: 25,
-                width: 25,
-              }}
-            ></img>
-          </div>
+            display: 'flex',
+            width: 50, height: 50,
+          }}
+          onClick={() => setcard('')}>
+          <img
+            alt=""
+            src={back}
+            style={{ width: 30, height: 30 }}
+          ></img>
+        </div>
+        <Gravador funcao={insertVoiceEvolucao}></Gravador>
+        <div id="btnsalvarevolucao"
+          className='button-green'
+          style={{ width: 50, height: 50 }}
+          onClick={(e) => {
+            setviewinsertevolucao(1);
+            e.stopPropagation();
+          }}
+        >
+          <img
+            alt=""
+            src={novo}
+            style={{
+              margin: 10,
+              height: 30,
+              width: 30,
+            }}
+          ></img>
         </div>
       </div>
     );

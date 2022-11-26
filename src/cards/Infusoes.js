@@ -3,18 +3,16 @@ import React, { useCallback, useContext, useState, useEffect } from 'react';
 import Context from '../pages/Context';
 import axios from 'axios';
 import moment from 'moment';
-import useSpeechToText from 'react-hook-speech-to-text';
 // funções.
 import toast from '../functions/toast';
 // componentes.
 import Bic from '../components/Bic';
+import Gravador from '../components/Gravador';
 // import toast from '../functions/toast';
 import checkinput from '../functions/checkinput';
 // imagens.
-import deletar from '../images/deletar.svg';
 import salvar from '../images/salvar.svg';
 import novo from '../images/novo.svg';
-import microfone from '../images/microfone.svg';
 import power from '../images/power.svg';
 import back from '../images/back.svg';
 
@@ -93,6 +91,23 @@ function Infusoes() {
     })
   }
 
+  // inserindo uma infusão.
+  const insertVoiceInfusao = ([infusao]) => {
+    var obj = {
+      id_atendimento: atendimento,
+      droga: infusao,
+      velocidade: 10,
+      data_inicio: moment(),
+      data_termino: null,
+    }
+    axios.post(html + 'insert_infusao', obj).then(() => {
+      loadInfusoes();
+      setviewinsertinfusao(0);
+      toast(settoast, 'INFUSÃO REGISTRADA COM SUCESSO', 'rgb(82, 190, 128, 1)', 3000);
+    })
+  }
+
+
   // excluir uma infusão.
   /*
   const deleteInfusao = (infusao) => {
@@ -107,137 +122,42 @@ function Infusoes() {
   const [selectedinputdroga, setselectedinputdroga] = useState(null);
   const [selectedinputvazao, setselectedinputvazao] = useState(null);
   function Botoes() {
-    const [btngravavoz, setbtngravavoz] = useState("button-green");
-    const {
-      isRecording,
-      results,
-      setResults,
-      startSpeechToText,
-      stopSpeechToText,
-    } = useSpeechToText({
-      continuous: true,
-      useLegacyResults: false
-    })
     return (
-      <div style={{
-        display: 'flex', flexDirection: 'column', justifyContent: 'center',
-        alignItems: 'center', marginTop: 15
-      }}>
-        <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'center', marginTop: 15 }}>
-          <div id="botão de retorno"
-            className="button-red"
-            style={{
-              display: 'flex',
-              alignSelf: 'center',
-            }}
-            onClick={() => setcard('')}>
-            <img
-              alt=""
-              src={back}
-              style={{ width: 30, height: 30 }}
-            ></img>
-          </div>
-          <div id="btngravavoz" className={btngravavoz}
-            style={{ display: 'flex', width: 50, height: 50 }}
-            onClick={(e) => {
-              if (selectedinputdroga == null) {
-                if (isRecording == true) {
-                  stopSpeechToText();
-                  setbtngravavoz("button-green");
-                  var obj = {
-                    id_atendimento: atendimento,
-                    droga: results.map(result => result.transcript.toString().toUpperCase()).toString(),
-                    velocidade: 10,
-                    data_inicio: moment(),
-                    data_termino: null,
-                  }
-                  axios.post(html + 'insert_infusao', obj).then(() => {
-                    loadInfusoes();
-                    setviewinsertinfusao(0);
-                    toast(settoast, 'INFUSÃO REGISTRADA COM SUCESSO', 'rgb(82, 190, 128, 1)', 3000);
-                  })
-
-                  e.stopPropagation();
-                } else {
-                  setbtngravavoz("gravando");
-                  startSpeechToText();
-                  e.stopPropagation();
-                }
-              } else {
-                if (isRecording == true) {
-                  stopSpeechToText();
-                  setbtngravavoz("button-green");
-                  document.getElementById(selectedinputdroga).value = document.getElementById(selectedinputdroga).value + ' ' + results.map(result => result.transcript.toString().toUpperCase());
-                  updateInfusao(infusao, moment(), null);
-                  setselectedinputdroga(null);
-                  setselectedinputvazao(null);
-                  e.stopPropagation();
-                } else {
-                  setbtngravavoz("gravando");
-                  startSpeechToText();
-                  e.stopPropagation();
-                }
-              }
-            }}
-          >
-            <img
-              alt=""
-              src={microfone}
-              style={{
-                margin: 10,
-                height: 30,
-                width: 30,
-              }}
-            ></img>
-          </div>
-          <div id="btnsalvarinfusão"
-            className='button-green'
-            style={{ width: 50, height: 50 }}
-            onClick={(e) => {
-              setviewinsertinfusao(1);
-              e.stopPropagation();
-            }}
-          >
-            <img
-              alt=""
-              src={novo}
-              style={{
-                margin: 10,
-                height: 30,
-                width: 30,
-              }}
-            ></img>
-          </div>
-        </div>
-        <div id="lista de resultados"
-          className="button"
+      <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'center', marginTop: 15 }}>
+        <div id="botão de retorno"
+          className="button-red"
           style={{
-            display: btngravavoz == "gravando" ? 'flex' : 'none',
-            flexDirection: 'column', justifyContent: 'center', width: 150,
-          }}>
-          {results.map(item => (
-            <div key={item.timestamp}>
-              {item.transcript.toUpperCase()}
-            </div>
-          ))}
-          <div className='button-red'
-            style={{ width: 25, minWidth: 25, height: 25, minHeight: 25 }}
-            onClick={(e) => {
-              stopSpeechToText();
-              setResults([]);
-              setbtngravavoz("button-green");
-              e.stopPropagation();
-            }}>
-            <img
-              alt=""
-              src={deletar}
-              style={{
-                margin: 10,
-                height: 25,
-                width: 25,
-              }}
-            ></img>
-          </div>
+            display: 'flex',
+            alignSelf: 'center',
+          }}
+          onClick={() => setcard('')}>
+          <img
+            alt=""
+            src={back}
+            style={{ width: 30, height: 30 }}
+          ></img>
+        </div>
+        <Gravador funcao={insertVoiceInfusao}></Gravador>
+        <div id="btnsalvarinfusão"
+          className='button-green'
+          style={{
+            display: 'flex',
+            alignSelf: 'center',
+          }}
+          onClick={(e) => {
+            setviewinsertinfusao(1);
+            e.stopPropagation();
+          }}
+        >
+          <img
+            alt=""
+            src={novo}
+            style={{
+              margin: 10,
+              height: 30,
+              width: 30,
+            }}
+          ></img>
         </div>
       </div>
     );

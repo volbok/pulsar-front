@@ -3,19 +3,17 @@ import React, { useContext, useState, useEffect, useCallback } from 'react';
 import Context from '../pages/Context';
 import axios from 'axios';
 import moment from 'moment';
-import useSpeechToText from 'react-hook-speech-to-text';
 // funções.
 import toast from '../functions/toast';
-// import toast from '../functions/toast';
+import modal from '../functions/modal';
 import checkinput from '../functions/checkinput';
 // imagens.
 import deletar from '../images/deletar.svg';
 import salvar from '../images/salvar.svg';
 import novo from '../images/novo.svg';
-import microfone from '../images/microfone.svg';
 import back from '../images/back.svg';
-// funções.
-import modal from '../functions/modal';
+// componentes.
+import Gravador from '../components/Gravador';
 
 function Antibioticos() {
 
@@ -45,7 +43,7 @@ function Antibioticos() {
   }
 
   // atualizando um antibiótico.
-  const [antibiotico, setantibiotico] = useState(0);
+  /*
   const updateAntibiotico = (item) => {
     var obj = null;
     if (viewinsertantibiotico == 1) {
@@ -70,6 +68,7 @@ function Antibioticos() {
       toast(settoast, 'DADOS DO ANTIBIÓTICO ATUALIZADOS COM SUCESSO', 'rgb(82, 190, 128, 1)', 3000);
     })
   }
+  */
 
   // inserindo um antibiótico.
   const insertAntibiotico = () => {
@@ -79,6 +78,22 @@ function Antibioticos() {
       data_inicio: moment(document.getElementById('inputInicio').value, 'DD/MM/YYYY'),
       data_termino: null,
       prazo: moment().add(document.getElementById('inputDias').value, 'days'),
+    }
+    axios.post(html + 'insert_antibiotico', obj).then(() => {
+      loadAntibioticos();
+      setviewinsertantibiotico(0);
+      toast(settoast, 'ANTIBIÓTICO REGISTRADO COM SUCESSO', 'rgb(82, 190, 128, 1)', 3000);
+    })
+  }
+
+  // inserindo um antibiótico por voz.
+  const insertVoiceAntibiotico = ([atb]) => {
+    var obj = {
+      id_atendimento: atendimento,
+      antibiotico: atb,
+      data_inicio: moment(),
+      data_termino: null,
+      prazo: 7,
     }
     axios.post(html + 'insert_antibiotico', obj).then(() => {
       loadAntibioticos();
@@ -97,122 +112,42 @@ function Antibioticos() {
 
   // registro de textarea por voz.
   function Botoes() {
-    const [btngravavoz, setbtngravavoz] = useState("button-green");
-    const {
-      isRecording,
-      results,
-      setResults,
-      startSpeechToText,
-      stopSpeechToText,
-    } = useSpeechToText({
-      continuous: true,
-      useLegacyResults: false
-    })
     return (
-      <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', margin: 5 }}>
-        <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'center' }}>
-          <div id="botão de retorno"
-            className="button-red"
-            style={{
-              display: 'flex',
-              alignSelf: 'center',
-            }}
-            onClick={() => setcard('')}>
-            <img
-              alt=""
-              src={back}
-              style={{ width: 30, height: 30 }}
-            ></img>
-          </div>
-          <div id="btngravavoz" className={btngravavoz}
-            style={{ display: 'flex', width: 50, height: 50 }}
-            onClick={(e) => {
-              if (antibiotico == 0) {
-                if (isRecording == true) {
-                  stopSpeechToText();
-                  setbtngravavoz("button-green");
-                  document.getElementById("inputAntibiotico").value = results.slice(0, 1).map(result => result.transcript.toString().toUpperCase());
-                  insertAntibiotico();
-                  e.stopPropagation();
-                } else {
-                  setbtngravavoz("gravando");
-                  startSpeechToText();
-                  e.stopPropagation();
-                }
-              } else {
-                if (isRecording == true) {
-                  stopSpeechToText();
-                  setbtngravavoz("button-green");
-                  document.getElementById("inputAntibiotico " + antibiotico.id_antibiotico).value = results.slice(0, 1).map(result => result.transcript.toString().toUpperCase());
-                  updateAntibiotico(antibiotico);
-                  e.stopPropagation();
-                } else {
-                  setbtngravavoz("gravando");
-                  startSpeechToText();
-                  e.stopPropagation();
-                }
-              }
-            }}
-          >
-            <img
-              alt=""
-              src={microfone}
-              style={{
-                margin: 10,
-                height: 30,
-                width: 30,
-              }}
-            ></img>
-          </div>
-          <div id="btnsalvarcultura"
-            className='button-green'
-            style={{ width: 50, height: 50 }}
-            onClick={(e) => {
-              setviewinsertantibiotico(1);
-              e.stopPropagation();
-            }}
-          >
-            <img
-              alt=""
-              src={novo}
-              style={{
-                margin: 10,
-                height: 30,
-                width: 30,
-              }}
-            ></img>
-          </div>
-        </div>
-        <div id="lista de resultados"
-          className="button"
+      <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'center' }}>
+        <div id="botão de retorno"
+          className="button-red"
           style={{
-            display: btngravavoz == "gravando" && results.length < 3 ? 'flex' : 'none',
-            flexDirection: 'column', justifyContent: 'center', width: 150,
+            display: 'flex',
             alignSelf: 'center',
-          }}>
-          {results.slice(-1).map(item => (
-            <div key={item.timestamp}>
-              {item.transcript.toUpperCase()}
-            </div>
-          ))}
-          <div className='button-red'
-            style={{ width: 25, minWidth: 25, height: 25, minHeight: 25 }}
-            onClick={(e) => {
-              stopSpeechToText();
-              setResults([]);
-              setbtngravavoz("button-green");
-              e.stopPropagation();
-            }}>
-            <img
-              alt=""
-              src={deletar}
-              style={{
-                margin: 10,
-                height: 25,
-                width: 25,
-              }}
-            ></img>
-          </div>
+          }}
+          onClick={() => setcard('')}>
+          <img
+            alt=""
+            src={back}
+            style={{ width: 30, height: 30 }}
+          ></img>
+        </div>
+        <Gravador funcao={insertVoiceAntibiotico}></Gravador>
+        <div id="btnsalvarcultura"
+          className='button-green'
+          style={{
+            display: 'flex',
+            alignSelf: 'center',
+          }}
+          onClick={(e) => {
+            setviewinsertantibiotico(1);
+            e.stopPropagation();
+          }}
+        >
+          <img
+            alt=""
+            src={novo}
+            style={{
+              margin: 10,
+              height: 30,
+              width: 30,
+            }}
+          ></img>
         </div>
       </div>
     );
@@ -440,7 +375,7 @@ function Antibioticos() {
                   height: window.innerWidth < 426 ? 60 : 225,
                   width: window.innerWidth < 426 ? 'calc(95% + 10px)' : '',
                   margin: 0,
-                  marginRight: window.innerWidth < 426 ? 5 : 0,
+                  marginRight: window.innerWidth < 426 ? 0 : 0,
                   borderTopLeftRadius: window.innerWidth < 426 ? 5 : 5,
                   borderTopRightRadius: window.innerWidth < 426 ? 5 : 0,
                   borderBottomLeftRadius: window.innerWidth < 426 ? 0 : 5,
@@ -485,6 +420,8 @@ function Antibioticos() {
                   paddingBottom: window.innerWidth < 426 ? 0 : 5,
                   marginTop: 0,
                   marginLeft: 0,
+                  alignSelf: 'center',
+                  alignContent: 'center',
                 }}>
                 <div id="conteúdo do antibiótico" style={{
                   display: 'flex',
@@ -492,11 +429,14 @@ function Antibioticos() {
                   justifyContent: 'center',
                   flex: window.innerWidth < 426 ? 1 : 4,
                   width: window.innerWidth < 426 ? '95%' : '',
+                  alignSelf: 'center',
+                  alignContent: 'center',
                 }}>
                   <div id="antibiótico e datas" style={{
                     flex: window.innerWidth < 426 ? 1 : 3,
                     display: 'flex', flexDirection: 'column', justifyContent: 'center',
                     alignSelf: 'center',
+                    alignItems: 'center',
                     margin: 5, padding: 5,
                     backgroundColor: 'white',
                     height: 200,
@@ -508,7 +448,6 @@ function Antibioticos() {
                       onFocus={(e) => (e.target.placeholder = '')}
                       onBlur={(e) => (e.target.placeholder = 'ANTIBIÓTICO...')}
                       defaultValue={item.antibiotico}
-                      onClick={(e) => { setantibiotico(item); e.stopPropagation() }}
                       onKeyUp={(e) => {
                         clearTimeout(timeout);
                         timeout = setTimeout(() => {
@@ -530,7 +469,7 @@ function Antibioticos() {
                         display: 'flex',
                         flexDirection: 'center', justifyContent: 'center', alignSelf: 'center',
                         width: 'calc(100% - 10px)',
-                        marginTop: 10,
+                        marginTop: window.innerWidth < 426 ? 0 : 10,
                       }}
                       title="ANTIBIÓTICO."
                     >
@@ -545,6 +484,15 @@ function Antibioticos() {
                       defaultValue={moment(item.data_inicio).format('DD/MM/YYYY')}
                       onClick={() => document.getElementById("inputInicio " + item.id_antibiotico).value = ''}
                       onKeyUp={(e) => {
+                        var x = document.getElementById("inputInicio " + item.id_antibiotico).value;
+                        if (x.length == 2) {
+                          x = x + '/';
+                          document.getElementById("inputInicio " + item.id_antibiotico).value = x;
+                        }
+                        if (x.length == 5) {
+                          x = x + '/'
+                          document.getElementById("inputInicio " + item.id_antibiotico).value = x;
+                        }
                         clearTimeout(timeout);
                         timeout = setTimeout(() => {
                           var date = moment(document.getElementById("inputInicio " + item.id_antibiotico).value, 'DD/MM/YYYY', true);
@@ -581,19 +529,19 @@ function Antibioticos() {
                       type="text"
                       inputMode='numeric'
                       placeholder='TÉRMINO...'
-                      onClick={() => document.getElementById("inputTermino").value = ''}
+                      onClick={() => document.getElementById("inputTermino " + item.id_antibiotico).value = ''}
                       onFocus={(e) => (e.target.placeholder = '')}
                       onBlur={(e) => (e.target.placeholder = 'TÉRMINO...')}
                       defaultValue={item.data_termino != null ? moment(item.data_termino).format('DD/MM/YYYY') : ''}
                       onKeyUp={(e) => {
-                        var x = document.getElementById("inputTermino").value;
+                        var x = document.getElementById("inputTermino " + item.id_antibiotico).value;
                         if (x.length == 2) {
                           x = x + '/';
-                          document.getElementById("inputTermino").value = x;
+                          document.getElementById("inputTermino " + item.id_antibiotico).value = x;
                         }
                         if (x.length == 5) {
                           x = x + '/'
-                          document.getElementById("inputTermino").value = x;
+                          document.getElementById("inputTermino " + item.id_antibiotico).value = x;
                         }
                         clearTimeout(timeout);
                         timeout = setTimeout(() => {
@@ -631,7 +579,8 @@ function Antibioticos() {
                     style={{
                       flex: 1,
                       display: 'flex', flexDirection: 'column',
-                      justifyContent: 'center'
+                      justifyContent: 'center',
+                      marginBottom: window.innerWidth < 426 ? 12.5 : '',
                     }}>
                     <div style={{
                       display: 'flex', flexDirection: 'column', justifyContent: 'center',
@@ -692,7 +641,7 @@ function Antibioticos() {
                         width: window.innerWidth < 426 ? '30vw' : '7vw',
                       }}
                     >
-                      {moment().diff(item.data_inicio, 'days') + '/' + moment(item.prazo).diff(item.data_inicio, 'days')}
+                      {item.data_termino == null ? moment().diff(item.data_inicio, 'days') + '/' + moment(item.prazo).diff(item.data_inicio, 'days') : moment(item.data_termino).diff(item.data_inicio, 'days') + '/' + moment(item.prazo).diff(item.data_inicio, 'days')}
                       <div style={{ marginTop: 5 }}>{'FIM PREVISTO:'}</div>
                       <div>{moment(item.prazo).format('DD/MM/YYYY')}</div>
                     </div>

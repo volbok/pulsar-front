@@ -3,7 +3,6 @@ import React, { useContext, useState, useEffect, useCallback } from 'react';
 import Context from '../pages/Context';
 import axios from 'axios';
 import moment from 'moment';
-import useSpeechToText from 'react-hook-speech-to-text';
 // funções.
 import modal from '../functions/modal';
 import toast from '../functions/toast';
@@ -11,9 +10,7 @@ import checkinput from '../functions/checkinput';
 // imagens.
 import deletar from '../images/deletar.svg';
 import salvar from '../images/salvar.svg';
-import novo from '../images/novo.svg';
 import back from '../images/back.svg';
-import microfone from '../images/microfone.svg';
 
 function Dieta() {
 
@@ -215,6 +212,7 @@ function Dieta() {
               }
               clearTimeout(timeout);
               var date = moment(document.getElementById("inputDataInicio").value, 'DD/MM/YYYY', true);
+              // eslint-disable-next-line
               timeout = setTimeout(() => {
                 if (date.isValid() == false) {
                   toast(settoast, 'DATA INVÁLIDA', 'rgb(231, 76, 60, 1)', 3000);
@@ -270,129 +268,6 @@ function Dieta() {
     )
     // eslint-disable-next-line
   }, [viewupdatedieta, tipodieta, dieta]);
-
-  // registro de alergia por voz.
-  function Botoes() {
-    const [btngravavoz, setbtngravavoz] = useState("button-green");
-    const {
-      isRecording,
-      results,
-      startSpeechToText,
-      stopSpeechToText,
-      setResults,
-    } = useSpeechToText({
-      continuous: true,
-      useLegacyResults: false
-    });
-    return (
-      <div style={{ display: 'none', flexDirection: 'column', justifyContent: 'center', marginTop: 15 }}>
-        <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'center' }}>
-          <div id="btngravavoz" className={btngravavoz}
-            style={{ display: 'none', width: 50, height: 50 }}
-            onClick={isRecording ?
-              (e) => {
-                stopSpeechToText();
-                setbtngravavoz("button-green");
-                var parametros = [];
-                results.map(result => parametros.push(result.transcript.toString()));
-                console.log(parametros);
-                if (parametros.length == 3) {
-                  var obj = {
-                    infusao: parametros.slice(1, 2),
-                    get: parametros.slice(2, 3),
-                    tipo: parametros.slice(0, 1),
-                    data_inicio: moment(),
-                    data_termino: null,
-                    id_atendimento: atendimento,
-                  }
-                  axios.post(html + 'insert_dieta', obj).then(() => {
-                    loadDietas();
-                  })
-                } else {
-                  toast(settoast, 'INFORME PAUSADAMENTE TODOS OS DADOS', 'red', 2000);
-                }
-                e.stopPropagation();
-              } :
-              (e) => {
-                setbtngravavoz("gravando");
-                startSpeechToText();
-                e.stopPropagation();
-              }}
-          >
-            <img
-              alt=""
-              src={microfone}
-              style={{
-                margin: 10,
-                height: 30,
-                width: 30,
-              }}
-            ></img>
-          </div>
-          <div>
-            <div id="botão de retorno"
-              className="button-red"
-              style={{
-                display: 'flex',
-                alignSelf: 'center',
-              }}
-              onClick={() => setcard('')}>
-              <img
-                alt=""
-                src={back}
-                style={{ width: 30, height: 30 }}
-              ></img>
-            </div>
-            <div id="btninputdieta"
-              className='button-green'
-              onClick={(e) => { setviewupdatedieta(1); e.stopPropagation() }}
-              style={{ width: 50, height: 50 }}
-            >
-              <img
-                alt=""
-                src={novo}
-                style={{
-                  margin: 10,
-                  height: 30,
-                  width: 30,
-                }}
-              ></img>
-            </div>
-          </div>
-        </div>
-        <div id="lista de resultados"
-          className="button"
-          style={{
-            display: btngravavoz == "gravando" ? 'flex' : 'none',
-            flexDirection: 'column', justifyContent: 'center', width: 150
-          }}>
-          {results.map(item => (
-            <div key={item.timestamp}>
-              {item.transcript.toUpperCase()}
-            </div>
-          ))}
-          <div className='button-red'
-            style={{ width: 25, minWidth: 25, height: 25, minHeight: 25 }}
-            onClick={(e) => {
-              stopSpeechToText();
-              setResults([]);
-              setbtngravavoz("button-green");
-              e.stopPropagation();
-            }}>
-            <img
-              alt=""
-              src={deletar}
-              style={{
-                margin: 10,
-                height: 25,
-                width: 25,
-              }}
-            ></img>
-          </div>
-        </div>
-      </div>
-    );
-  }
 
   return (
     <div id="scroll-dietas"
@@ -464,7 +339,6 @@ function Dieta() {
           style={{ width: 30, height: 30 }}
         ></img>
       </div>
-      <Botoes></Botoes>
       <UpdateDieta></UpdateDieta>
       <OpcoesDieta></OpcoesDieta>
     </div >

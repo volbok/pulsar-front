@@ -496,7 +496,7 @@ function VentilacaoMecanica() {
     return (
       <div
         style={{
-          display: vm.length < 1 ? 'none' : 'flex',
+          display: vm.slice(-1).map(item => item.modo != 'OFF') ? 'none' : 'flex',
           flexDirection: 'column', justifyContent: 'center',
           width: window.innerWidth < 426 ? '80vw' : '100%', marginTop: 5,
           alignSelf: 'center',
@@ -623,6 +623,7 @@ function VentilacaoMecanica() {
         style={{
           display: vm.sort((a, b) => moment(a.data_vm) < moment(b.data_vm) ? -1 : 1).slice(-1).map(item => item.modo) == 'OFF' ? 'flex' : 'none',
           padding: 10,
+          width: 200, alignSelf: 'center',
         }}>
         {'PACIENTE FORA DA VM'}
       </div>

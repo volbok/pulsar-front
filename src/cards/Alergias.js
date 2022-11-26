@@ -2,7 +2,8 @@
 import React, { useContext, useState, useEffect, useCallback } from 'react';
 import Context from '../pages/Context';
 import axios from 'axios';
-import useSpeechToText from 'react-hook-speech-to-text';
+// componentes.
+import Gravador from '../components/Gravador';
 // funções.
 import modal from '../functions/modal';
 // import toast from '../functions/toast';
@@ -12,7 +13,6 @@ import deletar from '../images/deletar.svg';
 import salvar from '../images/salvar.svg';
 import novo from '../images/novo.svg';
 import back from '../images/back.svg';
-import microfone from '../images/microfone.svg';
 
 function Alergias() {
 
@@ -123,17 +123,6 @@ function Alergias() {
 
   // registro de alergia por voz.
   function Botoes() {
-    const [btngravavoz, setbtngravavoz] = useState("button-green");
-    const {
-      isRecording,
-      results,
-      startSpeechToText,
-      stopSpeechToText,
-      setResults,
-    } = useSpeechToText({
-      continuous: false,
-      useLegacyResults: false
-    });
     return (
       <div style={{
         display: 'flex', flexDirection: 'column', justifyContent: 'center',
@@ -153,35 +142,14 @@ function Alergias() {
               style={{ width: 30, height: 30 }}
             ></img>
           </div>
-          <div id="btngravavoz" className={btngravavoz}
-            style={{ display: 'flex', width: 50, height: 50 }}
-            onClick={isRecording ?
-              (e) => {
-                stopSpeechToText();
-                setbtngravavoz("button-green");
-                results.map(result => insertAlergia([result.transcript.toString().toUpperCase()]));
-                e.stopPropagation();
-              } :
-              (e) => {
-                setbtngravavoz("gravando");
-                startSpeechToText();
-                e.stopPropagation();
-              }}
-          >
-            <img
-              alt=""
-              src={microfone}
-              style={{
-                margin: 10,
-                height: 30,
-                width: 30,
-              }}
-            ></img>
-          </div>
+          <Gravador funcao={insertAlergia}></Gravador>
           <div id="btninputalergia"
             className='button-green'
             onClick={(e) => { setviewinsertalergia(1); e.stopPropagation() }}
-            style={{ width: 50, height: 50 }}
+            style={{
+              display: 'flex',
+              alignSelf: 'center',
+            }}
           >
             <img
               alt=""
@@ -190,36 +158,6 @@ function Alergias() {
                 margin: 10,
                 height: 30,
                 width: 30,
-              }}
-            ></img>
-          </div>
-        </div>
-        <div id="lista de resultados"
-          className="button"
-          style={{
-            display: btngravavoz == "gravando" ? 'flex' : 'none',
-            flexDirection: 'column', justifyContent: 'center', width: 150
-          }}>
-          {results.map(item => (
-            <div key={item.timestamp}>
-              {item.transcript.toUpperCase()}
-            </div>
-          ))}
-          <div className='button-red'
-            style={{ width: 25, minWidth: 25, height: 25, minHeight: 25 }}
-            onClick={(e) => {
-              stopSpeechToText();
-              setResults([]);
-              setbtngravavoz("button-green");
-              e.stopPropagation();
-            }}>
-            <img
-              alt=""
-              src={deletar}
-              style={{
-                margin: 10,
-                height: 25,
-                width: 25,
               }}
             ></img>
           </div>

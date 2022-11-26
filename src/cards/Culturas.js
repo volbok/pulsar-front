@@ -3,9 +3,9 @@ import React, { useContext, useState, useEffect, useCallback } from 'react';
 import Context from '../pages/Context';
 import axios from 'axios';
 import moment from 'moment';
-import useSpeechToText from 'react-hook-speech-to-text';
 // funções.
 import toast from '../functions/toast';
+import modal from '../functions/modal';
 // import toast from '../functions/toast';
 import checkinput from '../functions/checkinput';
 // imagens.
@@ -13,9 +13,9 @@ import deletar from '../images/deletar.svg';
 import salvar from '../images/salvar.svg';
 import novo from '../images/novo.svg';
 import back from '../images/back.svg';
-import microfone from '../images/microfone.svg';
-// funções.
-import modal from '../functions/modal';
+// componentes.
+import Gravador from '../components/Gravador';
+
 
 function Culturas() {
 
@@ -32,7 +32,6 @@ function Culturas() {
   useEffect(() => {
     if (card == 'card-culturas') {
       loadCulturas();
-      setcultura(0);
     }
     // eslint-disable-next-line
   }, [card]);
@@ -45,8 +44,7 @@ function Culturas() {
     });
   }
 
-  // atualizando uma cultura.
-  const [cultura, setcultura] = useState(0);
+  /*
   const updateCultura = (item) => {
     var obj = null;
     if (viewinsertcultura == 1) {
@@ -71,6 +69,7 @@ function Culturas() {
       toast(settoast, 'DADOS DA CULTURA ATUALIZADOS COM SUCESSO', 'rgb(82, 190, 128, 1)', 3000);
     })
   }
+  */
 
   // inserindo uma cultura.
   const insertCultura = () => {
@@ -89,6 +88,22 @@ function Culturas() {
     })
   }
 
+  // inserir alergia.
+  const insertVoiceCultura = ([material]) => {
+    var obj = {
+      id_atendimento: atendimento,
+      material: material,
+      resultado: '',
+      data_pedido: moment(),
+      data_resultado: null,
+    }
+    axios.post(html + 'insert_cultura', obj).then((response) => {
+      loadCulturas();
+      setviewinsertcultura(0);
+      toast(settoast, 'CULTURA REGISTRADA COM SUCESSO', 'rgb(82, 190, 128, 1)', 3000);
+    })
+  }
+
   // excluir uma cultura.
   const deleteCultura = (cultura) => {
     axios.get(html + 'delete_cultura/' + cultura.id_cultura).then(() => {
@@ -99,144 +114,42 @@ function Culturas() {
 
   // registro de textarea por voz.
   function Botoes() {
-    const [btngravavoz, setbtngravavoz] = useState("button-green");
-    const {
-      isRecording,
-      results,
-      setResults,
-      startSpeechToText,
-      stopSpeechToText,
-    } = useSpeechToText({
-      continuous: true,
-      useLegacyResults: false
-    })
     return (
-      <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
-        <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'center' }}>
-          <div id="botão de retorno"
-            className="button-red"
-            style={{
-              display: 'flex',
-              alignSelf: 'center',
-            }}
-            onClick={() => setcard('')}>
-            <img
-              alt=""
-              src={back}
-              style={{ width: 30, height: 30 }}
-            ></img>
-          </div>
-          <div id="btngravavoz" className={btngravavoz}
-            style={{ display: 'flex', width: 50, height: 50 }}
-            onClick={(e) => {
-              if (cultura == 0) {
-                if (isRecording == true) {
-                  stopSpeechToText();
-                  setbtngravavoz("button-green");
-                  document.getElementById("inputMaterial").value = results.slice(0, 1).map(result => result.transcript.toString().toUpperCase());
-                  document.getElementById("inputResultado").value = results.slice(1, 2).map(result => result.transcript.toString().toUpperCase());
-
-                  var obj = {
-                    id_atendimento: atendimento,
-                    material: results.slice(0, 1).map(result => result.transcript.toString().toUpperCase()).pop(),
-                    resultado: results.slice(1, 2).map(result => result.transcript.toString().toUpperCase()).pop(),
-                    data_pedido: moment(),
-                    data_resultado: null,
-                  }
-                  axios.post(html + 'insert_cultura', obj).then((response) => {
-                    loadCulturas();
-                    setviewinsertcultura(0);
-                    toast(settoast, 'CULTURA REGISTRADA COM SUCESSO', 'rgb(82, 190, 128, 1)', 3000);
-                  })
-
-                  e.stopPropagation();
-                } else {
-                  setbtngravavoz("gravando");
-                  startSpeechToText();
-                  e.stopPropagation();
-                }
-              } else {
-                if (isRecording == true) {
-                  stopSpeechToText();
-                  setbtngravavoz("button-green");
-                  document.getElementById("inputMaterial " + cultura.id_cultura).value = results.slice(0, 1).map(result => result.transcript.toString().toUpperCase());
-                  document.getElementById("inputResultado " + cultura.id_cultura).value = results.slice(1, 2).map(result => result.transcript.toString().toUpperCase());
-                  console.log('CULTURA: ' + cultura.id_cultura);
-                  updateCultura(cultura);
-                  e.stopPropagation();
-                } else {
-                  setbtngravavoz("gravando");
-                  startSpeechToText();
-                  e.stopPropagation();
-                }
-              }
-            }}
-          >
-            <img
-              alt=""
-              src={microfone}
-              style={{
-                margin: 10,
-                height: 30,
-                width: 30,
-              }}
-            ></img>
-          </div>
-          <div id="btnsalvarcultura"
-            className='button-green'
-            style={{ width: 50, height: 50 }}
-            onClick={(e) => {
-              setviewinsertcultura(1);
-              e.stopPropagation();
-            }}
-          >
-            <img
-              alt=""
-              src={novo}
-              style={{
-                margin: 10,
-                height: 30,
-                width: 30,
-              }}
-            ></img>
-          </div>
-        </div>
-        <div id="lista de resultados"
-          className="button"
+      <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'center' }}>
+        <div id="botão de retorno"
+          className="button-red"
           style={{
-            display: btngravavoz == "gravando" && results.length < 3 ? 'flex' : 'none',
-            flexDirection: 'column', justifyContent: 'center', width: 150,
+            display: 'flex',
             alignSelf: 'center',
-          }}>
-          <div className='button-yellow' style={{ display: results.length > 1 ? 'none' : 'flex', pading: 10 }}>
-            {results.length == 0 ? 'INFORME MATERIAL' : results.length == 1 ? 'INFORME RESULTADO' : ''}
-          </div>
-          <div>
-            {results.length == 1 ? 'MATERIAL: ' : results.length == 2 ? 'RESULTADO: ' : ''}
-          </div>
-          {results.slice(-1).map(item => (
-            <div key={item.timestamp}>
-              {item.transcript.toUpperCase()}
-            </div>
-          ))}
-          <div className='button-red'
-            style={{ width: 25, minWidth: 25, height: 25, minHeight: 25 }}
-            onClick={(e) => {
-              stopSpeechToText();
-              setResults([]);
-              setbtngravavoz("button-green");
-              e.stopPropagation();
-            }}>
-            <img
-              alt=""
-              src={deletar}
-              style={{
-                margin: 10,
-                height: 25,
-                width: 25,
-              }}
-            ></img>
-          </div>
+          }}
+          onClick={() => setcard('')}>
+          <img
+            alt=""
+            src={back}
+            style={{ width: 30, height: 30 }}
+          ></img>
+        </div>
+        <Gravador funcao={insertVoiceCultura}></Gravador>
+        <div id="btnsalvarcultura"
+          className='button-green'
+          style={{
+            display: 'flex',
+            alignSelf: 'center',
+          }}
+          onClick={(e) => {
+            setviewinsertcultura(1);
+            e.stopPropagation();
+          }}
+        >
+          <img
+            alt=""
+            src={novo}
+            style={{
+              margin: 10,
+              height: 30,
+              width: 30,
+            }}
+          ></img>
         </div>
       </div>
     );
@@ -507,7 +420,6 @@ function Culturas() {
                   onFocus={(e) => (e.target.placeholder = '')}
                   onBlur={(e) => (e.target.placeholder = 'MATERIAL...')}
                   defaultValue={item.material}
-                  onClick={(e) => { setcultura(item); e.stopPropagation() }}
                   onKeyUp={(e) => {
                     clearTimeout(timeout);
                     timeout = setTimeout(() => {
@@ -540,7 +452,6 @@ function Culturas() {
                   onFocus={(e) => (e.target.placeholder = '')}
                   onBlur={(e) => (e.target.placeholder = 'RESULTADO...')}
                   defaultValue={item.resultado}
-                  onClick={(e) => { setcultura(item); e.stopPropagation() }}
                   onKeyUp={(e) => {
                     clearTimeout(timeout);
                     var resultado = document.getElementById('inputResultado ' + item.id_cultura).value.toUpperCase();

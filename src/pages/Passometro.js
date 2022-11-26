@@ -531,9 +531,11 @@ function Passometro() {
 
   // estado para retorno do balanço hídrico acumulado.
   const [balancoacumulado, setbalancoacumulado] = useState(0);
-  // carregando todas as informações do atendimento (causou muita lentidão ao carregar a aplicação).
+  // carregando todas as informações do atendimento.
   const getAllData = (paciente, atendimento) => {
     // Dados relacionados ao paciente.
+    // lista d eproblemas, hda.
+    loadAtendimentos();
     // alergias.
     if (cardalergias == 1) {
       setbusyalergias(1);

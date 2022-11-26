@@ -131,7 +131,7 @@ function VentilacaoMecanica() {
           style={{
             flexDirection: 'column',
             width: window.innerWidth < 426 ? '80vw' : '60vw',
-            height: window.innerWidth < 426 ? '90vh' : '',
+            height: window.innerWidth < 426 ? 0.7 * window.innerHeight : '',
             justifyContent: window.innerWidth < 426 ? 'flex-start' : 'center',
             alignContent: 'center',
           }}>
@@ -398,7 +398,7 @@ function VentilacaoMecanica() {
                     results.length == 1 ? 'INFORME O VALOR PARA PRESSÃO' :
                       results.length == 2 ? 'INFORME O VALOR PARA VOLUME' :
                         results.length == 3 ? 'INFORME O VALOR PARA PEEP' :
-                          results.length == 4 ? 'INFORME O VALOR PARA FIO2' : ''
+                          results.length == 4 ? 'INFORME O VALOR PARA FIO2' : 'VALORES INPUTADOS COM SUCESSO!'
                 }
               </div>
             </div>

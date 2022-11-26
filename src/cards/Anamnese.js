@@ -7,6 +7,7 @@ import useSpeechToText from 'react-hook-speech-to-text';
 import toast from '../functions/toast';
 // imagens.
 import deletar from '../images/deletar.svg';
+import salvar from '../images/salvar.svg';
 import microfone from '../images/microfone.svg';
 import back from '../images/back.svg';
 
@@ -103,12 +104,7 @@ function Anamnese() {
             onClick={(e) => {
               if (selectedinput != null) {
                 if (isRecording == true) {
-                  stopSpeechToText();
-                  setbtngravavoz("button-green");
-                  document.getElementById(selectedinput).value = document.getElementById(selectedinput).value + ' ' + results.map(result => result.transcript.toString().toUpperCase() + '.');
-                  updatePaciente(pacientes.filter(item => item.id_paciente == paciente));
-                  updateAtendimento();
-                  e.stopPropagation();
+                  // nada.
                 } else {
                   setbtngravavoz("gravando");
                   startSpeechToText();
@@ -154,6 +150,26 @@ function Anamnese() {
             <img
               alt=""
               src={deletar}
+              style={{
+                margin: 10,
+                height: 25,
+                width: 25,
+              }}
+            ></img>
+          </div>
+          <div id="botão salvar" className='button-green'
+            style={{ width: 25, minWidth: 25, height: 25, minHeight: 25 }}
+            onClick={(e) => {
+              stopSpeechToText();
+              setbtngravavoz("button-green");
+              document.getElementById(selectedinput).value = document.getElementById(selectedinput).value + ' ' + results.map(result => result.transcript.toString().toUpperCase() + '.');
+              updatePaciente(pacientes.filter(item => item.id_paciente == paciente));
+              updateAtendimento();
+              e.stopPropagation();
+            }}>
+            <img
+              alt=""
+              src={salvar}
               style={{
                 margin: 10,
                 height: 25,

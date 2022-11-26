@@ -3,21 +3,19 @@ import React, { useContext, useState, useEffect, useCallback } from 'react';
 import Context from '../pages/Context';
 import axios from 'axios';
 import moment from 'moment';
-import useSpeechToText from 'react-hook-speech-to-text';
 // funções.
 import toast from '../functions/toast';
 import modal from '../functions/modal';
-
-// import toast from '../functions/toast';
 import checkinput from '../functions/checkinput';
 // imagens.
 import deletar from '../images/deletar.svg';
 import salvar from '../images/salvar.svg';
 import novo from '../images/novo.svg';
-import microfone from '../images/microfone.svg';
 import flag from '../images/flag.svg';
 import fail from '../images/fail.svg';
 import back from '../images/back.svg';
+// componentes.
+import Gravador from '../components/Gravador';
 
 function Propostas() {
 
@@ -83,6 +81,24 @@ function Propostas() {
     })
   }
 
+  // inserindo uma proposta por voz.
+  const insertVoiceProposta = ([proposta]) => {
+    var obj = {
+      id_atendimento: atendimento,
+      proposta: proposta,
+      status: 0,
+      data_proposta: moment(),
+      id_usuario: usuario.id,
+      prazo: 5,
+      data_conclusao: null,
+    }
+    axios.post(html + 'insert_proposta', obj).then(() => {
+      loadPropostas();
+      setviewinsertproposta(0);
+      toast(settoast, 'PROPOSTA REGISTRADA COM SUCESSO', 'rgb(82, 190, 128, 1)', 3000);
+    })
+  }
+
   // excluir uma proposta.
   const deleteProposta = (proposta) => {
     axios.get(html + 'delete_proposta/' + proposta.id_proposta).then(() => {
@@ -92,129 +108,40 @@ function Propostas() {
   }
 
   // registro de textarea por voz.
-  const [selectedproposta, setselectedproposta] = useState(null);
-  const [selectedprazo, setselectedprazo] = useState(null);
-  function Botoes(item) {
-    const [btngravavoz, setbtngravavoz] = useState("button-green");
-    const {
-      isRecording,
-      results,
-      setResults,
-      startSpeechToText,
-      stopSpeechToText,
-    } = useSpeechToText({
-      continuous: true,
-      useLegacyResults: false
-    })
+  function Botoes() {
     return (
-      <div style={{
-        display: 'flex', flexDirection: 'column', justifyContent: 'center',
-        alignItems: 'center', marginTop: 15
-      }}>
-        <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'center' }}>
-          <div id="botão de retorno"
-            className="button-red"
-            style={{
-              display: 'flex',
-              width: 50, height: 50
-            }}
-            onClick={() => setcard('')}>
-            <img
-              alt=""
-              src={back}
-              style={{ width: 30, height: 30 }}
-            ></img>
-          </div>
-          <div id="btngravavoz" className={btngravavoz}
-            style={{ display: 'flex', width: 50, height: 50 }}
-            onClick={(e) => {
-              if (selectedproposta == null) {
-                if (isRecording == true) {
-                  stopSpeechToText();
-                  setbtngravavoz("button-green");
-                  document.getElementById("inputProposta").value = results.map(result => result.transcript.toString().toUpperCase() + '.');
-                  insertProposta();
-                  e.stopPropagation();
-                } else {
-                  setbtngravavoz("gravando");
-                  startSpeechToText();
-                  e.stopPropagation();
-                }
-              } else {
-                if (isRecording == true) {
-                  stopSpeechToText();
-                  setbtngravavoz("button-green");
-                  document.getElementById(selectedproposta).value = document.getElementById(selectedproposta).value + ' ' + results.map(result => result.transcript.toString().toUpperCase() + '.');
-                  updateProposta(proposta, selectedproposta, selectedprazo, item.status);
-                  setselectedproposta(null);
-                  setselectedprazo(null);
-                  e.stopPropagation();
-                } else {
-                  setbtngravavoz("gravando");
-                  startSpeechToText();
-                  e.stopPropagation();
-                }
-              }
-            }}
-          >
-            <img
-              alt=""
-              src={microfone}
-              style={{
-                margin: 10,
-                height: 30,
-                width: 30,
-              }}
-            ></img>
-          </div>
-          <div id="btnsalvarevolucao"
-            className='button-green'
-            style={{ width: 50, height: 50 }}
-            onClick={(e) => {
-              setviewinsertproposta(1);
-              e.stopPropagation();
-            }}
-          >
-            <img
-              alt=""
-              src={novo}
-              style={{
-                margin: 10,
-                height: 30,
-                width: 30,
-              }}
-            ></img>
-          </div>
-        </div>
-        <div id="lista de resultados"
-          className="button"
+      <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'center' }}>
+        <div id="botão de retorno"
+          className="button-red"
           style={{
-            display: btngravavoz == "gravando" ? 'flex' : 'none',
-            flexDirection: 'column', justifyContent: 'center', width: 150
-          }}>
-          {results.map(item => (
-            <div key={item.timestamp}>
-              {item.transcript.toUpperCase()}
-            </div>
-          ))}
-          <div className='button-red'
-            style={{ width: 25, minWidth: 25, height: 25, minHeight: 25 }}
-            onClick={(e) => {
-              stopSpeechToText();
-              setResults([]);
-              setbtngravavoz("button-green");
-              e.stopPropagation();
-            }}>
-            <img
-              alt=""
-              src={deletar}
-              style={{
-                margin: 10,
-                height: 25,
-                width: 25,
-              }}
-            ></img>
-          </div>
+            display: 'flex',
+            width: 50, height: 50
+          }}
+          onClick={() => setcard('')}>
+          <img
+            alt=""
+            src={back}
+            style={{ width: 30, height: 30 }}
+          ></img>
+        </div>
+        <Gravador funcao={insertVoiceProposta}></Gravador>
+        <div id="btnsalvarevolucao"
+          className='button-green'
+          style={{ width: 50, height: 50 }}
+          onClick={(e) => {
+            setviewinsertproposta(1);
+            e.stopPropagation();
+          }}
+        >
+          <img
+            alt=""
+            src={novo}
+            style={{
+              margin: 10,
+              height: 30,
+              width: 30,
+            }}
+          ></img>
         </div>
       </div>
     );
@@ -473,8 +400,6 @@ function Propostas() {
                     defaultValue={item.proposta}
                     onClick={(e) => {
                       setproposta(item);
-                      setselectedproposta("inputProposta " + item.id_proposta);
-                      setselectedprazo("inputPrazo " + item.id_proposta);
                       e.stopPropagation();
                     }}
                     onKeyUp={(e) => {
@@ -531,8 +456,6 @@ function Propostas() {
                             moment(item.prazo).diff(moment(), 'days') < 1 && item.status == 0 ? 0 : moment(item.data_conclusao).diff(moment(item.data_proposta), 'days')}
                         onClick={(e) => {
                           setproposta(item);
-                          setselectedproposta("inputProposta " + item.id_proposta);
-                          setselectedprazo("inputPrazo " + item.id_proposta);
                           e.stopPropagation()
                         }}
                         onKeyUp={(e) => {
@@ -552,9 +475,6 @@ function Propostas() {
                     </div>
                     <img
                       onClick={(e) => {
-                        setproposta(item);
-                        setselectedproposta("inputProposta " + item.id_proposta);
-                        setselectedprazo("inputPrazo " + item.id_proposta);
                         if (item.status == 0) {
                           setTimeout(() => {
                             updateProposta(item, "inputProposta " + item.id_proposta, "inputPrazo " + item.id_proposta, 1);

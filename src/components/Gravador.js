@@ -1,34 +1,36 @@
 /* eslint eqeqeq: "off" */
 import React, { useState } from 'react';
-import useSpeechToText from 'react-hook-speech-to-text';
+
 import microfone from '../images/microfone.svg';
 import salvar from '../images/salvar.svg';
 import deletar from '../images/deletar.svg';
 
+// import useSpeechToText from 'react-hook-speech-to-text';
+import SpeechRecognition, { useSpeechRecognition } from 'react-speech-recognition'
+
 function Gravador({ funcao }) {
   const [btngravavoz, setbtngravavoz] = useState("button-green");
+
+  // speech-recognition.
   const {
-    isRecording,
-    results,
-    startSpeechToText,
-    stopSpeechToText,
-    setResults,
-  } = useSpeechToText({
-    continuous: false,
-    useLegacyResults: false
-  });
+    transcript,
+    listening,
+    resetTranscript,
+    // browserSupportsSpeechRecognition
+  } = useSpeechRecognition();
+
   return (
     <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
       <div id="btngravavoz" className={btngravavoz}
         style={{ display: 'flex', width: 50, height: 50 }}
-        onClick={isRecording ?
+        onClick={listening ?
           () => {
             // não faz nada.
           } :
           (e) => {
             document.getElementById("btngravavoz").style.pointerEvents = 'none';
             setbtngravavoz("gravando");
-            startSpeechToText();
+            SpeechRecognition.startListening();
             e.stopPropagation();
           }}
       >
@@ -48,17 +50,13 @@ function Gravador({ funcao }) {
           display: btngravavoz == "gravando" ? 'flex' : 'none',
           flexDirection: 'column', justifyContent: 'center', width: 150
         }}>
-        {results.map(item => (
-          <div key={item.timestamp}>
-            {item.transcript.toUpperCase()}
-          </div>
-        ))}
+        {transcript.toUpperCase()}
         <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'center' }}>
           <div id="botão excluir" className='button-red'
             style={{ width: 25, minWidth: 25, height: 25, minHeight: 25 }}
             onClick={(e) => {
-              stopSpeechToText();
-              setResults([]);
+              SpeechRecognition.stopListening();
+              resetTranscript();
               setbtngravavoz("button-green");
               document.getElementById("btngravavoz").style.pointerEvents = 'auto';
               e.stopPropagation();
@@ -76,9 +74,9 @@ function Gravador({ funcao }) {
           <div id="botão salvar" className='button-green'
             style={{ width: 25, minWidth: 25, height: 25, minHeight: 25 }}
             onClick={(e) => {
-              stopSpeechToText();
+              SpeechRecognition.stopListening();
               setbtngravavoz("button-green");
-              results.map(result => funcao([result.transcript.toString().toUpperCase()]));
+              funcao([transcript.toUpperCase()]);
               document.getElementById("btngravavoz").style.pointerEvents = 'auto';
               e.stopPropagation();
             }}>

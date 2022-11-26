@@ -74,6 +74,7 @@ function Passometro() {
     setpaciente,
     atendimentos, setatendimentos,
     setatendimento, atendimento,
+    setselectedatendimento, selectedatendimento,
 
     // estados utilizados pela função getAllData (necessária para alimentar os card fechados).
     setalergias, alergias,
@@ -180,6 +181,7 @@ function Passometro() {
     if (pagina == 1) {
       setpaciente([]);
       setatendimento(null);
+      setselectedatendimento(null);
       loadPacientes();
 
       setcarddiasinternacao(settings.map(item => item.card_diasinternacao).pop());
@@ -382,6 +384,7 @@ function Passometro() {
                   onClick={() => {
                     setviewlista(0);
                     setatendimento(item.id_atendimento);
+                    setselectedatendimento(item);
                     setpaciente(item.id_paciente);
                     getAllData(item.id_paciente, item.id_atendimento);
                     if (pagina == 1) {
@@ -534,8 +537,6 @@ function Passometro() {
   // carregando todas as informações do atendimento.
   const getAllData = (paciente, atendimento) => {
     // Dados relacionados ao paciente.
-    // lista d eproblemas, hda.
-    loadAtendimentos();
     // alergias.
     if (cardalergias == 1) {
       setbusyalergias(1);

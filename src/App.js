@@ -71,7 +71,9 @@ function App() {
   const [pacientes, setpacientes] = useState([]);
   const [paciente, setpaciente] = useState([]);
   const [atendimentos, setatendimentos] = useState([]);
-  const [atendimento, setatendimento] = useState(null);
+
+  const [atendimento, setatendimento] = useState(null); // usado para identificar o id_atendimento.
+  const [selectedatendimento, setselectedatendimento] = useState([]); // usado para identificar todo o resgitro de atendimento.
 
   const [alergias, setalergias] = useState([]);
   const [lesoes, setlesoes] = useState([]);
@@ -144,6 +146,7 @@ function App() {
         paciente, setpaciente,
         atendimentos, setatendimentos,
         atendimento, setatendimento,
+        selectedatendimento, setselectedatendimento,
 
         alergias, setalergias,
         lesoes, setlesoes,

@@ -17,9 +17,12 @@ function Anamnese() {
   const {
     html,
     settoast,
+
+    unidade,
     pacientes,
     paciente,
-    atendimentos, // todos os registros de atendimento para a unidade selecionada.
+    atendimentos, setatendimentos, // todos os registros de atendimento para a unidade selecionada.
+
     atendimento, // corresponde ao id_atendimento das tabela "atendimento".
     card, setcard,
   } = useContext(Context);
@@ -32,9 +35,14 @@ function Anamnese() {
       setselectedinput(null);
       setanamnese(pacientes.filter(item => item.id_paciente == paciente));
       setselectedatendimento(atendimentos.filter(item => item.id_atendimento == atendimento));
+      document.getElementById("inputProblemas").value = atendimentos.filter(item => item.id_atendimento == atendimento).map(item => item.problemas);
+      document.getElementById("inputSituacao").value = atendimentos.filter(item => item.id_atendimento == atendimento).map(item => item.situacao);
+      document.getElementById("inputAntecedentesPessoais").value = pacientes.filter(item => item.id_paciente == paciente).map(item => item.antecedentes_pessoais);
+      document.getElementById("inputMedicacoesPrevias").value = pacientes.filter(item => item.id_paciente == paciente).map(item => item.medicacoes_previas);
+      document.getElementById("inputExamesPrevios").value = pacientes.filter(item => item.id_paciente == paciente).map(item => item.exames_previos);
     }
     // eslint-disable-next-line
-  }, [card, paciente, atendimento]);
+  }, [card, paciente, atendimentos, atendimento]);
 
   // atualizando um paciente.
   const updatePaciente = () => {
@@ -49,6 +57,9 @@ function Anamnese() {
     }
     axios.post(html + 'update_paciente/' + paciente, obj).then(() => {
       toast(settoast, 'DADOS DA ANAMNESE ATUALIZADOS COM SUCESSO', 'rgb(82, 190, 128, 1)', 3000);
+      axios.get(html + 'list_atendimentos/' + unidade).then((response) => {
+        setatendimentos(response.data.rows);
+      });
     })
   }
 
@@ -66,6 +77,10 @@ function Anamnese() {
     }
     axios.post(html + 'update_atendimento/' + atendimento, obj).then(() => {
       toast(settoast, 'DADOS DA ANAMNESE ATUALIZADOS COM SUCESSO', 'rgb(82, 190, 128, 1)', 3000);
+      axios.get(html + 'list_atendimentos/' + unidade).then((response) => {
+        setatendimentos(response.data.rows);
+        console.log('LISTA DE ATENDIMENTOS CARREGADA: ' + response.data.rows.length);
+      });
     })
   }
 

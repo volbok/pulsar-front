@@ -4,6 +4,7 @@
   "homepage": "https://ghaprodrigolessa.github.io/pulsar-front/",
   "private": false,
   "dependencies": {
+    "@react-pdf/renderer": "^1.6.8",
     "axios": "^0.21.1",
     "history": "^4.10.1",
     "moment": "^2.24.0",
@@ -13,7 +14,7 @@
     "react-hook-speech-to-text": "^0.8.0",
     "react-router-dom": "^5.2.0",
     "react-scripts": "^4.0.3",
-    "@react-pdf/renderer": "^1.6.8"
+    "react-speech-recognition": "^3.10.0"
   },
   "scripts": {
     "predeploy": "npm run build",

@@ -89,7 +89,7 @@ function Propostas() {
       status: 0,
       data_proposta: moment(),
       id_usuario: usuario.id,
-      prazo: 5,
+      prazo: moment().add(7, 'days'),
       data_conclusao: null,
     }
     axios.post(html + 'insert_proposta', obj).then(() => {

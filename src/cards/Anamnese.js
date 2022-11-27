@@ -2,13 +2,9 @@
 import React, { useContext, useState, useEffect } from 'react';
 import Context from '../pages/Context';
 import axios from 'axios';
-import useSpeechToText from 'react-hook-speech-to-text';
 // funções.
 import toast from '../functions/toast';
 // imagens.
-import deletar from '../images/deletar.svg';
-import salvar from '../images/salvar.svg';
-import microfone from '../images/microfone.svg';
 import back from '../images/back.svg';
 
 function Anamnese() {
@@ -32,7 +28,6 @@ function Anamnese() {
 
   useEffect(() => {
     if (card == 'card-anamnese') {
-      setselectedinput(null);
       setanamnese(pacientes.filter(item => item.id_paciente == paciente));
       setselectedatendimento(atendimentos.filter(item => item.id_atendimento == atendimento));
       document.getElementById("inputProblemas").value = atendimentos.filter(item => item.id_atendimento == atendimento).map(item => item.problemas);
@@ -85,113 +80,21 @@ function Anamnese() {
   }
 
   // registro de textarea por voz.
-  const [selectedinput, setselectedinput] = useState(null);
   function Botoes() {
-    const [btngravavoz, setbtngravavoz] = useState("button-green");
-    const {
-      isRecording,
-      results,
-      startSpeechToText,
-      stopSpeechToText,
-      setResults,
-    } = useSpeechToText({
-      continuous: true,
-      useLegacyResults: false
-    });
     return (
-      <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', marginTop: 15 }}>
-        <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'center' }}>
-          <div id="botão de retorno"
-            className="button-red"
-            style={{
-              display: 'flex',
-              alignSelf: 'center',
-            }}
-            onClick={() => setcard('')}>
-            <img
-              alt=""
-              src={back}
-              style={{ width: 30, height: 30 }}
-            ></img>
-          </div>
-          <div id="btngravavoz" className={btngravavoz}
-            style={{ display: 'flex', width: 50, height: 50 }}
-            onClick={(e) => {
-              if (selectedinput != null) {
-                if (isRecording == true) {
-                  // nada.
-                } else {
-                  setbtngravavoz("gravando");
-                  startSpeechToText();
-                  e.stopPropagation();
-                }
-              } else {
-                toast(settoast, 'SELECIONE UM CAMPO PRIMEIRO', 'rgb(231, 76, 60, 1)', 3000);
-                e.stopPropagation();
-              }
-            }}
-          >
-            <img
-              alt=""
-              src={microfone}
-              style={{
-                margin: 10,
-                height: 30,
-                width: 30,
-              }}
-            ></img>
-          </div>
-        </div>
-        <div id="lista de resultados"
-          className="button"
+      <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'center' }}>
+        <div id="botão de retorno"
+          className="button-red"
           style={{
-            display: btngravavoz == "gravando" ? 'flex' : 'none',
-            flexDirection: 'column', justifyContent: 'center', width: 150,
+            display: 'flex',
             alignSelf: 'center',
-          }}>
-          {results.map(item => (
-            <div key={item.timestamp}>
-              {item.transcript.toUpperCase()}
-            </div>
-          ))}
-          <div className='button-red'
-            style={{ width: 25, minWidth: 25, height: 25, minHeight: 25 }}
-            onClick={(e) => {
-              stopSpeechToText();
-              setResults([]);
-              setbtngravavoz("button-green");
-              e.stopPropagation();
-            }}>
-            <img
-              alt=""
-              src={deletar}
-              style={{
-                margin: 10,
-                height: 25,
-                width: 25,
-              }}
-            ></img>
-          </div>
-          <div id="botão salvar" className='button-green'
-            style={{ width: 25, minWidth: 25, height: 25, minHeight: 25 }}
-            onClick={(e) => {
-              stopSpeechToText();
-              setbtngravavoz("button-green");
-              document.getElementById(selectedinput).value = document.getElementById(selectedinput).value + ' ' + results.map(result => result.transcript.toString().toUpperCase() + '.');
-              updatePaciente(pacientes.filter(item => item.id_paciente == paciente));
-              updateAtendimento();
-              e.stopPropagation();
-            }}>
-            <img
-              alt=""
-              src={salvar}
-              style={{
-                margin: 10,
-                height: 25,
-                width: 25,
-              }}
-            ></img>
-          </div>
+          }}
+          onClick={() => setcard('')}>
+          <img
+            alt=""
+            src={back}
+            style={{ width: 30, height: 30 }}
+          ></img>
         </div>
       </div>
     );
@@ -216,7 +119,6 @@ function Anamnese() {
           onFocus={(e) => (e.target.placeholder = '')}
           onBlur={(e) => (e.target.placeholder = 'LISTA DE PROBLEMAS')}
           defaultValue={selectedatendimento.map(item => item.problemas)}
-          onClick={(e) => { setselectedinput("inputProblemas"); e.stopPropagation() }}
           onKeyUp={(e) => {
             clearTimeout(timeout);
             timeout = setTimeout(() => {
@@ -243,7 +145,6 @@ function Anamnese() {
           onFocus={(e) => (e.target.placeholder = '')}
           onBlur={(e) => (e.target.placeholder = 'SITUAÇÃO, CONTEXTO, HISTÓRIA DA DOENÇA ATUAL')}
           defaultValue={selectedatendimento.map(item => item.situacao)}
-          onClick={(e) => { setselectedinput("inputSituacao"); e.stopPropagation() }}
           onKeyUp={(e) => {
             clearTimeout(timeout);
             timeout = setTimeout(() => {
@@ -270,7 +171,6 @@ function Anamnese() {
           onFocus={(e) => (e.target.placeholder = '')}
           onBlur={(e) => (e.target.placeholder = 'ANTECEDENTES PESSOAIS')}
           defaultValue={anamnese.map(item => item.antecedentes_pessoais)}
-          onClick={(e) => { setselectedinput("inputAntecedentesPessoais"); e.stopPropagation() }}
           onKeyUp={(e) => {
             clearTimeout(timeout);
             timeout = setTimeout(() => {
@@ -298,7 +198,6 @@ function Anamnese() {
           onFocus={(e) => (e.target.placeholder = '')}
           onBlur={(e) => (e.target.placeholder = 'MEDICAÇÕES DE USO DOMICILIAR')}
           defaultValue={anamnese.map(item => item.medicacoes_previas)}
-          onClick={(e) => { setselectedinput("inputMedicacoesPrevias"); e.stopPropagation() }}
           onKeyUp={(e) => {
             clearTimeout(timeout);
             timeout = setTimeout(() => {
@@ -326,7 +225,6 @@ function Anamnese() {
           onFocus={(e) => (e.target.placeholder = '')}
           onBlur={(e) => (e.target.placeholder = 'EXAMES PRÉVIOS')}
           defaultValue={anamnese.map(item => item.exames_previos)}
-          onClick={(e) => { setselectedinput("inputExamesPrevios"); e.stopPropagation() }}
           onKeyUp={(e) => {
             clearTimeout(timeout);
             timeout = setTimeout(() => {

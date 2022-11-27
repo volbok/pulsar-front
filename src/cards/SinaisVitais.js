@@ -15,6 +15,8 @@ import salvar from '../images/salvar.svg';
 import novo from '../images/novo.svg';
 import microfone from '../images/microfone.svg';
 import back from '../images/back.svg';
+// componentes.
+import GravadorMulti from '../components/GravadorMulti';
 
 function SinaisVitais() {
 
@@ -68,6 +70,30 @@ function SinaisVitais() {
       balanco: balanco,
       evacuacao: evacuacao,
       estase: estase,
+      data_sinais_vitais: moment(),
+    }
+    axios.post(html + 'insert_sinais_vitais', obj).then(() => {
+      // toast(settoast, 'SINAIS VITAIS ADICIONADOS COM SUCESSO', 'rgb(82, 190, 128, 1)', 3000);
+      loadSinaisVitais();
+      setviewinsertsinaisvitais(0);
+    })
+  }
+
+  // inserir sinais vitais.
+  const insertMultiSinaisVitais = (valores) => {
+    var obj = {
+      id_atendimento: atendimento,
+      pas: valores.slice(0, 1).pop(),
+      pad: valores.slice(1, 2).pop(),
+      fc: valores.slice(2, 3).pop(),
+      fr: valores.slice(3, 4).pop(),
+      sao2: valores.slice(4, 5).pop(),
+      tax: valores.slice(5, 6).pop(),
+      glicemia: valores.slice(6, 7).pop(),
+      diurese: valores.slice(7, 8).pop(),
+      balanco: valores.slice(8, 9).pop(),
+      evacuacao: valores.slice(9, 10).pop(),
+      estase: valores.slice(10, 11).pop(),
       data_sinais_vitais: moment(),
     }
     axios.post(html + 'insert_sinais_vitais', obj).then(() => {
@@ -433,180 +459,31 @@ function SinaisVitais() {
 
   // registro de sinais vitais por voz.
   function Botoes() {
-    const [btngravavoz, setbtngravavoz] = useState("button-green");
-    const {
-      isRecording,
-      results,
-      startSpeechToText,
-      stopSpeechToText,
-      setResults,
-    } = useSpeechToText({
-      continuous: true,
-      useLegacyResults: false
-    });
-
     return (
-      <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', marginTop: 15 }}>
-        <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'center' }}>
-          <div id="botão de retorno"
-            className="button-red"
-            style={{
-              display: 'flex',
-              alignSelf: 'center',
-            }}
-            onClick={() => setcard('')}>
-            <img
-              alt=""
-              src={back}
-              style={{ width: 30, height: 30 }}
-            ></img>
-          </div>
-          <div id="btngravavoz" className={btngravavoz}
-            style={{ display: 'flex', width: 50, height: 50 }}
-            onClick={isRecording ?
-              (e) => {
-                stopSpeechToText();
-                setbtngravavoz("button-green");
-                var parametros = [];
-                results.map(result => parametros.push(result.transcript.toString()));
-                console.log(parametros);
-                if (parametros.length == 11) {
-                  insertSinaisVitais([parametros]);
-                } else {
-                  toast(settoast, 'INFORME PAUSADAMENTE TODOS OS DADOS VITAIS', 'red', 2000);
-                }
-                e.stopPropagation();
-              } :
-              (e) => {
-                setbtngravavoz("gravando");
-                startSpeechToText();
-                e.stopPropagation();
-              }}
-          >
-            <img
-              alt=""
-              src={microfone}
-              style={{
-                margin: 10,
-                height: 30,
-                width: 30,
-              }}
-            ></img>
-          </div>
-          <div id="btninputsinaisvitais"
-            className='button-green'
-            onClick={(e) => { setviewinsertsinaisvitais(1); e.stopPropagation() }}
-            style={{ width: 50, height: 50 }}
-          >
-            <img
-              alt=""
-              src={novo}
-              style={{
-                margin: 10,
-                height: 30,
-                width: 30,
-              }}
-            ></img>
-          </div>
+      <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'center' }}>
+        <div id="botão de retorno"
+          className="button-red"
+          style={{ display: 'flex', alignSelf: 'center' }}
+          onClick={() => setcard('')}>
+          <img
+            alt=""
+            src={back}
+            style={{ width: 30, height: 30 }}
+          ></img>
         </div>
-        <div className='fundo'
-          style={{ display: btngravavoz == "gravando" ? 'flex' : 'none' }}>
-          <div id="lista de resultados"
-            className='button-opaque'
-            style={{
-              flexDirection: 'column', justifyContent: 'center', alignSelf: 'center',
-            }}>
-
-            <div id="indicador do sinal vital"
-              className='button-yellow'
-              style={{ padding: 20, margin: 10, fontSize: 16 }}>
-              <div>
-                {
-                  results.length == 0 ? 'INFORME O VALOR PARA PAS' :
-                    results.length == 1 ? 'INFORME O VALOR PARA PAD' :
-                      results.length == 2 ? 'INFORME O VALOR PARA FC' :
-                        results.length == 3 ? 'INFORME O VALOR PARA FR' :
-                          results.length == 4 ? 'INFORME O VALOR PARA SAO2' :
-                            results.length == 5 ? 'INFORME O VALOR PARA TAX' :
-                              results.length == 6 ? 'INFORME O VALOR PARA GLICEMIA' :
-                                results.length == 7 ? 'INFORME O VALOR PARA DIURESE' :
-                                  results.length == 8 ? 'INFORME O VALOR PARA BALANÇO' :
-                                    results.length == 9 ? 'INFORME O VALOR PARA EVACUAÇÃO' :
-                                      results.length == 10 ? 'INFORME O VALOR PARA ESTASE' : 'SINAIS VITAIS IMPUTADOS!'
-                }
-              </div>
-            </div>
-            <div id="último dado inputado"
-              style={{ display: 'flex', flexDirection: 'row', justifyContent: 'center', margin: 10 }}
-            >
-              <div style={{ marginRight: 5 }}>
-                {results.length == 1 ? 'PAS:' :
-                  results.length == 2 ? 'PAD:' :
-                    results.length == 3 ? 'FC:' :
-                      results.length == 4 ? 'FR:' :
-                        results.length == 5 ? 'SAO2:' :
-                          results.length == 6 ? 'TAX:' :
-                            results.length == 7 ? 'GLICEMIA:' :
-                              results.length == 8 ? 'DIURESE:' :
-                                results.length == 9 ? 'BALANÇO:' :
-                                  results.length == 10 ? 'EVACUAÇÃO:' :
-                                    results.length == 11 ? 'ESTASE:' : ''}
-              </div>
-              {results.slice(-1).map(item => (
-                <div key={item.timestamp}>
-                  {item.transcript.toUpperCase()}
-                </div>
-              ))}
-            </div>
-            <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'center' }}>
-              <div className='button-red'
-                style={{ width: 50, minWidth: 50, height: 50, minHeight: 50 }}
-                onClick={(e) => {
-                  stopSpeechToText();
-                  setResults([]);
-                  setbtngravavoz("button-green");
-                  e.stopPropagation();
-                }}>
-                <img
-                  alt=""
-                  src={deletar}
-                  style={{
-                    margin: 10,
-                    height: 25,
-                    width: 25,
-                  }}
-                ></img>
-              </div>
-              <div id="btngravavoz" className='button-green'
-                style={{ width: 50, minWidth: 50, height: 50, minHeight: 50 }}
-                onClick={(e) => {
-                  stopSpeechToText();
-                  setbtngravavoz("button-green");
-                  var parametros = [];
-                  results.map(result => parametros.push(result.transcript.toString().toUpperCase()));
-                  console.log(parametros);
-                  if (parametros.length == 11) {
-                    insertSinaisVitais(parametros);
-                  } else {
-                    toast(settoast, 'INFORME PAUSADAMENTE TODOS OS DADOS VITAIS', 'red', 2000);
-                  }
-                  e.stopPropagation();
-                }}
-              >
-                <img
-                  alt=""
-                  src={salvar}
-                  style={{
-                    margin: 10,
-                    height: 30,
-                    width: 30,
-                  }}
-                ></img>
-              </div>
-            </div>
-          </div >
+        <GravadorMulti funcao={insertMultiSinaisVitais} campos={['PAS', 'PAD', 'FC', 'FR', 'SAO2', 'TAX', 'GLICEMIA', 'DIURESE', 'BALANÇO', 'EVACUAÇÃO', 'ESTASE']}></GravadorMulti>
+        <div id="btninputsinaisvitais"
+          className='button-green'
+          onClick={(e) => { setviewinsertsinaisvitais(1); e.stopPropagation() }}
+          style={{ display: 'flex', alignSelf: 'center' }}
+        >
+          <img
+            alt=""
+            src={novo}
+            style={{ width: 30, height: 30 }}
+          ></img>
         </div>
-      </div >
+      </div>
     );
   }
 

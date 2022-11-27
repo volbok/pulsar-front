@@ -5,7 +5,6 @@ import microfone from '../images/microfone.svg';
 import salvar from '../images/salvar.svg';
 import deletar from '../images/deletar.svg';
 
-// import useSpeechToText from 'react-hook-speech-to-text';
 import SpeechRecognition, { useSpeechRecognition } from 'react-speech-recognition'
 
 function Gravador({ funcao }) {
@@ -16,7 +15,6 @@ function Gravador({ funcao }) {
     transcript,
     listening,
     resetTranscript,
-    // browserSupportsSpeechRecognition
   } = useSpeechRecognition();
 
   return (

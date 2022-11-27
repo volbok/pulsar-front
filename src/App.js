@@ -14,6 +14,9 @@ import PdfFull from './pages/PdfFull';
 import Toast from './components/Toast';
 import Modal from './components/Modal';
 import DatePicker from './components/DatePicker';
+// componentes.
+import toast from './functions/toast';
+
 // router.
 import {
   // BrowserRouter as Router, >> pode usar fora do githubPages.
@@ -21,6 +24,7 @@ import {
   Switch,
   Route,
 } from 'react-router-dom'
+import Alertas from './cards/Alertas';
 
 function App() {
   // api.
@@ -73,7 +77,6 @@ function App() {
   const [atendimentos, setatendimentos] = useState([]);
 
   const [atendimento, setatendimento] = useState(null); // usado para identificar o id_atendimento.
-  const [selectedatendimento, setselectedatendimento] = useState([]); // usado para identificar todo o resgitro de atendimento.
 
   const [alergias, setalergias] = useState([]);
   const [lesoes, setlesoes] = useState([]);
@@ -101,6 +104,13 @@ function App() {
   }
   window.addEventListener('resize', documentHeight)
   documentHeight();
+
+  window.history.pushState({ page: 1 }, "", "");
+  window.onpopstate = function (event) {
+    if (event) {
+      window.history.pushState({ page: 1 }, "", "");
+    }
+  }
 
   return (
     <Context.Provider
@@ -146,7 +156,6 @@ function App() {
         paciente, setpaciente,
         atendimentos, setatendimentos,
         atendimento, setatendimento,
-        selectedatendimento, setselectedatendimento,
 
         alergias, setalergias,
         lesoes, setlesoes,

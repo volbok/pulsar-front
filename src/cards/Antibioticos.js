@@ -93,12 +93,13 @@ function Antibioticos() {
       antibiotico: atb,
       data_inicio: moment(),
       data_termino: null,
-      prazo: 7,
+      prazo: moment().add(7, 'days'),
     }
-    axios.post(html + 'insert_antibiotico', obj).then(() => {
+    axios.post(html + 'insert_antibiotico', obj).then((response) => {
       loadAntibioticos();
       setviewinsertantibiotico(0);
       toast(settoast, 'ANTIBIÓTICO REGISTRADO COM SUCESSO', 'rgb(82, 190, 128, 1)', 3000);
+      console.log(response);
     })
   }
 

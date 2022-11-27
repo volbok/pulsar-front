@@ -13,8 +13,9 @@ import checkinput from '../functions/checkinput';
 import deletar from '../images/deletar.svg';
 import salvar from '../images/salvar.svg';
 import novo from '../images/novo.svg';
-import microfone from '../images/microfone.svg';
 import back from '../images/back.svg';
+// componentes.
+import GravadorMulti from '../components/GravadorMulti';
 
 function VentilacaoMecanica() {
 
@@ -64,6 +65,26 @@ function VentilacaoMecanica() {
       volume: volume,
       peep: peep,
       fio2: fio2,
+      data_vm: moment(),
+    }
+    axios.post(html + 'insert_vm', obj).then(() => {
+      // toast(settoast, 'PARÂMETROS VENTILATÓRIOS ADICIONADOS COM SUCESSO', 'rgb(82, 190, 128, 1)', 3000);
+      loadVentilacaoMecanica();
+      setviewinsertvm(0);
+    })
+  }
+
+  // inserir registro de parâmetros ventilatórios.
+  const insertVoiceVentilacaoMecanica = (parametros) => {
+    // var today = moment();
+    // console.log(today);
+    var obj = {
+      id_atendimento: atendimento,
+      modo: parametros.slice(0, 1).pop(),
+      pressao: parametros.slice(1, 2).pop(),
+      volume: parametros.slice(2, 3).pop(),
+      peep: parametros.slice(3, 4).pop(),
+      fio2: parametros.slice(4, 5).pop(),
       data_vm: moment(),
     }
     axios.post(html + 'insert_vm', obj).then(() => {
@@ -319,10 +340,7 @@ function VentilacaoMecanica() {
         <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'center' }}>
           <div id="botão de retorno"
             className="button-red"
-            style={{
-              display: 'flex',
-              alignSelf: 'center',
-            }}
+            style={{ display: 'flex', alignSelf: 'center' }}
             onClick={() => setcard('')}>
             <img
               alt=""
@@ -330,51 +348,16 @@ function VentilacaoMecanica() {
               style={{ width: 30, height: 30 }}
             ></img>
           </div>
-          <div id="btngravavoz" className={btngravavoz}
-            style={{ display: 'flex', width: 50, height: 50 }}
-            onClick={isRecording ?
-              (e) => {
-                stopSpeechToText();
-                setbtngravavoz("button-green");
-                var parametros = [];
-                results.map(result => parametros.push(result.transcript.toString()));
-                console.log(parametros);
-                if (parametros.length == 11) {
-                  insertVentilacaoMecanica([parametros]);
-                } else {
-                  toast(settoast, 'INFORME PAUSADAMENTE TODOS OS PARÂMETROS DA VM', 'red', 2000);
-                }
-                e.stopPropagation();
-              } :
-              (e) => {
-                setbtngravavoz("gravando");
-                startSpeechToText();
-                e.stopPropagation();
-              }}
-          >
-            <img
-              alt=""
-              src={microfone}
-              style={{
-                margin: 10,
-                height: 30,
-                width: 30,
-              }}
-            ></img>
-          </div>
+          <GravadorMulti funcao={insertVoiceVentilacaoMecanica} campos={['MODO', 'PRESSÃO', 'VOLUME', 'PEEP', 'FIO2']}></GravadorMulti>
           <div id="btninputvm"
             className='button-green'
             onClick={(e) => { setviewinsertvm(1); e.stopPropagation() }}
-            style={{ width: 50, height: 50 }}
+            style={{ display: 'flex', alignSelf: 'center' }}
           >
             <img
               alt=""
               src={novo}
-              style={{
-                margin: 10,
-                height: 30,
-                width: 30,
-              }}
+              style={{ width: 30, height: 30 }}
             ></img>
           </div>
         </div>

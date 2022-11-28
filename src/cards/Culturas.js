@@ -129,7 +129,7 @@ function Culturas() {
             style={{ width: 30, height: 30 }}
           ></img>
         </div>
-        <Gravador funcao={insertVoiceCultura}></Gravador>
+        <Gravador funcao={insertVoiceCultura} continuo={false}></Gravador>
         <div id="btnsalvarcultura"
           className='button-green'
           style={{

@@ -137,7 +137,7 @@ function Infusoes() {
             style={{ width: 30, height: 30 }}
           ></img>
         </div>
-        <Gravador funcao={insertVoiceInfusao}></Gravador>
+        <Gravador funcao={insertVoiceInfusao} continuo={false}></Gravador>
         <div id="btnsalvarinfusão"
           className='button-green'
           style={{

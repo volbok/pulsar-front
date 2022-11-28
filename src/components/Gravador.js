@@ -7,7 +7,7 @@ import deletar from '../images/deletar.svg';
 
 import SpeechRecognition, { useSpeechRecognition } from 'react-speech-recognition'
 
-function Gravador({ funcao }) {
+function Gravador({ funcao, continuo }) {
   const [btngravavoz, setbtngravavoz] = useState("button-green");
 
   // speech-recognition.
@@ -28,7 +28,7 @@ function Gravador({ funcao }) {
           (e) => {
             document.getElementById("btngravavoz").style.pointerEvents = 'none';
             setbtngravavoz("gravando");
-            SpeechRecognition.startListening();
+            SpeechRecognition.startListening({continuous: continuo});
             e.stopPropagation();
           }}
       >
@@ -46,7 +46,7 @@ function Gravador({ funcao }) {
         className="button"
         style={{
           display: btngravavoz == "gravando" ? 'flex' : 'none',
-          flexDirection: 'column', justifyContent: 'center', width: 150
+          flexDirection: 'column', justifyContent: 'center', width: 150, padding: 20,
         }}>
         {transcript.toUpperCase()}
         <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'center' }}>

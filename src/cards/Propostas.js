@@ -124,7 +124,7 @@ function Propostas() {
             style={{ width: 30, height: 30 }}
           ></img>
         </div>
-        <Gravador funcao={insertVoiceProposta}></Gravador>
+        <Gravador funcao={insertVoiceProposta} continuo={true}></Gravador>
         <div id="btnsalvarevolucao"
           className='button-green'
           style={{ width: 50, height: 50 }}

@@ -114,7 +114,7 @@ function Evolucoes() {
             style={{ width: 30, height: 30 }}
           ></img>
         </div>
-        <Gravador funcao={insertVoiceEvolucao}></Gravador>
+        <Gravador funcao={insertVoiceEvolucao} continuo={true}></Gravador>
         <div id="btnsalvarevolucao"
           className='button-green'
           style={{ width: 50, height: 50 }}

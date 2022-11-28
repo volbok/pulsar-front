@@ -128,7 +128,7 @@ function Antibioticos() {
             style={{ width: 30, height: 30 }}
           ></img>
         </div>
-        <Gravador funcao={insertVoiceAntibiotico}></Gravador>
+        <Gravador funcao={insertVoiceAntibiotico} continuo={false}></Gravador>
         <div id="btnsalvarcultura"
           className='button-green'
           style={{

@@ -142,7 +142,7 @@ function Alergias() {
               style={{ width: 30, height: 30 }}
             ></img>
           </div>
-          <Gravador funcao={insertAlergia}></Gravador>
+          <Gravador funcao={insertAlergia} continuo={false} ></Gravador>
           <div id="btninputalergia"
             className='button-green'
             onClick={(e) => { setviewinsertalergia(1); e.stopPropagation() }}

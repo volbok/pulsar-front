@@ -670,7 +670,13 @@ function Passometro() {
         setbusysinaisvitais(0);
         setsinaisvitais(response.data.rows);
         // cálculo do balanço acumulado.
-        x.map(item => arraybalancos.push(parseInt(item.balanco)));
+        x.map(item => {
+          if (isNaN(parseFloat(item.balanco.replace(" ", ""))) == true) {
+            console.log(item.balanco);
+          } else {
+            arraybalancos.push(parseFloat(item.balanco.replace(" ", "")));
+          }
+        });
         function soma(total, num) {
           return total + num;
         }

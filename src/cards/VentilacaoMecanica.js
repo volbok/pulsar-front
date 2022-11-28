@@ -7,7 +7,6 @@ import useSpeechToText from 'react-hook-speech-to-text';
 // funções.
 import modal from '../functions/modal';
 import toast from '../functions/toast';
-// import toast from '../functions/toast';
 import checkinput from '../functions/checkinput';
 // imagens.
 import deletar from '../images/deletar.svg';

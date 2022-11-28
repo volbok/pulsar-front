@@ -688,110 +688,114 @@ function SinaisVitais() {
       <div className="text3">
         SINAIS VITAIS
       </div>
-      {sinaisvitais.sort((a, b) => moment(a.data_sinais_vitais) > moment(b.data_sinais_vitais) ? -1 : 1).slice(-3).map(item => (
-        <div className='row'
-          key={'sinais_vitais ' + item.id_sinais_vitais}
-          onClick={(e) => { setitem_sinaisvitais(item); setviewinsertsinaisvitais(2); e.stopPropagation(); }}
-          style={{
-            display: 'flex',
-            flexDirection: window.innerWidth < 426 ? 'column' : 'row',
-          }}
-        >
-          <div id="identificador"
-            className='button-yellow'
+      <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-evenly', flexWrap: 'wrap' }}>
+        {sinaisvitais.sort((a, b) => moment(a.data_sinais_vitais) < moment(b.data_sinais_vitais) ? 1 : -1).slice(-4).map(item => (
+          <div className='row'
+            key={'sinais_vitais ' + item.id_sinais_vitais}
+            onClick={(e) => { setitem_sinaisvitais(item); setviewinsertsinaisvitais(2); e.stopPropagation(); }}
             style={{
-              flex: 1,
-              flexDirection: window.innerWidth < 426 ? 'row' : 'column',
-              justifyContent: 'center', alignSelf: 'center',
-              margin: 5, padding: 5,
-              height: window.innerWidth < 426 ? '200vh' : window.innerWidth > 425 && window.innerWidth < 769 ? '60vh' : '30vh',
-              width: '95%',
-              marginBottom: window.innerWidth < 426 ? 0 : 5,
-              marginRight: window.innerWidth < 426 ? 5 : 0,
-              borderTopLeftRadius: window.innerWidth < 426 ? 5 : 5,
-              borderTopRightRadius: window.innerWidth < 426 ? 5 : 0,
-              borderBottomLeftRadius: window.innerWidth < 426 ? 0 : 5,
-              borderBottomRightRadius: window.innerWidth < 426 ? 0 : 0,
-            }}>
-            <div style={{
-              display: window.innerWidth < 426 ? 'none' : 'flex',
-              flexDirection: 'column',
-              justifyContent: 'center'
-            }}>
-              <div className='text2' style={{ color: '#ffffff' }}>{moment(item.data_sinais_vitais).format('DD/MM/YY')}</div>
-              <div className='text2' style={{ color: '#ffffff', marginTop: 0 }}>{moment(item.data_sinais_vitais).format('HH:mm')}</div>
-              <div className='button-red'
-                style={{ width: 25, minWidth: 25, height: 25, minHeight: 25, alignSelf: 'center' }}
-                onClick={(e) => {
-                  modal(setdialogo, 'CONFIRMAR EXCLUSÃO DOS DADOS VITAIS ?', deleteSinaisVitais, item.id_sinais_vitais);
-                  e.stopPropagation();
-                }}>
-                <img
-                  alt=""
-                  src={deletar}
-                  style={{
-                    margin: 10,
-                    height: 25,
-                    width: 25,
-                  }}
-                ></img>
-              </div>
-            </div>
-            <div style={{
-              display: window.innerWidth < 426 ? 'flex' : 'none',
-              flexDirection: 'row',
-              justifyContent: 'space-between',
-              width: '100%',
-            }}>
-              <div className='text2' style={{ color: '#ffffff' }}>{moment(item.data_sinais_vitais).format('DD/MM/YY - HH:mm')}</div>
-              <div className='button-red'
-                style={{ width: 25, minWidth: 25, height: 25, minHeight: 25 }}
-                onClick={(e) => {
-                  modal(setdialogo, 'CONFIRMAR EXCLUSÃO DOS DADOS VITAIS ?', deleteSinaisVitais, item.id_sinais_vitais);
-                  e.stopPropagation();
-                }}>
-                <img
-                  alt=""
-                  src={deletar}
-                  style={{
-                    margin: 10,
-                    height: 25,
-                    width: 25,
-                  }}
-                ></img>
-              </div>
-            </div>
-          </div>
-          <div id="sinais vitais"
-            className='button'
-            style={{
-              flex: window.innerWidth < 426 ? 11 : 4,
-              display: 'flex', flexDirection: 'row',
-              justifyContent: 'center',
-              flexWrap: 'wrap', width: '95%',
-              height: window.innerWidth < 426 ? '200vh' : window.innerWidth > 425 && window.innerWidth < 769 ? '60vh' : '30vh',
-              borderTopLeftRadius: window.innerWidth < 426 ? 0 : 0,
-              borderTopRightRadius: window.innerWidth < 426 ? 0 : 5,
-              borderBottomLeftRadius: window.innerWidth < 426 ? 5 : 0,
-              borderBottomRightRadius: window.innerWidth < 426 ? 5 : 5,
-              marginTop: window.innerWidth < 426 ? 0 : 5,
-              marginLeft: window.innerWidth < 426 ? 5 : 0,
+              display: 'flex',
+              flexDirection: window.innerWidth < 426 ? 'column' : 'row',
+              justifyContent: 'flex-end',
             }}
           >
-            {montaSinalVital('PAS', item.pas, 'mmHg', 70, 180)}
-            {montaSinalVital('PAD', item.pad, 'mmHg', 50, 120)}
-            {montaSinalVital('FC', item.fc, 'bpm', 45, 120)}
-            {montaSinalVital('FR', item.fr, 'irpm', 10, 22)}
-            {montaSinalVital('SAO2', item.sao2, '%', 85, 100)}
-            {montaSinalVital('TAX', item.tax, '°C', 35, 37.3)}
-            {montaSinalVital('GLICEMIA', item.glicemia, 'mg/dl', 70, 180)}
-            {montaSinalVital('DIURESE', item.diurese, 'ml', 500, 2000)}
-            {montaSinalVital('BALANÇO', item.balanco, 'ml', -2000, 2000)}
-            {montaSinalVital('EVACUAÇÃO', item.evacuacao, '', '', '')}
-            {montaSinalVital('ESTASE', item.estase, 'ml', 0, 200)}
+            <div id="identificador"
+              className='button-yellow'
+              style={{
+                flex: 1,
+                flexDirection: window.innerWidth < 426 ? 'row' : 'column',
+                justifyContent: 'center', alignSelf: 'center',
+                margin: 5, padding: 5,
+                height: window.innerWidth < 426 ? '200vh' : window.innerWidth > 425 && window.innerWidth < 769 ? '60vh' : '30vh',
+                width: window.innerWidth < 426 ? '95%' : 50,
+                marginBottom: window.innerWidth < 426 ? 0 : 5,
+                marginRight: window.innerWidth < 426 ? 5 : 0,
+                borderTopLeftRadius: window.innerWidth < 426 ? 5 : 5,
+                borderTopRightRadius: window.innerWidth < 426 ? 5 : 0,
+                borderBottomLeftRadius: window.innerWidth < 426 ? 0 : 5,
+                borderBottomRightRadius: window.innerWidth < 426 ? 0 : 0,
+              }}>
+              <div style={{
+                display: window.innerWidth < 426 ? 'none' : 'flex',
+                flexDirection: 'column',
+                justifyContent: 'center'
+              }}>
+                <div className='text2' style={{ color: '#ffffff' }}>{moment(item.data_sinais_vitais).format('DD/MM/YY')}</div>
+                <div className='text2' style={{ color: '#ffffff', marginTop: 0 }}>{moment(item.data_sinais_vitais).format('HH:mm')}</div>
+                <div className='button-red'
+                  style={{ width: 25, minWidth: 25, height: 25, minHeight: 25, alignSelf: 'center' }}
+                  onClick={(e) => {
+                    modal(setdialogo, 'CONFIRMAR EXCLUSÃO DOS DADOS VITAIS ?', deleteSinaisVitais, item.id_sinais_vitais);
+                    e.stopPropagation();
+                  }}>
+                  <img
+                    alt=""
+                    src={deletar}
+                    style={{
+                      margin: 10,
+                      height: 25,
+                      width: 25,
+                    }}
+                  ></img>
+                </div>
+              </div>
+              <div style={{
+                display: window.innerWidth < 426 ? 'flex' : 'none',
+                flexDirection: 'row',
+                justifyContent: 'space-between',
+                width: '100%',
+              }}>
+                <div className='text2' style={{ color: '#ffffff' }}>{moment(item.data_sinais_vitais).format('DD/MM/YY - HH:mm')}</div>
+                <div className='button-red'
+                  style={{ width: 25, minWidth: 25, height: 25, minHeight: 25 }}
+                  onClick={(e) => {
+                    modal(setdialogo, 'CONFIRMAR EXCLUSÃO DOS DADOS VITAIS ?', deleteSinaisVitais, item.id_sinais_vitais);
+                    e.stopPropagation();
+                  }}>
+                  <img
+                    alt=""
+                    src={deletar}
+                    style={{
+                      margin: 10,
+                      height: 25,
+                      width: 25,
+                    }}
+                  ></img>
+                </div>
+              </div>
+            </div>
+            <div id="sinais vitais"
+              className='button'
+              style={{
+                flex: window.innerWidth < 426 ? 11 : 4,
+                display: 'flex', flexDirection: 'row',
+                justifyContent: 'center',
+                flexWrap: 'wrap',
+                width: window.innerWidth < 426 ? '95%' : '27vw',
+                height: window.innerWidth < 426 ? '200vh' : window.innerWidth > 425 && window.innerWidth < 769 ? '60vh' : '30vh',
+                borderTopLeftRadius: window.innerWidth < 426 ? 0 : 0,
+                borderTopRightRadius: window.innerWidth < 426 ? 0 : 5,
+                borderBottomLeftRadius: window.innerWidth < 426 ? 5 : 0,
+                borderBottomRightRadius: window.innerWidth < 426 ? 5 : 5,
+                marginTop: window.innerWidth < 426 ? 0 : 5,
+                marginLeft: window.innerWidth < 426 ? 5 : 0,
+              }}
+            >
+              {montaSinalVital('PAS', item.pas, 'mmHg', 70, 180)}
+              {montaSinalVital('PAD', item.pad, 'mmHg', 50, 120)}
+              {montaSinalVital('FC', item.fc, 'bpm', 45, 120)}
+              {montaSinalVital('FR', item.fr, 'irpm', 10, 22)}
+              {montaSinalVital('SAO2', item.sao2, '%', 85, 100)}
+              {montaSinalVital('TAX', item.tax, '°C', 35, 37.3)}
+              {montaSinalVital('GLICEMIA', item.glicemia, 'mg/dl', 70, 180)}
+              {montaSinalVital('DIURESE', item.diurese, 'ml', 500, 2000)}
+              {montaSinalVital('BALANÇO', item.balanco, 'ml', -2000, 2000)}
+              {montaSinalVital('EVACUAÇÃO', item.evacuacao, '', '', '')}
+              {montaSinalVital('ESTASE', item.estase, 'ml', 0, 200)}
+            </div>
           </div>
-        </div>
-      ))}
+        ))}
+      </div>
       {setDataGrafico()}
       <Botoes></Botoes>
       <InsertSinaisVitais></InsertSinaisVitais>

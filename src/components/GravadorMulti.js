@@ -49,7 +49,7 @@ function GravadorMulti({ funcao, campos }) {
           className="button"
           style={{
             display: btngravavoz == "gravando" ? 'flex' : 'none',
-            flexDirection: 'column', justifyContent: 'center', width: 150, padding: 10
+            flexDirection: 'column', justifyContent: 'center', width: 150, padding: 20
           }}>
           {campo + ' ' + transcript.toUpperCase()}
           <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'center' }}>

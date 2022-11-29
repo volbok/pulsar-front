@@ -3,10 +3,8 @@ import React, { useContext, useState, useEffect } from 'react';
 import Context from '../pages/Context';
 import axios from 'axios';
 import moment from 'moment';
-import useSpeechToText from 'react-hook-speech-to-text';
 // funções.
 import modal from '../functions/modal';
-import toast from '../functions/toast';
 import checkinput from '../functions/checkinput';
 // imagens.
 import deletar from '../images/deletar.svg';
@@ -322,133 +320,31 @@ function VentilacaoMecanica() {
 
   // registro de sinais vitais por voz.
   function Botoes() {
-    const [btngravavoz, setbtngravavoz] = useState("button-green");
-    const {
-      isRecording,
-      results,
-      startSpeechToText,
-      stopSpeechToText,
-      setResults,
-    } = useSpeechToText({
-      continuous: true,
-      useLegacyResults: false
-    });
-
     return (
-      <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', marginTop: 15 }}>
-        <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'center' }}>
-          <div id="botão de retorno"
-            className="button-red"
-            style={{ display: 'flex', alignSelf: 'center' }}
-            onClick={() => setcard('')}>
-            <img
-              alt=""
-              src={back}
-              style={{ width: 30, height: 30 }}
-            ></img>
-          </div>
-          <GravadorMulti funcao={insertVoiceVentilacaoMecanica} campos={['MODO', 'PRESSÃO', 'VOLUME', 'PEEP', 'FIO2']}></GravadorMulti>
-          <div id="btninputvm"
-            className='button-green'
-            onClick={(e) => { setviewinsertvm(1); e.stopPropagation() }}
-            style={{ display: 'flex', alignSelf: 'center' }}
-          >
-            <img
-              alt=""
-              src={novo}
-              style={{ width: 30, height: 30 }}
-            ></img>
-          </div>
+      <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'center' }}>
+        <div id="botão de retorno"
+          className="button-red"
+          style={{ display: 'flex', alignSelf: 'center' }}
+          onClick={() => setcard('')}>
+          <img
+            alt=""
+            src={back}
+            style={{ width: 30, height: 30 }}
+          ></img>
         </div>
-        <div className='fundo'
-          style={{ display: btngravavoz == "gravando" ? 'flex' : 'none' }}>
-          <div id="lista de resultados"
-            className='button-opaque'
-            style={{
-              flexDirection: 'column', justifyContent: 'center', alignSelf: 'center',
-            }}>
-
-            <div id="indicador do sinal vital"
-              className='button-yellow'
-              style={{
-                display: results.length > 4 ? 'none' : 'flex',
-                padding: 20, margin: 10, fontSize: 16
-              }}>
-              <div>
-                {
-                  results.length == 0 ? 'INFORME O VALOR PARA MODO' :
-                    results.length == 1 ? 'INFORME O VALOR PARA PRESSÃO' :
-                      results.length == 2 ? 'INFORME O VALOR PARA VOLUME' :
-                        results.length == 3 ? 'INFORME O VALOR PARA PEEP' :
-                          results.length == 4 ? 'INFORME O VALOR PARA FIO2' : 'VALORES INPUTADOS COM SUCESSO!'
-                }
-              </div>
-            </div>
-            <div id="último dado inputado"
-              style={{ display: 'flex', flexDirection: 'row', justifyContent: 'center', margin: 10 }}
-            >
-              <div style={{ marginRight: 5 }}>
-                {results.length == 1 ? 'MODO:' :
-                  results.length == 2 ? 'PRESSÃO:' :
-                    results.length == 3 ? 'VOLUME:' :
-                      results.length == 4 ? 'PEEP:' :
-                        results.length == 5 ? 'FIO2:' : ''}
-              </div>
-              {results.slice(-1).map(item => (
-                <div key={item.timestamp}>
-                  {item.transcript.toUpperCase()}
-                </div>
-              ))}
-            </div>
-            <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'center' }}>
-              <div className='button-red'
-                style={{ width: 50, minWidth: 50, height: 50, minHeight: 50 }}
-                onClick={(e) => {
-                  stopSpeechToText();
-                  setResults([]);
-                  setbtngravavoz("button-green");
-                  e.stopPropagation();
-                }}>
-                <img
-                  alt=""
-                  src={deletar}
-                  style={{
-                    margin: 10,
-                    height: 25,
-                    width: 25,
-                  }}
-                ></img>
-              </div>
-              <div id="btngravavoz" className='button-green'
-                style={{ width: 50, minWidth: 50, height: 50, minHeight: 50 }}
-                onClick={(e) => {
-                  stopSpeechToText();
-                  setbtngravavoz("button-green");
-                  var parametros = [];
-                  results.map(result => parametros.push(result.transcript.toString().toUpperCase()));
-                  console.log(parametros);
-                  if (parametros.length == 5) {
-                    insertVentilacaoMecanica(parametros);
-                  } else {
-                    toast(settoast, 'INFORME PAUSADAMENTE TODOS OS PARÂMETROS VENTILATÓRIOS', 'red', 2000);
-                  }
-                  e.stopPropagation();
-                }}
-              >
-                <img
-                  alt=""
-                  src={salvar}
-                  style={{
-                    margin: 10,
-                    height: 30,
-                    width: 30,
-                  }}
-                ></img>
-              </div>
-            </div>
-          </div >
+        <GravadorMulti funcao={insertVoiceVentilacaoMecanica} campos={['MODO', 'PRESSÃO', 'VOLUME', 'PEEP', 'FIO2']}></GravadorMulti>
+        <div id="btninputvm"
+          className='button-green'
+          onClick={(e) => { setviewinsertvm(1); e.stopPropagation() }}
+          style={{ display: 'flex', alignSelf: 'center' }}
+        >
+          <img
+            alt=""
+            src={novo}
+            style={{ width: 30, height: 30 }}
+          ></img>
         </div>
-      </div >
+      </div>
     );
   }
 

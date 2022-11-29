@@ -3,17 +3,14 @@ import React, { useContext, useState, useEffect } from 'react';
 import Context from '../pages/Context';
 import axios from 'axios';
 import moment from 'moment';
-import useSpeechToText from 'react-hook-speech-to-text';
 // funções.
 import modal from '../functions/modal';
-import toast from '../functions/toast';
 // import toast from '../functions/toast';
 import checkinput from '../functions/checkinput';
 // imagens.
 import deletar from '../images/deletar.svg';
 import salvar from '../images/salvar.svg';
 import novo from '../images/novo.svg';
-import microfone from '../images/microfone.svg';
 import back from '../images/back.svg';
 // componentes.
 import GravadorMulti from '../components/GravadorMulti';
@@ -688,7 +685,12 @@ function SinaisVitais() {
       <div className="text3">
         SINAIS VITAIS
       </div>
-      <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-evenly', flexWrap: 'wrap' }}>
+      <div style={{
+        display: 'flex',
+        flexDirection: window.innerWidth < 426 ? 'column' : 'row',
+        justifyContent: window.innerWidth < 426 ? 'center' : 'space-evenly',
+        flexWrap: 'wrap'
+      }}>
         {sinaisvitais.sort((a, b) => moment(a.data_sinais_vitais) < moment(b.data_sinais_vitais) ? 1 : -1).slice(-4).map(item => (
           <div className='row'
             key={'sinais_vitais ' + item.id_sinais_vitais}
@@ -696,7 +698,8 @@ function SinaisVitais() {
             style={{
               display: 'flex',
               flexDirection: window.innerWidth < 426 ? 'column' : 'row',
-              justifyContent: 'flex-end',
+              justifyContent: 'center',
+              alignSelf: 'center',
             }}
           >
             <div id="identificador"
@@ -704,12 +707,12 @@ function SinaisVitais() {
               style={{
                 flex: 1,
                 flexDirection: window.innerWidth < 426 ? 'row' : 'column',
-                justifyContent: 'center', alignSelf: 'center',
-                margin: 5, padding: 5,
+                justifyContent: 'center',
+                alignSelf: 'center',
+                margin: 0, 
+                padding: 5,
                 height: window.innerWidth < 426 ? '200vh' : window.innerWidth > 425 && window.innerWidth < 769 ? '60vh' : '30vh',
-                width: window.innerWidth < 426 ? '95%' : 50,
-                marginBottom: window.innerWidth < 426 ? 0 : 5,
-                marginRight: window.innerWidth < 426 ? 5 : 0,
+                width: window.innerWidth < 426 ? '90%' : 50,
                 borderTopLeftRadius: window.innerWidth < 426 ? 5 : 5,
                 borderTopRightRadius: window.innerWidth < 426 ? 5 : 0,
                 borderBottomLeftRadius: window.innerWidth < 426 ? 0 : 5,
@@ -770,15 +773,15 @@ function SinaisVitais() {
                 flex: window.innerWidth < 426 ? 11 : 4,
                 display: 'flex', flexDirection: 'row',
                 justifyContent: 'center',
+                alignSelf: 'center',
                 flexWrap: 'wrap',
-                width: window.innerWidth < 426 ? '95%' : '27vw',
+                width: window.innerWidth < 426 ? '90%' : '27vw',
                 height: window.innerWidth < 426 ? '200vh' : window.innerWidth > 425 && window.innerWidth < 769 ? '60vh' : '30vh',
                 borderTopLeftRadius: window.innerWidth < 426 ? 0 : 0,
                 borderTopRightRadius: window.innerWidth < 426 ? 0 : 5,
                 borderBottomLeftRadius: window.innerWidth < 426 ? 5 : 0,
                 borderBottomRightRadius: window.innerWidth < 426 ? 5 : 5,
-                marginTop: window.innerWidth < 426 ? 0 : 5,
-                marginLeft: window.innerWidth < 426 ? 5 : 0,
+                margin: 0,
               }}
             >
               {montaSinalVital('PAS', item.pas, 'mmHg', 70, 180)}

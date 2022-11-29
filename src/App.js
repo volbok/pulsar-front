@@ -9,13 +9,11 @@ import Cadastro from './pages/Cadastro';
 import Passometro from './pages/Passometro';
 import Settings from './pages/Settings';
 import Usuarios from './pages/Usuarios';
-import PdfFull from './pages/PdfFull';
+import Pdf from './pages/Pdf';
 // componentes.
 import Toast from './components/Toast';
 import Modal from './components/Modal';
 import DatePicker from './components/DatePicker';
-// componentes.
-import toast from './functions/toast';
 
 // router.
 import {
@@ -24,7 +22,6 @@ import {
   Switch,
   Route,
 } from 'react-router-dom'
-import Alertas from './cards/Alertas';
 
 function App() {
   // api.
@@ -98,6 +95,7 @@ function App() {
   const [interconsultas, setinterconsultas] = useState([]);
 
   // resolvendo a responsividade para o innerHeight nos celulares.
+  const [altura, setaltura] = useState(window.innerHeight);
   const documentHeight = () => {
     const doc = document.documentElement
     doc.style.setProperty('--doc-height', `${window.innerHeight}px`)
@@ -175,6 +173,8 @@ function App() {
         sinaisvitais, setsinaisvitais,
         vm, setvm,
         interconsultas, setinterconsultas,
+
+        altura, setaltura
       }}
     >
       <div>
@@ -187,7 +187,7 @@ function App() {
               <Passometro></Passometro>
             </Route>
             <Route path="/pdf">
-              <PdfFull></PdfFull>
+              <Pdf></Pdf>
             </Route>
             <Route path="/cadastro">
               <Cadastro></Cadastro>

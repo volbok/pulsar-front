@@ -17,6 +17,8 @@ function GravadorMulti({ funcao, campos }) {
   } = useSpeechRecognition();
 
   const [contador, setcontador] = useState(0);
+
+  // eslint-disable-next-line
   const [capturas, setcapturas] = useState([]);
 
   const Gravador = (campo) => {

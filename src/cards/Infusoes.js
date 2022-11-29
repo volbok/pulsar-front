@@ -278,7 +278,7 @@ function Infusoes() {
           height: 285, minHeight: 285,
           marginTop: 5,
         }}>
-        {datas.map(valor => (
+        {datas.sort((a, b) => moment(a) > moment(b) ? 1 : -1).map(valor => (
           <div key={'datas ' + valor}>
             <div id={"drogas maepadas " + valor}
               className="scroll"

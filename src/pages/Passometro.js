@@ -49,6 +49,8 @@ function Passometro() {
     settoast,
     pagina, setpagina,
 
+    altura,
+
     settings,
     // tema, settema,
     carddiasinternacao, setcarddiasinternacao,
@@ -672,10 +674,11 @@ function Passometro() {
         // cálculo do balanço acumulado.
         x.map(item => {
           if (isNaN(parseFloat(item.balanco.replace(" ", ""))) == true) {
-            console.log(item.balanco);
+            console.log('VALOR INVÁLIDO PARA CÁLCULO DO BALANÇO ACUMULADO: ' + item.balanco);
           } else {
             arraybalancos.push(parseFloat(item.balanco.replace(" ", "")));
           }
+          return null;
         });
         function soma(total, num) {
           return total + num;
@@ -740,10 +743,11 @@ function Passometro() {
       <div
         className='card-fechado cor2'
         style={{
-          display: card == '' && setting == 1 ? 'flex' : 'none',
+          display: card == '' && atendimento != null && setting == 1 ? 'flex' : 'none',
           backgroundColor: sinal != null && sinal.length > 0 ? yellow : '',
           borderColor: sinal != null && sinal.length > 0 ? yellow : '',
-          width: window.innerWidth > 425 && atendimento != null ? Math.ceil((document.getElementById("conteúdo vazio").offsetWidth / 4) - 43) : '',
+          width: window.innerWidth > 425 && document.getElementById("conteúdo vazio") != null ? Math.ceil((document.getElementById("conteúdo vazio").offsetWidth / 4) - 43) :
+            window.innerWidth < 426 ? '90vw' : '17.5vw',
         }}
         onClick={() => {
           if (card == opcao) {
@@ -1019,6 +1023,7 @@ function Passometro() {
         flexDirection: window.innerWidth > 425 ? 'row' : 'column',
         justifyContent: window.innerWidth > 425 ? 'space-evenly' : 'center',
         width: '100vw',
+        height: altura,
       }}>
       <div id="lista de pacientes"
         style={{
@@ -1061,7 +1066,8 @@ function Passometro() {
         <div id='boneco' className="card-fechado"
           style={{
             display: card == '' && cardbody == 1 ? 'flex' : 'none',
-            width: window.innerWidth > 425 && atendimento != null ? Math.ceil((document.getElementById("conteúdo vazio").offsetWidth / 4) - 43) : '',
+            width: window.innerWidth > 425 && document.getElementById("conteúdo vazio") != null ? Math.ceil((document.getElementById("conteúdo vazio").offsetWidth / 4) - 43) :
+              window.innerWidth < 426 ? '90vw' : '17.5vw',
           }}
           onClick={() => {
             if (card == 'card-boneco') {

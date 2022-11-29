@@ -3,7 +3,6 @@ import React, { useContext, useState, useEffect, useCallback } from 'react';
 import Context from '../pages/Context';
 import axios from 'axios';
 import moment from 'moment';
-import useSpeechToText from 'react-hook-speech-to-text';
 // funções.
 import modal from '../functions/modal';
 import toast from '../functions/toast';
@@ -12,8 +11,8 @@ import checkinput from '../functions/checkinput';
 import deletar from '../images/deletar.svg';
 import salvar from '../images/salvar.svg';
 import novo from '../images/novo.svg';
-import microfone from '../images/microfone.svg';
 import back from '../images/back.svg';
+import Gravador from '../components/Gravador';
 
 function Interconsultas() {
 
@@ -127,17 +126,6 @@ function Interconsultas() {
 
   // registro de interconsulta por voz.
   function Botoes() {
-    const [btngravavoz, setbtngravavoz] = useState("button-green");
-    const {
-      isRecording,
-      results,
-      startSpeechToText,
-      stopSpeechToText,
-      setResults,
-    } = useSpeechToText({
-      continuous: true,
-      useLegacyResults: false
-    });
     return (
       <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'center', marginTop: 15 }}>
         <div id="botão de retorno"
@@ -153,77 +141,21 @@ function Interconsultas() {
             style={{ width: 30, height: 30 }}
           ></img>
         </div>
-        <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'center' }}>
-          <div id="btngravavoz" className={btngravavoz}
-            style={{ display: 'flex', width: 50, height: 50 }}
-            onClick={isRecording ?
-              (e) => {
-                stopSpeechToText();
-                setbtngravavoz("button-green");
-                results.map(result => insertInterconsulta([result.transcript.toString().toUpperCase()]));
-                e.stopPropagation();
-              } :
-              (e) => {
-                setbtngravavoz("gravando");
-                startSpeechToText();
-                e.stopPropagation();
-              }}
-          >
-            <img
-              alt=""
-              src={microfone}
-              style={{
-                margin: 10,
-                height: 30,
-                width: 30,
-              }}
-            ></img>
-          </div>
-          <div id="btninputinterconsulta"
-            className='button-green'
-            onClick={(e) => { setviewinsertinterconsulta(1); e.stopPropagation() }}
-            style={{ width: 50, height: 50 }}
-          >
-            <img
-              alt=""
-              src={novo}
-              style={{
-                margin: 10,
-                height: 30,
-                width: 30,
-              }}
-            ></img>
-          </div>
-        </div>
-        <div id="lista de resultados"
-          className="button"
-          style={{
-            display: btngravavoz == "gravando" ? 'flex' : 'none',
-            flexDirection: 'column', justifyContent: 'center', width: 150
-          }}>
-          {results.map(item => (
-            <div key={item.timestamp}>
-              {item.transcript.toUpperCase()}
-            </div>
-          ))}
-          <div className='button-red'
-            style={{ width: 25, minWidth: 25, height: 25, minHeight: 25 }}
-            onClick={(e) => {
-              stopSpeechToText();
-              setResults([]);
-              setbtngravavoz("button-green");
-              e.stopPropagation();
-            }}>
-            <img
-              alt=""
-              src={deletar}
-              style={{
-                margin: 10,
-                height: 25,
-                width: 25,
-              }}
-            ></img>
-          </div>
+        <Gravador funcao={insertInterconsulta}></Gravador>
+        <div id="btninputinterconsulta"
+          className='button-green'
+          onClick={(e) => { setviewinsertinterconsulta(1); e.stopPropagation() }}
+          style={{ display: 'flex', alignSelf: 'center' }}
+        >
+          <img
+            alt=""
+            src={novo}
+            style={{
+              margin: 10,
+              height: 30,
+              width: 30,
+            }}
+          ></img>
         </div>
       </div>
     );
@@ -289,7 +221,7 @@ function Interconsultas() {
               maxWidth: window.innerWidth < 426 ? '80vw' : 300,
               margin: 5,
             }}>
-            <div className='button-yellow'
+            <div className='button'
               style={{
                 flex: 1,
                 flexDirection: window.innerWidth < 426 ? 'row' : 'column',
@@ -342,7 +274,7 @@ function Interconsultas() {
                 {item.especialidade}
               </div>
               <div
-                className={item.status == 'PENDENTE' ? 'button-red' : 'button-green'}
+                className={item.status == 'PENDENTE' ? 'button-red' : item.status == 'ATIVA' ? 'button-yellow' : 'button-green'}
                 onClick={(e) => { setselectedinterconsulta(item); setviewopcoesstatus(1); e.stopPropagation() }}
               >
                 {item.status}

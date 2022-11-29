@@ -22,13 +22,14 @@ function PdfFull() {
     pacientes,
     atendimentos,
 
-    setalergias, alergias,
+    setatendimento,
+
+    alergias,
     setantibioticos, antibioticos,
     setinvasoes, invasoes,
-    setprecaucoes, precaucoes,
-    setriscos, riscos,
+    precaucoes,
+    riscos,
     setculturas, culturas,
-    setdietas, dietas,
     setevolucoes, evolucoes,
     setinfusoes, infusoes,
     setpropostas, propostas,
@@ -54,7 +55,9 @@ function PdfFull() {
   window.addEventListener('load', refreshApp);
 
   useEffect(() => {
-    loadAllData();
+    if (pagina == 6) {
+      loadAllData();
+    }
     // eslint-disable-next-line
   }, [pagina]);
 
@@ -122,8 +125,11 @@ function PdfFull() {
           zIndex: 90
         }}
         onClick={() => {
-          setpagina(1);
-          history.push('/passometro');
+          // setatendimento(null);
+          setTimeout(() => {
+            setpagina(1);
+            history.push('/passometro');
+          }, 2000);
         }}>
         <img
           alt=""
@@ -188,18 +194,23 @@ function PdfFull() {
 
   // conteúdo de cada atendimento.
   function PdfAtendimento({ item }) {
-    axios.get(html + 'paciente_alergias/' + item.id_paciente).then((response) => {
-      setalergias(response.data.rows);
-    });
-    axios.get(html + 'paciente_precaucoes/' + item.id_paciente).then((response) => {
-      setprecaucoes(response.data.rows);
-    });
-    axios.get(html + 'paciente_riscos/' + item.id_paciente).then((response) => {
-      setriscos(response.data.rows);
-    });
     return (
       <Page wrap={false} size="A4" style={{ padding: 10 }}>
         <View wrap={false} style={styles.view0}>
+          <View style={styles.view1}>
+            <Text style={[styles.title2, {
+              flex: 1, backgroundColor: '#85929E', // borderColor: '#85929E',
+              color: 'white', textAlign: 'center'
+            }]}>
+              {'LEITO: ' + item.leito}
+            </Text>
+            <Text style={[styles.title2, { flex: 5.5 }]}>
+              {'NOME: ' + pacientes.filter(valor => valor.id_paciente == item.id_paciente).map(valor => valor.nome_paciente)}
+            </Text>
+            <Text style={[styles.title2, { flex: 1.5 }]}>
+              {'IDADE: ' + pacientes.filter(valor => valor.id_paciente == item.id_paciente).map(valor => moment().diff(valor.dn_paciente, 'years')) + ' ANOS'}
+            </Text>
+          </View>
           <View wrap={false} style={styles.view1}>
             <Text wrap={false} style={[styles.title2, { flex: 1 }]}>
               {'ADMISSÃO: ' + moment(item.data_inicio).format('DD/MM/YY')}
@@ -239,36 +250,36 @@ function PdfFull() {
               {'SITUAÇÃO: ' + item.situacao}
             </Text>
             <Text wrap={false} style={styles.title2}>
-              {'EVOLUÇÕES:' + evolucoes.slice(-10).map(item =>
+              {'EVOLUÇÕES:' + evolucoes.filter(valor => valor.id_atendimento == item.id_atendimento).slice(-10).map(item =>
                 '\n' + moment(item.data_evolucao).format('DD/MM/YY') + ' - ' + item.evolucao)}
             </Text>
           </View>
           <View wrap={false} style={styles.view1}>
             <Text wrap={false} style={[styles.title2, { flex: 2 }]}>
-              {invasoes.filter(item => item.data_retirada == null).length > 0 ? 'INVASÕES:' + invasoes.filter(item => item.data_retirada == null).map(item => '\n' + item.dispositivo + ' - ' + item.local + ' - ' + moment(item.data_implante).format('DD/MM/YY')) : 'INVASÕES: NÃO'}
+              {invasoes.filter(valor => valor.data_retirada == null && valor.id_atendimento == item.id_atendimento).length > 0 ? 'INVASÕES:' + invasoes.filter(item => item.data_retirada == null).map(item => '\n' + item.dispositivo + ' - ' + item.local + ' - ' + moment(item.data_implante).format('DD/MM/YY')) : 'INVASÕES: NÃO'}
             </Text>
             <Text wrap={false} style={[styles.title2, { flex: 1 }]}>
-              {vm.sort((a, b) => moment(a.data_vm) < moment(b.data_vm) ? -1 : 1).slice(-1).filter(item => item.modo != 'OFF').length > 0 ?
+              {vm.filter(valor => valor.id_atendimento == item.id_atendimento).sort((a, b) => moment(a.data_vm) < moment(b.data_vm) ? -1 : 1).slice(-1).filter(item => item.modo != 'OFF').length > 0 ?
                 'VM: ' + vm.sort((a, b) => moment(a.data_vm) < moment(b.data_vm) ? -1 : 1).slice(-1)
                   .map(item => '\n MODO: ' + item.modo + '\n PRESSÃO: ' + item.pressao + '\n VOLUME: ' + item.volume + '\n PEEP: ' + item.peep) + '\n FI: ' + item.fi
                 :
                 'VM: NÃO'}
             </Text>
             <Text wrap={false} style={[styles.title2, { flex: 1 }]}>
-              {infusoes.filter(item => item.data_termino == null).length > 0 ? 'INFUSÕES:' + infusoes.filter(item => item.data_termino == null).map(item => '\n' + item.droga + ' - ' + item.velocidade + 'ml/h') : 'INFUSÕES: NÃO'}
+              {infusoes.filter(valor => valor.data_termino == null && valor.id_atendimento == item.id_atendimento).length > 0 ? 'INFUSÕES:' + infusoes.filter(item => item.data_termino == null).map(item => '\n' + item.droga + ' - ' + item.velocidade + 'ml/h') : 'INFUSÕES: NÃO'}
             </Text>
           </View>
           <View wrap={false} style={styles.view1}>
             <Text wrap={false} style={[styles.title2, { flex: 1 }]}>
-              {culturas.length > 0 ? 'CULTURAS: ' + culturas.map(item => '\n' + item.material + ' (' + moment(item.data_pedido).format('DD/MM/YY') + '): ' + item.resultado) : 'CULTURAS: NÃO'}
+              {culturas.filter(valor => valor.id_atendimento == item.id_atendimento).length > 0 ? 'CULTURAS: ' + culturas.map(item => '\n' + item.material + ' (' + moment(item.data_pedido).format('DD/MM/YY') + '): ' + item.resultado) : 'CULTURAS: NÃO'}
             </Text>
             <Text wrap={false} style={[styles.title2, { flex: 1 }]}>
-              {antibioticos.length > 0 ? 'ANTIBIÓTICOS:' + antibioticos.map(item => '\n' + item.antibiotico + ' - ' + moment(item.data_inicio).format('DD/MM/YY')) : 'ANTIBIÓTICOS: NÃO'}
+              {antibioticos.filter(valor => valor.id_atendimento == item.id_atendimento).length > 0 ? 'ANTIBIÓTICOS:' + antibioticos.map(item => '\n' + item.antibiotico + ' - ' + moment(item.data_inicio).format('DD/MM/YY')) : 'ANTIBIÓTICOS: NÃO'}
             </Text>
           </View>
           <View wrap={false} style={[styles.view1, { flexDirection: 'column' }]}>
             <Text wrap={false} style={styles.title2}>
-              {propostas.filter(item => item.status == 0).length > 0 ?
+              {propostas.filter(valor => valor.status == 0 && valor.id_atendimento == item.id_atendimento).length > 0 ?
                 'PROPOSTAS:' + propostas.filter(item => item.status == 0).map(item => '\n' + item.proposta)
                 :
                 'SEM PROPOSTAS'

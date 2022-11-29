@@ -95,7 +95,8 @@ function App() {
   const [interconsultas, setinterconsultas] = useState([]);
 
   // resolvendo a responsividade para o innerHeight nos celulares.
-  const [altura, setaltura] = useState(window.innerHeight);
+  const [altura, setaltura] = useState(`${window.innerHeight}px`);
+  console.log('ALTURA: ' + window.innerHeight);
   const documentHeight = () => {
     const doc = document.documentElement
     doc.style.setProperty('--doc-height', `${window.innerHeight}px`)

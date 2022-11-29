@@ -26,6 +26,7 @@ function Evolucoes() {
     evolucoes, setevolucoes,
     arrayevolucoes, setarrayevolucoes,
     card, setcard,
+    altura,
   } = useContext(Context);
 
   useEffect(() => {
@@ -252,6 +253,11 @@ function Evolucoes() {
     <div id="scroll-evolucoes"
       className='card-aberto'
       style={{ display: card == 'card-evolucoes' ? 'flex' : 'none' }}
+      onLoad={() => {
+        setTimeout(() => {
+          document.getElementById("scroll-evolucoes").style.height = altura;
+        }, 1000);
+      }}
     >
       <div className="text3">
         EVOLUÇÕES

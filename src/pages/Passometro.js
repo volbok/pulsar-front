@@ -747,7 +747,7 @@ function Passometro() {
           backgroundColor: sinal != null && sinal.length > 0 ? yellow : '',
           borderColor: sinal != null && sinal.length > 0 ? yellow : '',
           width: window.innerWidth > 425 && document.getElementById("conteúdo vazio") != null ? Math.ceil((document.getElementById("conteúdo vazio").offsetWidth / 4) - 43) :
-            window.innerWidth < 426 ? '90vw' : '17.5vw',
+            window.innerWidth < 426 ? '' : '17.5vw',
         }}
         onClick={() => {
           if (card == opcao) {
@@ -1067,7 +1067,7 @@ function Passometro() {
           style={{
             display: card == '' && cardbody == 1 ? 'flex' : 'none',
             width: window.innerWidth > 425 && document.getElementById("conteúdo vazio") != null ? Math.ceil((document.getElementById("conteúdo vazio").offsetWidth / 4) - 43) :
-              window.innerWidth < 426 ? '90vw' : '17.5vw',
+              window.innerWidth < 426 ? '' : '17.5vw',
           }}
           onClick={() => {
             if (card == 'card-boneco') {

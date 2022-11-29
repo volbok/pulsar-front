@@ -279,9 +279,9 @@ function Culturas() {
   var searchcultura = '';
   const filterCultura = () => {
     clearTimeout(timeout);
-    document.getElementById("inputFilterCultura").focus();
     searchcultura = document.getElementById("inputFilterCultura").value.toUpperCase();
     timeout = setTimeout(() => {
+      document.getElementById("inputFilterCultura").blur();
       if (searchcultura == '') {
         setfiltercultura('');
         setarrayculturas(culturas);
@@ -423,6 +423,7 @@ function Culturas() {
                   onKeyUp={(e) => {
                     clearTimeout(timeout);
                     timeout = setTimeout(() => {
+                      document.getElementById("inputMaterial " + item.id_cultura).blur();
                       var obj = {
                         id_atendimento: item.id_atendimento,
                         material: document.getElementById('inputMaterial ' + item.id_cultura).value.toUpperCase(),
@@ -456,6 +457,7 @@ function Culturas() {
                     clearTimeout(timeout);
                     var resultado = document.getElementById('inputResultado ' + item.id_cultura).value.toUpperCase();
                     timeout = setTimeout(() => {
+                      document.getElementById("inputMaterial " + item.id_cultura).blur();
                       var obj = {
                         id_atendimento: item.id_atendimento,
                         material: document.getElementById('inputMaterial ' + item.id_cultura).value.toUpperCase(),

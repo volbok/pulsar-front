@@ -26,7 +26,7 @@ function Evolucoes() {
     evolucoes, setevolucoes,
     arrayevolucoes, setarrayevolucoes,
     card, setcard,
-    altura,
+    altura
   } = useContext(Context);
 
   useEffect(() => {
@@ -227,24 +227,20 @@ function Evolucoes() {
   var searchevolucao = '';
   const filterEvolucao = () => {
     clearTimeout(timeout);
-    document.getElementById("inputFilterEvolucao").focus();
     searchevolucao = document.getElementById("inputFilterEvolucao").value.toUpperCase();
     timeout = setTimeout(() => {
-      if (searchevolucao == '') {
-        setfilterevolucao('');
-        setarrayevolucoes(evolucoes);
-        document.getElementById("inputFilterEvolucao").value = '';
-        setTimeout(() => {
-          document.getElementById("inputFilterEvolucao").focus();
-        }, 100);
-      } else {
-        setfilterevolucao(document.getElementById("inputFilterEvolucao").value.toUpperCase());
-        setarrayevolucoes(evolucoes.filter(item => item.evolucao.includes(searchevolucao)));
-        document.getElementById("inputFilterEvolucao").value = searchevolucao;
-        setTimeout(() => {
-          document.getElementById("inputFilterEvolucao").focus();
-        }, 100);
-      }
+      document.getElementById("inputFilterEvolucao").blur();
+      setTimeout(() => {
+        if (searchevolucao == '') {
+          setfilterevolucao('');
+          setarrayevolucoes(evolucoes);
+          document.getElementById("inputFilterEvolucao").value = '';
+        } else {
+          setfilterevolucao(document.getElementById("inputFilterEvolucao").value.toUpperCase());
+          setarrayevolucoes(evolucoes.filter(item => item.evolucao.includes(searchevolucao)));
+          document.getElementById("inputFilterEvolucao").value = searchevolucao;
+        }
+      }, 1000);
     }, 1000);
   }
 
@@ -343,6 +339,7 @@ function Evolucoes() {
                   clearTimeout(timeout);
                   timeout = setTimeout(() => {
                     if (document.getElementById("inputEvolucao " + item.id_evolucao).value != '') {
+                      document.getElementById("inputEvolucao " + item.id_evolucao).blur();
                       updateEvolucao(item);
                     }
                     e.stopPropagation();

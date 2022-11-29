@@ -272,6 +272,7 @@ function Propostas() {
     document.getElementById("inputFilterProposta").focus();
     searchproposta = document.getElementById("inputFilterProposta").value.toUpperCase();
     timeout = setTimeout(() => {
+      document.getElementById("inputFilterProposta").blur();
       if (searchproposta == '') {
         setfilterproposta('');
         setarraypropostas(propostas);
@@ -406,6 +407,7 @@ function Propostas() {
                       clearTimeout(timeout);
                       timeout = setTimeout(() => {
                         if (document.getElementById("inputProposta " + item.id_proposta).value != '' && document.getElementById("inputPrazo " + item.id_proposta).value != '') {
+                          document.getElementById("inputProposta " + item.id_proposta).blur();
                           updateProposta(item, "inputProposta " + item.id_proposta, "inputPrazo " + item.id_proposta, item.status);
                         }
                         e.stopPropagation();

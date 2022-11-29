@@ -452,6 +452,7 @@ function Antibioticos() {
                       onKeyUp={(e) => {
                         clearTimeout(timeout);
                         timeout = setTimeout(() => {
+                          document.getElementById("inputAntibiotico " + item.id_antibiotico).blur();
                           var obj = {
                             id_atendimento: item.id_atendimento,
                             antibiotico: document.getElementById('inputAntibiotico ' + item.id_antibiotico).value.toUpperCase(),
@@ -496,6 +497,7 @@ function Antibioticos() {
                         }
                         clearTimeout(timeout);
                         timeout = setTimeout(() => {
+                          document.getElementById("inputInicio " + item.id_antibiotico).blur();
                           var date = moment(document.getElementById("inputInicio " + item.id_antibiotico).value, 'DD/MM/YYYY', true);
                           if (date.isValid() == false) {
                             toast(settoast, 'DATA INVÁLIDA', 'rgb(231, 76, 60, 1)', 3000);
@@ -546,6 +548,7 @@ function Antibioticos() {
                         }
                         clearTimeout(timeout);
                         timeout = setTimeout(() => {
+                          document.getElementById("inputTermino " + item.id_antibiotico).blur();
                           var field = document.getElementById("inputTermino " + item.id_antibiotico).value;
                           var date = moment(document.getElementById("inputTermino " + item.id_antibiotico).value, 'DD/MM/YYYY', true);
                           if (field != '' && date.isValid() == false) {
@@ -605,6 +608,7 @@ function Antibioticos() {
                           onKeyUp={(e) => {
                             clearTimeout(timeout);
                             timeout = setTimeout(() => {
+                              document.getElementById("inputDias " + item.id_antibiotico).blur();
                               var prazo = document.getElementById("inputDias " + item.id_antibiotico).value;
                               if (isNaN(prazo) == true && parseInt(prazo) < 0) {
                                 toast(settoast, 'VALOR INVÁLIDO', 'rgb(231, 76, 60, 1)', 3000);

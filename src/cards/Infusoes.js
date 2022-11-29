@@ -417,6 +417,7 @@ function Infusoes() {
                     } else {
                       clearTimeout(timeout);
                       timeout = setTimeout(() => {
+                        document.getElementById("inputVelocidade " + item.id_infusao).blur();
                         updateInfusao(item, item.data_inicio, item.data_termino);
                         toast(settoast, 'INFUSÃO ATUALIZADA COM SUCESSO', 'rgb(82, 190, 128, 1)', 3000);
                         e.stopPropagation();
@@ -449,6 +450,7 @@ function Infusoes() {
                 onKeyUp={(e) => {
                   clearTimeout(timeout);
                   timeout = setTimeout(() => {
+                    document.getElementById("inputDroga").blur();
                     if (document.getElementById("inputDroga " + item.id_infusao).value != '') {
                       // updateInfusao(item, item.data_inicio, item.data_termino);
                       var obj = {

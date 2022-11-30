@@ -115,7 +115,7 @@ function Culturas() {
   // registro de textarea por voz.
   function Botoes() {
     return (
-      <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'center' }}>
+      <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'center', flexWrap: 'wrap' }}>
         <div id="botão de retorno"
           className="button-red"
           style={{
@@ -461,7 +461,7 @@ function Culturas() {
                       setTimeout(() => {
                         var obj = {
                           id_atendimento: item.id_atendimento,
-                          material: document.getElementById('inputResultado ' + item.id_cultura).value.toUpperCase(),
+                          material: document.getElementById('inputMaterial ' + item.id_cultura).value.toUpperCase(),
                           resultado: resultado == '' ? null : resultado,
                           data_pedido: item.data_pedido,
                           data_resultado: resultado == '' ? null : moment(),

@@ -3,7 +3,7 @@ import React, { useContext, useState, useEffect } from 'react';
 import Context from '../pages/Context';
 import axios from 'axios';
 // funções.
-import toast from '../functions/toast';
+// import toast from '../functions/toast';
 // imagens.
 import back from '../images/back.svg';
 
@@ -12,7 +12,7 @@ function Anamnese() {
   // context.
   const {
     html,
-    settoast,
+    // settoast,
 
     unidade,
     pacientes,

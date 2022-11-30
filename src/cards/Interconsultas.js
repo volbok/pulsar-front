@@ -127,7 +127,7 @@ function Interconsultas() {
   // registro de interconsulta por voz.
   function Botoes() {
     return (
-      <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'center', marginTop: 15 }}>
+      <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'center', marginTop: 15, flexWrap: 'wrap' }}>
         <div id="botão de retorno"
           className="button-red"
           style={{

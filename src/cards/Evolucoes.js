@@ -7,7 +7,7 @@ import moment from 'moment';
 import toast from '../functions/toast';
 import modal from '../functions/modal';
 import checkinput from '../functions/checkinput';
-import filter from '../functions/filter';
+// import filter from '../functions/filter';
 // imagens.
 import deletar from '../images/deletar.svg';
 import salvar from '../images/salvar.svg';
@@ -102,7 +102,7 @@ function Evolucoes() {
   const [selectedinput, setselectedinput] = useState(null);
   function Botoes() {
     return (
-      <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'center' }}>
+      <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'center', flexWrap: 'wrap' }}>
         <div id="botão de retorno"
           className="button-red"
           style={{

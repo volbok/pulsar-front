@@ -45,6 +45,9 @@ function Gravador({ funcao, continuo }) {
       <div id="lista de resultados"
         className="button"
         style={{
+          top: 0, bottom: 0, left: 0, right: 0,
+          alignSelf: 'center',
+          backgroundColor: 'grey',
           display: btngravavoz == "gravando" ? 'flex' : 'none',
           flexDirection: 'column', justifyContent: 'center', width: 150, padding: 20,
         }}>

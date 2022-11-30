@@ -187,6 +187,7 @@ function Propostas() {
               placeholder="DIAS..."
               className="input"
               type="text"
+              inputMode='numeric'
               onFocus={(e) => (e.target.placeholder = '')}
               onBlur={(e) => (e.target.placeholder = 'DIAS...')}
               maxLength={3}
@@ -390,6 +391,7 @@ function Propostas() {
                 }}>
                   <textarea id={"inputProposta " + item.id_proposta}
                     className="textarea"
+                    autoComplete="off"
                     placeholder='PROPOSTA...'
                     onFocus={(e) => (e.target.placeholder = '')}
                     onBlur={(e) => (e.target.placeholder = 'INSERIR PROPOSTA...')}
@@ -401,11 +403,13 @@ function Propostas() {
                     onKeyUp={(e) => {
                       clearTimeout(timeout);
                       timeout = setTimeout(() => {
-                        if (document.getElementById("inputProposta " + item.id_proposta).value != '' && document.getElementById("inputPrazo " + item.id_proposta).value != '') {
-                          document.getElementById("inputProposta " + item.id_proposta).blur();
-                          updateProposta(item, "inputProposta " + item.id_proposta, "inputPrazo " + item.id_proposta, item.status);
-                        }
-                        e.stopPropagation();
+                        document.getElementById("inputProposta " + item.id_proposta).blur();
+                        setTimeout(() => {
+                          if (document.getElementById("inputProposta " + item.id_proposta).value != '' && document.getElementById("inputPrazo " + item.id_proposta).value != '') {
+                            updateProposta(item, "inputProposta " + item.id_proposta, "inputPrazo " + item.id_proposta, item.status);
+                          }
+                          e.stopPropagation();
+                        }, 500);
                       }, 2000);
                     }}
                     style={{
@@ -435,6 +439,7 @@ function Propostas() {
                       <div className='text1' style={{ margin: 0 }}>PRAZO</div>
                       <input id={"inputPrazo " + item.id_proposta}
                         autoComplete="off"
+                        inputMode='numeric'
                         placeholder="DIAS..."
                         className="input"
                         type="text"
@@ -463,9 +468,12 @@ function Propostas() {
                           } else {
                             clearTimeout(timeout);
                             timeout = setTimeout(() => {
-                              updateProposta(item, "inputProposta " + item.id_proposta, "inputPrazo " + item.id_proposta, item.status);
-                              e.stopPropagation();
-                            }, 500);
+                              document.getElementById("inputFilterProposta").blur();
+                              setTimeout(() => {
+                                updateProposta(item, "inputProposta " + item.id_proposta, "inputPrazo " + item.id_proposta, item.status);
+                                e.stopPropagation();
+                              }, 500);
+                            }, 2000);
                           }
                         }}
                       ></input>

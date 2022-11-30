@@ -70,7 +70,7 @@ function Anamnese() {
       situacao: document.getElementById("inputSituacao").value.toUpperCase(),
     }
     axios.post(html + 'update_atendimento/' + atendimento, obj).then(() => {
-      toast(settoast, 'DADOS DA ANAMNESE ATUALIZADOS COM SUCESSO', 'rgb(82, 190, 128, 1)', 3000);
+      // toast(settoast, 'DADOS DA ANAMNESE ATUALIZADOS COM SUCESSO', 'rgb(82, 190, 128, 1)', 3000);
       axios.get(html + 'list_atendimentos/' + unidade).then((response) => {
         setatendimentos(response.data.rows);
         console.log('LISTA DE ATENDIMENTOS CARREGADA: ' + response.data.rows.length);

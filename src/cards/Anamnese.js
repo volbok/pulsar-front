@@ -126,7 +126,7 @@ function Anamnese() {
                 updateAtendimento();
               }
               e.stopPropagation();
-            }, 2000);
+            }, 5000);
           }}
           style={{
             display: 'flex',
@@ -152,7 +152,7 @@ function Anamnese() {
                 updateAtendimento();
               }
               e.stopPropagation();
-            }, 2000);
+            }, 5000);
           }}
           style={{
             display: 'flex',
@@ -178,7 +178,7 @@ function Anamnese() {
                 updatePaciente();
               }
               e.stopPropagation();
-            }, 2000);
+            }, 5000);
           }}
           style={{
             display: 'flex',
@@ -205,7 +205,7 @@ function Anamnese() {
                 updatePaciente();
               }
               e.stopPropagation();
-            }, 2000);
+            }, 5000);
           }}
           style={{
             display: 'flex',
@@ -232,7 +232,7 @@ function Anamnese() {
                 updatePaciente();
               }
               e.stopPropagation();
-            }, 2000);
+            }, 5000);
           }}
           style={{
             display: 'flex',

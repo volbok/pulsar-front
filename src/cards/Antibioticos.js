@@ -227,10 +227,10 @@ function Antibioticos() {
               <div className='text1'>DIAS DE USO</div>
               <input
                 className="input"
+                autoComplete="off"
                 type="text"
                 inputMode='numeric'
                 maxLength={2}
-                autoComplete="off"
                 placeholder='DIAS...'
                 onFocus={(e) => (e.target.placeholder = '')}
                 onBlur={(e) => (e.target.placeholder = 'DIAS...')}
@@ -441,6 +441,7 @@ function Antibioticos() {
                   }}>
                     <input id={"inputAntibiotico " + item.id_antibiotico}
                       className="input"
+                      autoComplete="off"
                       placeholder='ANTIBIÓTICO...'
                       onFocus={(e) => (e.target.placeholder = '')}
                       onBlur={(e) => (e.target.placeholder = 'ANTIBIÓTICO...')}
@@ -449,18 +450,20 @@ function Antibioticos() {
                         clearTimeout(timeout);
                         timeout = setTimeout(() => {
                           document.getElementById("inputAntibiotico " + item.id_antibiotico).blur();
-                          var obj = {
-                            id_atendimento: item.id_atendimento,
-                            antibiotico: document.getElementById('inputAntibiotico ' + item.id_antibiotico).value.toUpperCase(),
-                            data_inicio: item.data_inicio,
-                            data_termino: item.data_termino,
-                            prazo: item.prazo,
-                          }
-                          axios.post(html + 'update_antibiotico/' + item.id_antibiotico, obj).then(() => {
-                            loadAntibioticos();
-                            toast(settoast, 'DADOS DO ANTIBIÓTICO ATUALIZADOS COM SUCESSO', 'rgb(82, 190, 128, 1)', 3000);
-                          });
-                          e.stopPropagation();
+                          setTimeout(() => {
+                            var obj = {
+                              id_atendimento: item.id_atendimento,
+                              antibiotico: document.getElementById('inputAntibiotico ' + item.id_antibiotico).value.toUpperCase(),
+                              data_inicio: item.data_inicio,
+                              data_termino: item.data_termino,
+                              prazo: item.prazo,
+                            }
+                            axios.post(html + 'update_antibiotico/' + item.id_antibiotico, obj).then(() => {
+                              loadAntibioticos();
+                              toast(settoast, 'DADOS DO ANTIBIÓTICO ATUALIZADOS COM SUCESSO', 'rgb(82, 190, 128, 1)', 3000);
+                            });
+                            e.stopPropagation();
+                          }, 500);
                         }, 3000);
                       }}
                       style={{
@@ -474,6 +477,7 @@ function Antibioticos() {
                     </input>
                     <input id={"inputInicio " + item.id_antibiotico}
                       className="input"
+                      autoComplete="off"
                       type="text"
                       inputMode='numeric'
                       placeholder='INÍCIO...'
@@ -494,24 +498,26 @@ function Antibioticos() {
                         clearTimeout(timeout);
                         timeout = setTimeout(() => {
                           document.getElementById("inputInicio " + item.id_antibiotico).blur();
-                          var date = moment(document.getElementById("inputInicio " + item.id_antibiotico).value, 'DD/MM/YYYY', true);
-                          if (date.isValid() == false) {
-                            toast(settoast, 'DATA INVÁLIDA', 'rgb(231, 76, 60, 1)', 3000);
-                            document.getElementById("inputInicio " + item.id_antibiotico).value = '';
-                          } else {
-                            var obj = {
-                              id_atendimento: item.id_atendimento,
-                              antibiotico: item.antibiotico,
-                              data_inicio: moment(document.getElementById('inputInicio ' + item.id_antibiotico).value, 'DD/MM/YYYY'),
-                              data_termino: item.data_termino,
-                              prazo: item.prazo,
+                          setTimeout(() => {
+                            var date = moment(document.getElementById("inputInicio " + item.id_antibiotico).value, 'DD/MM/YYYY', true);
+                            if (date.isValid() == false) {
+                              toast(settoast, 'DATA INVÁLIDA', 'rgb(231, 76, 60, 1)', 3000);
+                              document.getElementById("inputInicio " + item.id_antibiotico).value = '';
+                            } else {
+                              var obj = {
+                                id_atendimento: item.id_atendimento,
+                                antibiotico: item.antibiotico,
+                                data_inicio: moment(document.getElementById('inputInicio ' + item.id_antibiotico).value, 'DD/MM/YYYY'),
+                                data_termino: item.data_termino,
+                                prazo: item.prazo,
+                              }
+                              axios.post(html + 'update_antibiotico/' + item.id_antibiotico, obj).then(() => {
+                                loadAntibioticos();
+                                toast(settoast, 'DADOS DO ANTIBIÓTICO ATUALIZADOS COM SUCESSO', 'rgb(82, 190, 128, 1)', 3000);
+                              });
                             }
-                            axios.post(html + 'update_antibiotico/' + item.id_antibiotico, obj).then(() => {
-                              loadAntibioticos();
-                              toast(settoast, 'DADOS DO ANTIBIÓTICO ATUALIZADOS COM SUCESSO', 'rgb(82, 190, 128, 1)', 3000);
-                            });
-                          }
-                        }, 3000);
+                          }, 3000);
+                        }, 500);
                         e.stopPropagation();
                       }}
                       style={{
@@ -525,6 +531,7 @@ function Antibioticos() {
                     </input>
                     <input id={"inputTermino " + item.id_antibiotico}
                       className="input"
+                      autoComplete="off"
                       type="text"
                       inputMode='numeric'
                       placeholder='TÉRMINO...'
@@ -545,24 +552,26 @@ function Antibioticos() {
                         clearTimeout(timeout);
                         timeout = setTimeout(() => {
                           document.getElementById("inputTermino " + item.id_antibiotico).blur();
-                          var field = document.getElementById("inputTermino " + item.id_antibiotico).value;
-                          var date = moment(document.getElementById("inputTermino " + item.id_antibiotico).value, 'DD/MM/YYYY', true);
-                          if (field != '' && date.isValid() == false) {
-                            toast(settoast, 'DATA INVÁLIDA', 'rgb(231, 76, 60, 1)', 3000);
-                            document.getElementById("inputTermino " + item.id_antibiotico).value = '';
-                          } else {
-                            var obj = {
-                              id_atendimento: item.id_atendimento,
-                              antibiotico: item.antibiotico,
-                              data_inicio: item.data_inicio,
-                              data_termino: field == '' ? null : moment(document.getElementById('inputTermino ' + item.id_antibiotico).value, 'DD/MM/YYYY'),
-                              prazo: item.prazo,
+                          setTimeout(() => {
+                            var field = document.getElementById("inputTermino " + item.id_antibiotico).value;
+                            var date = moment(document.getElementById("inputTermino " + item.id_antibiotico).value, 'DD/MM/YYYY', true);
+                            if (field != '' && date.isValid() == false) {
+                              toast(settoast, 'DATA INVÁLIDA', 'rgb(231, 76, 60, 1)', 3000);
+                              document.getElementById("inputTermino " + item.id_antibiotico).value = '';
+                            } else {
+                              var obj = {
+                                id_atendimento: item.id_atendimento,
+                                antibiotico: item.antibiotico,
+                                data_inicio: item.data_inicio,
+                                data_termino: field == '' ? null : moment(document.getElementById('inputTermino ' + item.id_antibiotico).value, 'DD/MM/YYYY'),
+                                prazo: item.prazo,
+                              }
+                              axios.post(html + 'update_antibiotico/' + item.id_antibiotico, obj).then(() => {
+                                loadAntibioticos();
+                                toast(settoast, 'DADOS DO ANTIBIÓTICO ATUALIZADOS COM SUCESSO', 'rgb(82, 190, 128, 1)', 3000);
+                              });
                             }
-                            axios.post(html + 'update_antibiotico/' + item.id_antibiotico, obj).then(() => {
-                              loadAntibioticos();
-                              toast(settoast, 'DADOS DO ANTIBIÓTICO ATUALIZADOS COM SUCESSO', 'rgb(82, 190, 128, 1)', 3000);
-                            });
-                          }
+                          }, 500);
                         }, 3000);
                         e.stopPropagation();
                       }}
@@ -605,24 +614,26 @@ function Antibioticos() {
                             clearTimeout(timeout);
                             timeout = setTimeout(() => {
                               document.getElementById("inputDias " + item.id_antibiotico).blur();
-                              var prazo = document.getElementById("inputDias " + item.id_antibiotico).value;
-                              if (isNaN(prazo) == true && parseInt(prazo) < 0) {
-                                toast(settoast, 'VALOR INVÁLIDO', 'rgb(231, 76, 60, 1)', 3000);
-                                document.getElementById("inputDias " + item.id_antibiotico).value = '';
-                              } else {
-                                var obj = {
-                                  id_atendimento: item.id_atendimento,
-                                  antibiotico: item.antibiotico,
-                                  data_inicio: item.data_inicio,
-                                  data_termino: item.data_termino,
-                                  prazo: moment(item.data_inicio).add(prazo, 'days'),
+                              setTimeout(() => {
+                                var prazo = document.getElementById("inputDias " + item.id_antibiotico).value;
+                                if (isNaN(prazo) == true && parseInt(prazo) < 0) {
+                                  toast(settoast, 'VALOR INVÁLIDO', 'rgb(231, 76, 60, 1)', 3000);
+                                  document.getElementById("inputDias " + item.id_antibiotico).value = '';
+                                } else {
+                                  var obj = {
+                                    id_atendimento: item.id_atendimento,
+                                    antibiotico: item.antibiotico,
+                                    data_inicio: item.data_inicio,
+                                    data_termino: item.data_termino,
+                                    prazo: moment(item.data_inicio).add(prazo, 'days'),
+                                  }
+                                  axios.post(html + 'update_antibiotico/' + item.id_antibiotico, obj).then(() => {
+                                    loadAntibioticos();
+                                    toast(settoast, 'DADOS DO ANTIBIÓTICO ATUALIZADOS COM SUCESSO', 'rgb(82, 190, 128, 1)', 3000);
+                                  });
                                 }
-                                axios.post(html + 'update_antibiotico/' + item.id_antibiotico, obj).then(() => {
-                                  loadAntibioticos();
-                                  toast(settoast, 'DADOS DO ANTIBIÓTICO ATUALIZADOS COM SUCESSO', 'rgb(82, 190, 128, 1)', 3000);
-                                });
-                              }
-                            }, 1000);
+                              }, 1000);
+                            }, 3000);
                             e.stopPropagation();
                           }}
                           style={{

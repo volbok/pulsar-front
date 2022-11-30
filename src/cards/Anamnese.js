@@ -115,12 +115,14 @@ function Anamnese() {
         <div className='text3'>LISTA DE PROBLEMAS</div>
         <textarea
           className="textarea"
+          autoComplete='off'
           placeholder='LISTA DE PROBLEMAS'
           onFocus={(e) => (e.target.placeholder = '')}
           onBlur={(e) => (e.target.placeholder = 'LISTA DE PROBLEMAS')}
           defaultValue={selectedatendimento.map(item => item.problemas)}
           onKeyUp={(e) => {
             clearTimeout(timeout);
+            document.getElementById("inputProblemas").blur();
             timeout = setTimeout(() => {
               if (document.getElementById("inputProblemas").value != '') {
                 updateAtendimento();
@@ -141,12 +143,14 @@ function Anamnese() {
         <div className='text3'>SITUAÇÃO</div>
         <textarea
           className="textarea"
+          autoComplete='off'
           placeholder='SITUAÇÃO, CONTEXTO, HISTÓRIA DA DOENÇA ATUAL'
           onFocus={(e) => (e.target.placeholder = '')}
           onBlur={(e) => (e.target.placeholder = 'SITUAÇÃO, CONTEXTO, HISTÓRIA DA DOENÇA ATUAL')}
           defaultValue={selectedatendimento.map(item => item.situacao)}
           onKeyUp={(e) => {
             clearTimeout(timeout);
+            document.getElementById("inputSituacao").blur();
             timeout = setTimeout(() => {
               if (document.getElementById("inputSituacao").value != '') {
                 updateAtendimento();
@@ -167,12 +171,14 @@ function Anamnese() {
         <div className='text3'>ANTECEDENTES PESSOAIS</div>
         <textarea
           className="textarea"
+          autoComplete='off'
           placeholder='ANTECEDENTES PESSOAIS'
           onFocus={(e) => (e.target.placeholder = '')}
           onBlur={(e) => (e.target.placeholder = 'ANTECEDENTES PESSOAIS')}
           defaultValue={anamnese.map(item => item.antecedentes_pessoais)}
           onKeyUp={(e) => {
             clearTimeout(timeout);
+            document.getElementById("inputAntecedentesPessoais").blur();
             timeout = setTimeout(() => {
               if (document.getElementById("inputAntecedentesPessoais").value != '') {
                 updatePaciente();
@@ -194,12 +200,14 @@ function Anamnese() {
         <div className='text3'>MEDICAÇÕES DE USO DOMICILIAR</div>
         <textarea
           className="textarea"
+          autoComplete='off'
           placeholder='MEDICAÇÕES DE USO DOMICILIAR'
           onFocus={(e) => (e.target.placeholder = '')}
           onBlur={(e) => (e.target.placeholder = 'MEDICAÇÕES DE USO DOMICILIAR')}
           defaultValue={anamnese.map(item => item.medicacoes_previas)}
           onKeyUp={(e) => {
             clearTimeout(timeout);
+            document.getElementById("inputMedicacoesPrevias").blur();
             timeout = setTimeout(() => {
               if (document.getElementById("inputMedicacoesPrevias").value != '') {
                 updatePaciente();
@@ -221,12 +229,14 @@ function Anamnese() {
         <div className='text3'>EXAMES PRÉVIOS</div>
         <textarea
           className="textarea"
+          autoComplete='off'
           placeholder='EXAMES PRÉVIOS'
           onFocus={(e) => (e.target.placeholder = '')}
           onBlur={(e) => (e.target.placeholder = 'EXAMES PRÉVIOS')}
           defaultValue={anamnese.map(item => item.exames_previos)}
           onKeyUp={(e) => {
             clearTimeout(timeout);
+            document.getElementById("inputExamesPrevios").blur();
             timeout = setTimeout(() => {
               if (document.getElementById("inputExamesPrevios").value != '') {
                 updatePaciente();

@@ -452,7 +452,7 @@ function Infusoes() {
                 onKeyUp={(e) => {
                   clearTimeout(timeout);
                   timeout = setTimeout(() => {
-                    document.getElementById("inputDroga").blur();
+                    document.getElementById("inputDroga " + item.id_infusao).blur();
                     setTimeout(() => {
                       if (document.getElementById("inputDroga " + item.id_infusao).value != '') {
                         var obj = {

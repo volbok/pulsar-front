@@ -412,6 +412,7 @@ function Culturas() {
               }}>
                 <input id={"inputMaterial " + item.id_cultura}
                   className="input"
+                  autoComplete="off"
                   placeholder='MATERIAL...'
                   onFocus={(e) => (e.target.placeholder = '')}
                   onBlur={(e) => (e.target.placeholder = 'MATERIAL...')}
@@ -447,6 +448,7 @@ function Culturas() {
                 </input>
                 <textarea id={"inputResultado " + item.id_cultura}
                   className="textarea"
+                  autoComplete="off"
                   placeholder='RESULTADO...'
                   onFocus={(e) => (e.target.placeholder = '')}
                   onBlur={(e) => (e.target.placeholder = 'RESULTADO...')}

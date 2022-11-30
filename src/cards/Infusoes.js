@@ -418,9 +418,11 @@ function Infusoes() {
                       clearTimeout(timeout);
                       timeout = setTimeout(() => {
                         document.getElementById("inputVelocidade " + item.id_infusao).blur();
-                        updateInfusao(item, item.data_inicio, item.data_termino);
-                        toast(settoast, 'INFUSÃO ATUALIZADA COM SUCESSO', 'rgb(82, 190, 128, 1)', 3000);
-                        e.stopPropagation();
+                        setTimeout(() => {
+                          updateInfusao(item, item.data_inicio, item.data_termino);
+                          toast(settoast, 'INFUSÃO ATUALIZADA COM SUCESSO', 'rgb(82, 190, 128, 1)', 3000);
+                          e.stopPropagation();
+                        }, 1000);
                       }, 2000);
                     }
                   }}
@@ -451,21 +453,22 @@ function Infusoes() {
                   clearTimeout(timeout);
                   timeout = setTimeout(() => {
                     document.getElementById("inputDroga").blur();
-                    if (document.getElementById("inputDroga " + item.id_infusao).value != '') {
-                      // updateInfusao(item, item.data_inicio, item.data_termino);
-                      var obj = {
-                        id_atendimento: atendimento,
-                        droga: document.getElementById("inputDroga " + item.id_infusao).value,
-                        velocidade: item.velocidade,
-                        data_inicio: item.data_inicio,
-                        data_termino: item.data_termino,
+                    setTimeout(() => {
+                      if (document.getElementById("inputDroga " + item.id_infusao).value != '') {
+                        var obj = {
+                          id_atendimento: atendimento,
+                          droga: document.getElementById("inputDroga " + item.id_infusao).value,
+                          velocidade: item.velocidade,
+                          data_inicio: item.data_inicio,
+                          data_termino: item.data_termino,
+                        }
+                        axios.post(html + 'update_infusao/' + item.id_infusao, obj).then(() => {
+                          loadInfusoes();
+                        })
+                        toast(settoast, 'INFUSÃO ATUALIZADA COM SUCESSO', 'rgb(82, 190, 128, 1)', 3000);
+                        e.stopPropagation();
                       }
-                      axios.post(html + 'update_infusao/' + item.id_infusao, obj).then(() => {
-                        loadInfusoes();
-                      })
-                      toast(settoast, 'INFUSÃO ATUALIZADA COM SUCESSO', 'rgb(82, 190, 128, 1)', 3000);
-                      e.stopPropagation();
-                    }
+                    }, 1000);
                   }, 2000);
                 }}
                 style={{

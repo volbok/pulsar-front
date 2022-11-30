@@ -272,15 +272,17 @@ function Propostas() {
     searchproposta = document.getElementById("inputFilterProposta").value.toUpperCase();
     timeout = setTimeout(() => {
       document.getElementById("inputFilterProposta").blur();
-      if (searchproposta == '') {
-        setfilterproposta('');
-        setarraypropostas(propostas);
-        document.getElementById("inputFilterProposta").value = '';
-      } else {
-        setfilterproposta(document.getElementById("inputFilterProposta").value.toUpperCase());
-        setarraypropostas(propostas.filter(item => item.proposta.includes(searchproposta)));
-        document.getElementById("inputFilterProposta").value = searchproposta;
-      }
+      setTimeout(() => {
+        if (searchproposta == '') {
+          setfilterproposta('');
+          setarraypropostas(propostas);
+          document.getElementById("inputFilterProposta").value = '';
+        } else {
+          setfilterproposta(document.getElementById("inputFilterProposta").value.toUpperCase());
+          setarraypropostas(propostas.filter(item => item.proposta.includes(searchproposta)));
+          document.getElementById("inputFilterProposta").value = searchproposta;
+        }
+      }, 1000);
     }, 1000);
   }
 

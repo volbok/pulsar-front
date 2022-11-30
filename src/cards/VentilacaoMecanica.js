@@ -149,7 +149,7 @@ function VentilacaoMecanica() {
           style={{
             flexDirection: 'column',
             width: window.innerWidth < 426 ? '80vw' : '60vw',
-            height: window.innerWidth < 426 ? 0.7 * window.innerHeight : '',
+            height: window.innerWidth < 426 ? 0.5 * window.innerHeight : '',
             justifyContent: window.innerWidth < 426 ? 'flex-start' : 'center',
             alignContent: 'center',
           }}>

@@ -282,15 +282,17 @@ function Culturas() {
     searchcultura = document.getElementById("inputFilterCultura").value.toUpperCase();
     timeout = setTimeout(() => {
       document.getElementById("inputFilterCultura").blur();
-      if (searchcultura == '') {
-        setfiltercultura('');
-        setarrayculturas(culturas);
-        document.getElementById("inputFilterCultura").value = '';
-      } else {
-        setfiltercultura(document.getElementById("inputFilterCultura").value.toUpperCase());
-        setarrayculturas(culturas.filter(item => item.material.includes(searchcultura)));
-        document.getElementById("inputFilterCultura").value = searchcultura;
-      }
+      setTimeout(() => {
+        if (searchcultura == '') {
+          setfiltercultura('');
+          setarrayculturas(culturas);
+          document.getElementById("inputFilterCultura").value = '';
+        } else {
+          setfiltercultura(document.getElementById("inputFilterCultura").value.toUpperCase());
+          setarrayculturas(culturas.filter(item => item.material.includes(searchcultura)));
+          document.getElementById("inputFilterCultura").value = searchcultura;
+        }
+      }, 1000);
     }, 1000);
   }
 
@@ -418,18 +420,20 @@ function Culturas() {
                     clearTimeout(timeout);
                     timeout = setTimeout(() => {
                       document.getElementById("inputMaterial " + item.id_cultura).blur();
-                      var obj = {
-                        id_atendimento: item.id_atendimento,
-                        material: document.getElementById('inputMaterial ' + item.id_cultura).value.toUpperCase(),
-                        resultado: document.getElementById('inputResultado ' + item.id_cultura).value.toUpperCase(),
-                        data_pedido: item.data_pedido,
-                        data_resultado: item.data_resultado,
-                      }
-                      axios.post(html + 'update_cultura/' + item.id_cultura, obj).then(() => {
-                        loadCulturas();
-                        toast(settoast, 'DADOS DA CULTURA ATUALIZADOS COM SUCESSO', 'rgb(82, 190, 128, 1)', 3000);
-                      });
-                      e.stopPropagation();
+                      setTimeout(() => {
+                        var obj = {
+                          id_atendimento: item.id_atendimento,
+                          material: document.getElementById('inputMaterial ' + item.id_cultura).value.toUpperCase(),
+                          resultado: document.getElementById('inputResultado ' + item.id_cultura).value.toUpperCase(),
+                          data_pedido: item.data_pedido,
+                          data_resultado: item.data_resultado,
+                        }
+                        axios.post(html + 'update_cultura/' + item.id_cultura, obj).then(() => {
+                          loadCulturas();
+                          toast(settoast, 'DADOS DA CULTURA ATUALIZADOS COM SUCESSO', 'rgb(82, 190, 128, 1)', 3000);
+                        });
+                        e.stopPropagation();
+                      }, 1000);
                     }, 3000);
                   }}
                   style={{
@@ -452,18 +456,20 @@ function Culturas() {
                     var resultado = document.getElementById('inputResultado ' + item.id_cultura).value.toUpperCase();
                     timeout = setTimeout(() => {
                       document.getElementById("inputMaterial " + item.id_cultura).blur();
-                      var obj = {
-                        id_atendimento: item.id_atendimento,
-                        material: document.getElementById('inputMaterial ' + item.id_cultura).value.toUpperCase(),
-                        resultado: resultado == '' ? null : resultado,
-                        data_pedido: item.data_pedido,
-                        data_resultado: resultado == '' ? null : moment(),
-                      }
-                      axios.post(html + 'update_cultura/' + item.id_cultura, obj).then(() => {
-                        loadCulturas();
-                        toast(settoast, 'DADOS DA CULTURA ATUALIZADOS COM SUCESSO', 'rgb(82, 190, 128, 1)', 3000);
-                      });
-                      e.stopPropagation();
+                      setTimeout(() => {
+                        var obj = {
+                          id_atendimento: item.id_atendimento,
+                          material: document.getElementById('inputMaterial ' + item.id_cultura).value.toUpperCase(),
+                          resultado: resultado == '' ? null : resultado,
+                          data_pedido: item.data_pedido,
+                          data_resultado: resultado == '' ? null : moment(),
+                        }
+                        axios.post(html + 'update_cultura/' + item.id_cultura, obj).then(() => {
+                          loadCulturas();
+                          toast(settoast, 'DADOS DA CULTURA ATUALIZADOS COM SUCESSO', 'rgb(82, 190, 128, 1)', 3000);
+                        });
+                        e.stopPropagation();
+                      }, 1000);
                     }, 3000);
                   }}
                   style={{

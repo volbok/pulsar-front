@@ -288,15 +288,17 @@ function Antibioticos() {
     searchantibiotico = document.getElementById("inputFilterAntibiotico").value.toUpperCase();
     timeout = setTimeout(() => {
       document.getElementById("inputFilterAntibiotico").blur();
-      if (searchantibiotico == '') {
-        setfilterantibiotico('');
-        setarrayantibioticos(antibioticos);
-        document.getElementById("inputFilterAntibiotico").value = '';
-      } else {
-        setfilterantibiotico(document.getElementById("inputFilterAntibiotico").value.toUpperCase());
-        setarrayantibioticos(antibioticos.filter(item => item.antibiotico.includes(searchantibiotico)));
-        document.getElementById("inputFilterAntibiotico").value = searchantibiotico;
-      }
+      setTimeout(() => {
+        if (searchantibiotico == '') {
+          setfilterantibiotico('');
+          setarrayantibioticos(antibioticos);
+          document.getElementById("inputFilterAntibiotico").value = '';
+        } else {
+          setfilterantibiotico(document.getElementById("inputFilterAntibiotico").value.toUpperCase());
+          setarrayantibioticos(antibioticos.filter(item => item.antibiotico.includes(searchantibiotico)));
+          document.getElementById("inputFilterAntibiotico").value = searchantibiotico;
+        }
+      }, 1000);
     }, 1000);
   }
 

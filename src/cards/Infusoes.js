@@ -70,7 +70,7 @@ function Infusoes() {
       }
       axios.post(html + 'insert_infusao', obj).then(() => {
         loadInfusoes();
-        toast(settoast, 'INFUSÃO ATUALIZADA COM SUCESSO', 'rgb(82, 190, 128, 1)', 3000);
+        // toast(settoast, 'INFUSÃO ATUALIZADA COM SUCESSO', 'rgb(82, 190, 128, 1)', 3000);
       });
     });
   }
@@ -420,9 +420,9 @@ function Infusoes() {
                         document.getElementById("inputVelocidade " + item.id_infusao).blur();
                         setTimeout(() => {
                           updateInfusao(item, item.data_inicio, item.data_termino);
-                          toast(settoast, 'INFUSÃO ATUALIZADA COM SUCESSO', 'rgb(82, 190, 128, 1)', 3000);
+                          // toast(settoast, 'INFUSÃO ATUALIZADA COM SUCESSO', 'rgb(82, 190, 128, 1)', 3000);
                           e.stopPropagation();
-                        }, 1000);
+                        }, 500);
                       }, 2000);
                     }
                   }}
@@ -457,7 +457,7 @@ function Infusoes() {
                       if (document.getElementById("inputDroga " + item.id_infusao).value != '') {
                         var obj = {
                           id_atendimento: atendimento,
-                          droga: document.getElementById("inputDroga " + item.id_infusao).value,
+                          droga: document.getElementById("inputDroga " + item.id_infusao).value.toUpperCase(),
                           velocidade: item.velocidade,
                           data_inicio: item.data_inicio,
                           data_termino: item.data_termino,
@@ -465,10 +465,10 @@ function Infusoes() {
                         axios.post(html + 'update_infusao/' + item.id_infusao, obj).then(() => {
                           loadInfusoes();
                         })
-                        toast(settoast, 'INFUSÃO ATUALIZADA COM SUCESSO', 'rgb(82, 190, 128, 1)', 3000);
+                        // toast(settoast, 'INFUSÃO ATUALIZADA COM SUCESSO', 'rgb(82, 190, 128, 1)', 3000);
                         e.stopPropagation();
                       }
-                    }, 1000);
+                    }, 500);
                   }, 2000);
                 }}
                 style={{

@@ -292,8 +292,8 @@ function Culturas() {
           setarrayculturas(culturas.filter(item => item.material.includes(searchcultura)));
           document.getElementById("inputFilterCultura").value = searchcultura;
         }
-      }, 1000);
-    }, 1000);
+      }, 500);
+    }, 2000);
   }
 
   function FilterCulturas() {
@@ -431,11 +431,11 @@ function Culturas() {
                         }
                         axios.post(html + 'update_cultura/' + item.id_cultura, obj).then(() => {
                           loadCulturas();
-                          toast(settoast, 'DADOS DA CULTURA ATUALIZADOS COM SUCESSO', 'rgb(82, 190, 128, 1)', 3000);
+                          // toast(settoast, 'DADOS DA CULTURA ATUALIZADOS COM SUCESSO', 'rgb(82, 190, 128, 1)', 3000);
                         });
                         e.stopPropagation();
-                      }, 1000);
-                    }, 3000);
+                      }, 500);
+                    }, 2000);
                   }}
                   style={{
                     display: 'flex',
@@ -457,22 +457,22 @@ function Culturas() {
                     clearTimeout(timeout);
                     var resultado = document.getElementById('inputResultado ' + item.id_cultura).value.toUpperCase();
                     timeout = setTimeout(() => {
-                      document.getElementById("inputMaterial " + item.id_cultura).blur();
+                      document.getElementById("inputResultado " + item.id_cultura).blur();
                       setTimeout(() => {
                         var obj = {
                           id_atendimento: item.id_atendimento,
-                          material: document.getElementById('inputMaterial ' + item.id_cultura).value.toUpperCase(),
+                          material: document.getElementById('inputResultado ' + item.id_cultura).value.toUpperCase(),
                           resultado: resultado == '' ? null : resultado,
                           data_pedido: item.data_pedido,
                           data_resultado: resultado == '' ? null : moment(),
                         }
                         axios.post(html + 'update_cultura/' + item.id_cultura, obj).then(() => {
                           loadCulturas();
-                          toast(settoast, 'DADOS DA CULTURA ATUALIZADOS COM SUCESSO', 'rgb(82, 190, 128, 1)', 3000);
+                          // toast(settoast, 'DADOS DA CULTURA ATUALIZADOS COM SUCESSO', 'rgb(82, 190, 128, 1)', 3000);
                         });
                         e.stopPropagation();
-                      }, 1000);
-                    }, 3000);
+                      }, 500);
+                    }, 2000);
                   }}
                   style={{
                     display: 'flex',

@@ -56,7 +56,7 @@ function Evolucoes() {
     }
     axios.post(html + 'update_evolucao/' + item.id_evolucao, obj).then(() => {
       loadEvolucoes();
-      toast(settoast, 'DADOS DA EVOLUÇÃO ATUALIZADOS COM SUCESSO', 'rgb(82, 190, 128, 1)', 3000);
+      // toast(settoast, 'DADOS DA EVOLUÇÃO ATUALIZADOS COM SUCESSO', 'rgb(82, 190, 128, 1)', 3000);
     })
   }
 
@@ -244,7 +244,7 @@ function Evolucoes() {
           setarrayevolucoes(evolucoes.filter(item => item.evolucao.includes(searchevolucao)));
           document.getElementById("inputFilterEvolucao").value = searchevolucao;
         }
-      }, 1000);
+      }, 500);
     }, 1000);
   }
 

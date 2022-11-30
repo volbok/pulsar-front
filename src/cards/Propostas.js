@@ -59,7 +59,7 @@ function Propostas() {
     }
     axios.post(html + 'update_proposta/' + item.id_proposta, obj).then(() => {
       loadPropostas();
-      toast(settoast, 'DADOS DA PROPOSTA ATUALIZADOS COM SUCESSO', 'rgb(82, 190, 128, 1)', 3000);
+      // toast(settoast, 'DADOS DA PROPOSTA ATUALIZADOS COM SUCESSO', 'rgb(82, 190, 128, 1)', 3000);
     })
   }
 
@@ -282,8 +282,8 @@ function Propostas() {
           setarraypropostas(propostas.filter(item => item.proposta.includes(searchproposta)));
           document.getElementById("inputFilterProposta").value = searchproposta;
         }
-      }, 1000);
-    }, 1000);
+      }, 500);
+    }, 2000);
   }
 
   var timeout = null;

@@ -32,9 +32,9 @@ function Anamnese() {
       setselectedatendimento(atendimentos.filter(item => item.id_atendimento == atendimento));
       document.getElementById("inputProblemas").value = atendimentos.filter(item => item.id_atendimento == atendimento).map(item => item.problemas);
       document.getElementById("inputSituacao").value = atendimentos.filter(item => item.id_atendimento == atendimento).map(item => item.situacao);
-      document.getElementById("inputAntecedentesPessoais").value = pacientes.filter(item => item.id_paciente == paciente).map(item => item.antecedentes_pessoais);
-      document.getElementById("inputMedicacoesPrevias").value = pacientes.filter(item => item.id_paciente == paciente).map(item => item.medicacoes_previas);
-      document.getElementById("inputExamesPrevios").value = pacientes.filter(item => item.id_paciente == paciente).map(item => item.exames_previos);
+      // document.getElementById("inputAntecedentesPessoais").value = pacientes.filter(item => item.id_paciente == paciente).map(item => item.antecedentes_pessoais);
+      // document.getElementById("inputMedicacoesPrevias").value = pacientes.filter(item => item.id_paciente == paciente).map(item => item.medicacoes_previas);
+      // document.getElementById("inputExamesPrevios").value = pacientes.filter(item => item.id_paciente == paciente).map(item => item.exames_previos);
     }
     // eslint-disable-next-line
   }, [card, paciente, atendimentos, atendimento]);
@@ -50,11 +50,10 @@ function Anamnese() {
       medicacoes_previas: document.getElementById("inputMedicacoesPrevias").value.toUpperCase(),
       exames_previos: document.getElementById("inputExamesPrevios").value.toUpperCase(),
     }
+    console.log(JSON.stringify(obj));
+    console.log('ID DO PACIENTE: ' + paciente)
     axios.post(html + 'update_paciente/' + paciente, obj).then(() => {
-      toast(settoast, 'DADOS DA ANAMNESE ATUALIZADOS COM SUCESSO', 'rgb(82, 190, 128, 1)', 3000);
-      axios.get(html + 'list_atendimentos/' + unidade).then((response) => {
-        setatendimentos(response.data.rows);
-      });
+      updateAtendimento();
     })
   }
 

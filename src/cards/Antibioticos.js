@@ -298,7 +298,7 @@ function Antibioticos() {
           setarrayantibioticos(antibioticos.filter(item => item.antibiotico.includes(searchantibiotico)));
           document.getElementById("inputFilterAntibiotico").value = searchantibiotico;
         }
-      }, 1000);
+      }, 500);
     }, 1000);
   }
 
@@ -460,11 +460,11 @@ function Antibioticos() {
                             }
                             axios.post(html + 'update_antibiotico/' + item.id_antibiotico, obj).then(() => {
                               loadAntibioticos();
-                              toast(settoast, 'DADOS DO ANTIBIÓTICO ATUALIZADOS COM SUCESSO', 'rgb(82, 190, 128, 1)', 3000);
+                              // toast(settoast, 'DADOS DO ANTIBIÓTICO ATUALIZADOS COM SUCESSO', 'rgb(82, 190, 128, 1)', 3000);
                             });
                             e.stopPropagation();
-                          }, 1000);
-                        }, 3000);
+                          }, 500);
+                        }, 2000);
                       }}
                       style={{
                         display: 'flex',
@@ -501,7 +501,7 @@ function Antibioticos() {
                           setTimeout(() => {
                             var date = moment(document.getElementById("inputInicio " + item.id_antibiotico).value, 'DD/MM/YYYY', true);
                             if (date.isValid() == false) {
-                              toast(settoast, 'DATA INVÁLIDA', 'rgb(231, 76, 60, 1)', 3000);
+                              toast(settoast, 'DATA INVÁLIDA', 'rgb(231, 76, 60, 1)', 1500);
                               document.getElementById("inputInicio " + item.id_antibiotico).value = '';
                             } else {
                               var obj = {
@@ -513,11 +513,11 @@ function Antibioticos() {
                               }
                               axios.post(html + 'update_antibiotico/' + item.id_antibiotico, obj).then(() => {
                                 loadAntibioticos();
-                                toast(settoast, 'DADOS DO ANTIBIÓTICO ATUALIZADOS COM SUCESSO', 'rgb(82, 190, 128, 1)', 3000);
+                                // toast(settoast, 'DADOS DO ANTIBIÓTICO ATUALIZADOS COM SUCESSO', 'rgb(82, 190, 128, 1)', 3000);
                               });
                             }
-                          }, 1000);
-                        }, 3000);
+                          }, 500);
+                        }, 2000);
                         e.stopPropagation();
                       }}
                       style={{
@@ -556,7 +556,7 @@ function Antibioticos() {
                             var field = document.getElementById("inputTermino " + item.id_antibiotico).value;
                             var date = moment(document.getElementById("inputTermino " + item.id_antibiotico).value, 'DD/MM/YYYY', true);
                             if (field != '' && date.isValid() == false) {
-                              toast(settoast, 'DATA INVÁLIDA', 'rgb(231, 76, 60, 1)', 3000);
+                              toast(settoast, 'DATA INVÁLIDA', 'rgb(231, 76, 60, 1)', 1500);
                               document.getElementById("inputTermino " + item.id_antibiotico).value = '';
                             } else {
                               var obj = {
@@ -568,11 +568,11 @@ function Antibioticos() {
                               }
                               axios.post(html + 'update_antibiotico/' + item.id_antibiotico, obj).then(() => {
                                 loadAntibioticos();
-                                toast(settoast, 'DADOS DO ANTIBIÓTICO ATUALIZADOS COM SUCESSO', 'rgb(82, 190, 128, 1)', 3000);
+                                // toast(settoast, 'DADOS DO ANTIBIÓTICO ATUALIZADOS COM SUCESSO', 'rgb(82, 190, 128, 1)', 3000);
                               });
                             }
-                          }, 1000);
-                        }, 3000);
+                          }, 500);
+                        }, 2000);
                         e.stopPropagation();
                       }}
                       style={{
@@ -617,7 +617,7 @@ function Antibioticos() {
                               setTimeout(() => {
                                 var prazo = document.getElementById("inputDias " + item.id_antibiotico).value;
                                 if (isNaN(prazo) == true && parseInt(prazo) < 0) {
-                                  toast(settoast, 'VALOR INVÁLIDO', 'rgb(231, 76, 60, 1)', 3000);
+                                  toast(settoast, 'VALOR INVÁLIDO', 'rgb(231, 76, 60, 1)', 1500);
                                   document.getElementById("inputDias " + item.id_antibiotico).value = '';
                                 } else {
                                   var obj = {
@@ -629,11 +629,11 @@ function Antibioticos() {
                                   }
                                   axios.post(html + 'update_antibiotico/' + item.id_antibiotico, obj).then(() => {
                                     loadAntibioticos();
-                                    toast(settoast, 'DADOS DO ANTIBIÓTICO ATUALIZADOS COM SUCESSO', 'rgb(82, 190, 128, 1)', 3000);
+                                    // toast(settoast, 'DADOS DO ANTIBIÓTICO ATUALIZADOS COM SUCESSO', 'rgb(82, 190, 128, 1)', 3000);
                                   });
                                 }
-                              }, 1000);
-                            }, 3000);
+                              }, 500);
+                            }, 2000);
                             e.stopPropagation();
                           }}
                           style={{

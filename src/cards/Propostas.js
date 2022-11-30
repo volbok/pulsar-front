@@ -269,7 +269,6 @@ function Propostas() {
   var searchproposta = '';
   const filterProposta = () => {
     clearTimeout(timeout);
-    document.getElementById("inputFilterProposta").focus();
     searchproposta = document.getElementById("inputFilterProposta").value.toUpperCase();
     timeout = setTimeout(() => {
       document.getElementById("inputFilterProposta").blur();
@@ -277,16 +276,10 @@ function Propostas() {
         setfilterproposta('');
         setarraypropostas(propostas);
         document.getElementById("inputFilterProposta").value = '';
-        setTimeout(() => {
-          document.getElementById("inputFilterProposta").focus();
-        }, 100);
       } else {
         setfilterproposta(document.getElementById("inputFilterProposta").value.toUpperCase());
         setarraypropostas(propostas.filter(item => item.proposta.includes(searchproposta)));
         document.getElementById("inputFilterProposta").value = searchproposta;
-        setTimeout(() => {
-          document.getElementById("inputFilterProposta").focus();
-        }, 100);
       }
     }, 1000);
   }

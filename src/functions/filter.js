@@ -13,7 +13,7 @@ const filter = (timeout, input, search, setfilter, setarraylist, list, parameter
       }, 100);
     } else {
       setfilter(document.getElementById(input).value.toUpperCase());
-      setarraylist(list.filter(item => parameter.includes(search)));
+      setarraylist(list.filter(parameter));
       document.getElementById(input).value = search;
       setTimeout(() => {
         document.getElementById(input).focus();

@@ -286,16 +286,10 @@ function Culturas() {
         setfiltercultura('');
         setarrayculturas(culturas);
         document.getElementById("inputFilterCultura").value = '';
-        setTimeout(() => {
-          document.getElementById("inputFilterCultura").focus();
-        }, 100);
       } else {
         setfiltercultura(document.getElementById("inputFilterCultura").value.toUpperCase());
         setarrayculturas(culturas.filter(item => item.material.includes(searchcultura)));
         document.getElementById("inputFilterCultura").value = searchcultura;
-        setTimeout(() => {
-          document.getElementById("inputFilterCultura").focus();
-        }, 100);
       }
     }, 1000);
   }

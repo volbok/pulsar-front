@@ -7,6 +7,7 @@ import moment from 'moment';
 import toast from '../functions/toast';
 import modal from '../functions/modal';
 import checkinput from '../functions/checkinput';
+import filter from '../functions/filter';
 // imagens.
 import deletar from '../images/deletar.svg';
 import salvar from '../images/salvar.svg';
@@ -212,7 +213,10 @@ function Evolucoes() {
           onFocus={(e) => (e.target.placeholder = '')}
           onBlur={(e) => (e.target.placeholder = 'BUSCAR NAS EVOLUÇÕES...')}
           onClick={(e) => e.stopPropagation()}
-          onKeyUp={(e) => { filterEvolucao(); e.stopPropagation(); }}
+          onKeyUp={(e) => {
+            filterEvolucao();
+            e.stopPropagation();
+          }}
           type="text"
           id="inputFilterEvolucao"
           defaultValue={filterevolucao}

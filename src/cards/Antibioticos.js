@@ -463,7 +463,7 @@ function Antibioticos() {
                               toast(settoast, 'DADOS DO ANTIBIÓTICO ATUALIZADOS COM SUCESSO', 'rgb(82, 190, 128, 1)', 3000);
                             });
                             e.stopPropagation();
-                          }, 500);
+                          }, 1000);
                         }, 3000);
                       }}
                       style={{
@@ -516,8 +516,8 @@ function Antibioticos() {
                                 toast(settoast, 'DADOS DO ANTIBIÓTICO ATUALIZADOS COM SUCESSO', 'rgb(82, 190, 128, 1)', 3000);
                               });
                             }
-                          }, 3000);
-                        }, 500);
+                          }, 1000);
+                        }, 3000);
                         e.stopPropagation();
                       }}
                       style={{
@@ -571,7 +571,7 @@ function Antibioticos() {
                                 toast(settoast, 'DADOS DO ANTIBIÓTICO ATUALIZADOS COM SUCESSO', 'rgb(82, 190, 128, 1)', 3000);
                               });
                             }
-                          }, 500);
+                          }, 1000);
                         }, 3000);
                         e.stopPropagation();
                       }}

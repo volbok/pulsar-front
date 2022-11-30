@@ -122,13 +122,15 @@ function Anamnese() {
           defaultValue={selectedatendimento.map(item => item.problemas)}
           onKeyUp={(e) => {
             clearTimeout(timeout);
-            document.getElementById("inputProblemas").blur();
             timeout = setTimeout(() => {
-              if (document.getElementById("inputProblemas").value != '') {
-                updateAtendimento();
-              }
+              document.getElementById("inputProblemas").blur();
+              setTimeout(() => {
+                if (document.getElementById("inputProblemas").value != '') {
+                  updatePaciente();
+                }
+              }, 1000);
               e.stopPropagation();
-            }, 5000);
+            }, 3000);
           }}
           style={{
             display: 'flex',
@@ -150,13 +152,15 @@ function Anamnese() {
           defaultValue={selectedatendimento.map(item => item.situacao)}
           onKeyUp={(e) => {
             clearTimeout(timeout);
-            document.getElementById("inputSituacao").blur();
             timeout = setTimeout(() => {
-              if (document.getElementById("inputSituacao").value != '') {
-                updateAtendimento();
-              }
+              document.getElementById("inputSituacao").blur();
+              setTimeout(() => {
+                if (document.getElementById("inputSituacao").value != '') {
+                  updatePaciente();
+                }
+              }, 1000);
               e.stopPropagation();
-            }, 5000);
+            }, 4000);
           }}
           style={{
             display: 'flex',
@@ -178,13 +182,15 @@ function Anamnese() {
           defaultValue={anamnese.map(item => item.antecedentes_pessoais)}
           onKeyUp={(e) => {
             clearTimeout(timeout);
-            document.getElementById("inputAntecedentesPessoais").blur();
             timeout = setTimeout(() => {
-              if (document.getElementById("inputAntecedentesPessoais").value != '') {
-                updatePaciente();
-              }
+              document.getElementById("inputAntecedentesPessoais").blur();
+              setTimeout(() => {
+                if (document.getElementById("inputAntecedentesPessoais").value != '') {
+                  updatePaciente();
+                }
+              }, 1000);
               e.stopPropagation();
-            }, 5000);
+            }, 4000);
           }}
           style={{
             display: 'flex',
@@ -207,13 +213,15 @@ function Anamnese() {
           defaultValue={anamnese.map(item => item.medicacoes_previas)}
           onKeyUp={(e) => {
             clearTimeout(timeout);
-            document.getElementById("inputMedicacoesPrevias").blur();
             timeout = setTimeout(() => {
-              if (document.getElementById("inputMedicacoesPrevias").value != '') {
-                updatePaciente();
-              }
+              document.getElementById("inputMedicacoesPrevias").blur();
+              setTimeout(() => {
+                if (document.getElementById("inputMedicacoesPrevias").value != '') {
+                  updatePaciente();
+                }
+              }, 1000);
               e.stopPropagation();
-            }, 5000);
+            }, 4000);
           }}
           style={{
             display: 'flex',
@@ -236,13 +244,15 @@ function Anamnese() {
           defaultValue={anamnese.map(item => item.exames_previos)}
           onKeyUp={(e) => {
             clearTimeout(timeout);
-            document.getElementById("inputExamesPrevios").blur();
             timeout = setTimeout(() => {
-              if (document.getElementById("inputExamesPrevios").value != '') {
-                updatePaciente();
-              }
+              document.getElementById("inputExamesPrevios").blur();
+              setTimeout(() => {
+                if (document.getElementById("inputExamesPrevios").value != '') {
+                  updatePaciente();
+                }
+              }, 1000);
               e.stopPropagation();
-            }, 5000);
+            }, 4000);
           }}
           style={{
             display: 'flex',

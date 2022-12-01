@@ -50,8 +50,13 @@ function GravadorMulti({ funcao, campos }) {
         <div id="lista de resultados"
           className="button"
           style={{
+            top: 0, bottom: 0, left: 0, right: 0,
+            alignSelf: 'center',
+            width: window.innerWidth < 426 ? '80vw' : '',
+            minWidth: window.innerWidth < 426 ? '80vw' : '',
+            backgroundColor: 'grey',
             display: btngravavoz == "gravando" ? 'flex' : 'none',
-            flexDirection: 'column', justifyContent: 'center', width: 150, padding: 20
+            flexDirection: 'column', justifyContent: 'center', width: 150, padding: 20,
           }}>
           {campo + ' ' + transcript.toUpperCase()}
           <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'center' }}>

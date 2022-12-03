@@ -119,17 +119,17 @@ function Cadastro() {
   }
 
   // atualizando um novo paciente.
-  const updatePaciente = (paciente) => {
+  const updatePaciente = (id) => {
     var obj = {
-      nome_paciente: document.getElementById("inputNomePaciente " + paciente.id_paciente).value.toUpperCase(),
-      nome_mae_paciente: document.getElementById("inputNomeMae " + paciente.id_paciente).value.toUpperCase(),
-      dn_paciente: moment(document.getElementById("inputDn " + paciente.id_paciente).value, 'DD/MM/YYYY'),
-      antecedentes_pessoais: document.getElementById("inputAntecedentesPessoais " + paciente.id_paciente).value.toUpperCase(),
-      medicacoes_previas: document.getElementById("inputMedicacoesPrevias " + paciente.id_paciente).value.toUpperCase(),
-      exames_previos: document.getElementById("inputExamesPrevios " + paciente.id_paciente).value.toUpperCase(),
-      exames_atuais: paciente.exames_atuais,
+      nome_paciente: document.getElementById("inputNomePaciente " + id).value.toUpperCase(),
+      nome_mae_paciente: document.getElementById("inputNomeMae " + id).value.toUpperCase(),
+      dn_paciente: moment(document.getElementById("inputDn " + id).value, 'DD/MM/YYYY'),
+      antecedentes_pessoais: document.getElementById("inputAntecedentesPessoais " + id).value.toUpperCase(),
+      medicacoes_previas: document.getElementById("inputMedicacoesPrevias " + id).value.toUpperCase(),
+      exames_previos: document.getElementById("inputExamesPrevios " + id).value.toUpperCase(),
+      exames_atuais: document.getElementById("inputExamesAtuais " + id).value.toUpperCase(),
     }
-    axios.post(html + 'update_paciente/' + paciente.id_paciente, obj).then(() => {
+    axios.post(html + 'update_paciente/' + id, obj).then(() => {
       loadPacientes();
       toast(settoast, 'PACIENTE ATUALIZADO COM SUCESSO NA BASE PULSAR', 'rgb(82, 190, 128, 1)', 3000);
     })
@@ -745,11 +745,30 @@ function Cadastro() {
                 title="EXAMES PRÉVIOS."
               >
               </textarea>
+              <div id="exames atuais" style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
+                <div className='text1'>EXAMES ATUAIS</div>
+                <textarea
+                  className="textarea"
+                  placeholder='EXAMES ATUAIS'
+                  onFocus={(e) => (e.target.placeholder = '')}
+                  onBlur={(e) => (e.target.placeholder = 'EXAMES ATUAIS')}
+                  defaultValue={paciente.exames_atuais}
+                  style={{
+                    display: 'flex',
+                    flexDirection: 'center', justifyContent: 'center', alignSelf: 'center',
+                    width: window.innerWidth > 425 ? '50vw' : '70vw',
+                    whiteSpace: 'pre-wrap'
+                  }}
+                  id={"inputExamesAtuais " + paciente.id_paciente}
+                  title="EXAMES ATUAIS."
+                >
+                </textarea>
+              </div>
             </div>
             <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'center', marginTop: 10 }}>
               <div id="btnUpdatePaciente" title="ATUALIZAR DADOS DO PACIENTE" className="button-green"
                 onClick={() => {
-                  checkinput('textarea', settoast, ['inputNomePaciente ' + paciente.id_paciente, 'inputDn ' + paciente.id_paciente, 'inputNomeMae ' + paciente.id_paciente, 'inputAntecedentesPessoais ' + paciente.id_paciente, 'inputMedicacoesPrevias ' + paciente.id_paciente, 'inputExamesPrevios ' + paciente.id_paciente], 'btnUpdatePaciente', updatePaciente, [paciente]);
+                  checkinput('textarea', settoast, ['inputNomePaciente ' + paciente.id_paciente, 'inputDn ' + paciente.id_paciente, 'inputNomeMae ' + paciente.id_paciente, 'inputAntecedentesPessoais ' + paciente.id_paciente, 'inputMedicacoesPrevias ' + paciente.id_paciente, 'inputExamesPrevios ' + paciente.id_paciente], 'btnUpdatePaciente', updatePaciente, [paciente.id_paciente]);
                 }}
                 style={{ width: 50, height: 50, alignSelf: 'center' }}
               >

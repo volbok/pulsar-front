@@ -385,7 +385,7 @@ function VentilacaoMecanica() {
             overflowX: 'scroll', overflowY: 'hidden',
             width: '90%',
           }}>
-          {vm.sort((a, b) => moment(a.data_vm) < moment(b.data_vm) ? -1 : 1).slice(-5).map(item => (
+          {vm.sort((a, b) => moment(a.data_vm).milliseconds < moment(b.data_vm).milliseconds ? 1 : -1).slice(-5).map(item => (
             <div
               key={'gráfico ' + item.id_vm}
               style={{

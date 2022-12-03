@@ -716,7 +716,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
   flex-direction: row;
   justify-content: space-evenly;
   opacity: 1;
-  height: 1000px;
+  height: 1200px;
   margin: 5px;
   padding: 10px;
   border-radius: 5px;
@@ -1190,7 +1190,7 @@ ESTILOS VARIÁVEIS CONFORME A RESPONSIVIDADE.
     flex-direction: row;
     justify-content: space-evenly;
     opacity: 1;
-    height: 1300px;
+    height: 1500px;
     margin: 5px;
     padding: 10px;
     border-radius: 5px;
@@ -1239,7 +1239,7 @@ ESTILOS VARIÁVEIS CONFORME A RESPONSIVIDADE.
     flex-direction: row;
     justify-content: space-evenly;
     opacity: 1;
-    height: 1000px;
+    height: 1300px;
     margin: 5px;
     padding: 10px;
     border-radius: 5px;

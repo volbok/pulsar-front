@@ -102,6 +102,7 @@ function Cadastro() {
       antecedentes_pessoais: document.getElementById("inputNovoAntecedentesPessoais").value.toUpperCase(),
       medicacoes_previas: document.getElementById("inputNovoMedicacoesPrevias").value.toUpperCase(),
       exames_previos: document.getElementById("inputNovoExamesPrevios").value.toUpperCase(),
+      exames_atuais: null,
     }
     axios.post(html + 'insert_paciente', obj).then(() => {
       loadPacientes();
@@ -118,16 +119,17 @@ function Cadastro() {
   }
 
   // atualizando um novo paciente.
-  const updatePaciente = (id) => {
+  const updatePaciente = (paciente) => {
     var obj = {
-      nome_paciente: document.getElementById("inputNomePaciente " + id).value.toUpperCase(),
-      nome_mae_paciente: document.getElementById("inputNomeMae " + id).value.toUpperCase(),
-      dn_paciente: moment(document.getElementById("inputDn " + id).value, 'DD/MM/YYYY'),
-      antecedentes_pessoais: document.getElementById("inputAntecedentesPessoais " + id).value.toUpperCase(),
-      medicacoes_previas: document.getElementById("inputMedicacoesPrevias " + id).value.toUpperCase(),
-      exames_previos: document.getElementById("inputExamesPrevios " + id).value.toUpperCase(),
+      nome_paciente: document.getElementById("inputNomePaciente " + paciente.id_paciente).value.toUpperCase(),
+      nome_mae_paciente: document.getElementById("inputNomeMae " + paciente.id_paciente).value.toUpperCase(),
+      dn_paciente: moment(document.getElementById("inputDn " + paciente.id_paciente).value, 'DD/MM/YYYY'),
+      antecedentes_pessoais: document.getElementById("inputAntecedentesPessoais " + paciente.id_paciente).value.toUpperCase(),
+      medicacoes_previas: document.getElementById("inputMedicacoesPrevias " + paciente.id_paciente).value.toUpperCase(),
+      exames_previos: document.getElementById("inputExamesPrevios " + paciente.id_paciente).value.toUpperCase(),
+      exames_atuais: paciente.exames_atuais,
     }
-    axios.post(html + 'update_paciente/' + id, obj).then(() => {
+    axios.post(html + 'update_paciente/' + paciente.id_paciente, obj).then(() => {
       loadPacientes();
       toast(settoast, 'PACIENTE ATUALIZADO COM SUCESSO NA BASE PULSAR', 'rgb(82, 190, 128, 1)', 3000);
     })
@@ -747,7 +749,7 @@ function Cadastro() {
             <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'center', marginTop: 10 }}>
               <div id="btnUpdatePaciente" title="ATUALIZAR DADOS DO PACIENTE" className="button-green"
                 onClick={() => {
-                  checkinput('textarea', settoast, ['inputNomePaciente ' + paciente.id_paciente, 'inputDn ' + paciente.id_paciente, 'inputNomeMae ' + paciente.id_paciente, 'inputAntecedentesPessoais ' + paciente.id_paciente, 'inputMedicacoesPrevias ' + paciente.id_paciente, 'inputExamesPrevios ' + paciente.id_paciente], 'btnUpdatePaciente', updatePaciente, [paciente.id_paciente]);
+                  checkinput('textarea', settoast, ['inputNomePaciente ' + paciente.id_paciente, 'inputDn ' + paciente.id_paciente, 'inputNomeMae ' + paciente.id_paciente, 'inputAntecedentesPessoais ' + paciente.id_paciente, 'inputMedicacoesPrevias ' + paciente.id_paciente, 'inputExamesPrevios ' + paciente.id_paciente], 'btnUpdatePaciente', updatePaciente, [paciente]);
                 }}
                 style={{ width: 50, height: 50, alignSelf: 'center' }}
               >

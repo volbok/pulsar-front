@@ -374,7 +374,7 @@ function VentilacaoMecanica() {
     return (
       <div
         style={{
-          display: vm.slice(-1).map(item => item.modo != 'OFF') ? 'none' : 'flex',
+          display: vm.length > 0 && vm.slice(-1).map(item => item.modo != 'OFF') ? 'flex' : 'none',
           flexDirection: 'column', justifyContent: 'center',
           width: window.innerWidth < 426 ? '80vw' : '100%', marginTop: 5,
           alignSelf: 'center',

@@ -278,7 +278,7 @@ function Infusoes() {
           height: 285, minHeight: 285,
           marginTop: 5,
         }}>
-        {datas.sort((a, b) => moment(a) > moment(b) ? 1 : -1).map(valor => (
+        {datas.sort((a, b) => moment(a).milliseconds > moment(b).milliseconds ? 1 : -1).map(valor => (
           <div key={'datas ' + valor}>
             <div id={"drogas maepadas " + valor}
               className="scroll"
@@ -331,7 +331,7 @@ function Infusoes() {
   var timeout = null;
   return (
     <div id="scroll-infusao" className='card-aberto'
-      style={{ display: card == 'card-infusoes' ? 'flex' : 'none' }}
+      style={{ display: card == 'card-infusoes' ? 'flex' : 'none', flexDirection: 'column', justifyContent: 'flex-start' }}
     >
       <div className="text3">INFUSÕES</div>
       <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'center', flexWrap: 'wrap' }}>
@@ -487,7 +487,11 @@ function Infusoes() {
           </div>
         ))}
       </div>
-      <div style={{ display: infusoes.length > 0 ? 'flex' : 'none' }}>
+      <div style={{
+        display: infusoes.length > 0 ? 'flex' : 'none',
+        flexDirection: 'column', justifyContent: 'center',
+        alignSelf: 'center', width: window.innerWidth < 426 ? '80vw' : '95%'
+      }}>
         {graficoInfusoes()}
       </div>
       <InsertInfusao></InsertInfusao>

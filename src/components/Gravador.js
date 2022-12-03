@@ -45,7 +45,6 @@ function Gravador({ funcao, continuo }) {
       <div id="lista de resultados"
         className="button"
         style={{
-          top: 0, bottom: 0, left: 0, right: 0,
           alignSelf: 'center',
           width: window.innerWidth < 426 ? '70vw' : 150,
           minWidth: window.innerWidth < 426 ? '70vw' : '',

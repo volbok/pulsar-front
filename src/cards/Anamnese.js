@@ -49,6 +49,7 @@ function Anamnese() {
       antecedentes_pessoais: document.getElementById("inputAntecedentesPessoais").value.toUpperCase(),
       medicacoes_previas: document.getElementById("inputMedicacoesPrevias").value.toUpperCase(),
       exames_previos: document.getElementById("inputExamesPrevios").value.toUpperCase(),
+      exames_atuais: document.getElementById("inputExamesAtuais").value.toUpperCase(),
     }
     console.log(JSON.stringify(obj));
     console.log('ID DO PACIENTE: ' + paciente)
@@ -262,6 +263,37 @@ function Anamnese() {
           }}
           id="inputExamesPrevios"
           title="EXAMES PRÉVIOS."
+        >
+        </textarea>
+        <div className='text3'>EXAMES ATUAIS</div>
+        <textarea
+          className="textarea"
+          autoComplete='off'
+          placeholder='EXAMES ATUAIS'
+          onFocus={(e) => (e.target.placeholder = '')}
+          onBlur={(e) => (e.target.placeholder = 'EXAMES ATUAIS')}
+          defaultValue={anamnese.map(item => item.exames_atuais)}
+          onKeyUp={(e) => {
+            clearTimeout(timeout);
+            timeout = setTimeout(() => {
+              document.getElementById("inputExamesAtuais").blur();
+              setTimeout(() => {
+                if (document.getElementById("inputExamesAtuais").value != '') {
+                  updatePaciente();
+                }
+              }, 1000);
+              e.stopPropagation();
+            }, 4000);
+          }}
+          style={{
+            display: 'flex',
+            flexDirection: 'center', justifyContent: 'center', alignSelf: 'center',
+            whiteSpace: 'pre-wrap',
+            width: window.innerWidth < 426 ? '85%' : '95%',
+            height: window.innerWidth < 426 ? '50vh' : '',
+          }}
+          id="inputExamesAtuais"
+          title="EXAMES ATUAIS."
         >
         </textarea>
         <Botoes></Botoes>

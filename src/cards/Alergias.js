@@ -67,7 +67,7 @@ function Alergias() {
     return (
       <div className="fundo"
         onClick={(e) => { setviewinsertalergia(0); e.stopPropagation() }}
-        style={{ display: viewinsertalergia == 1 ? 'flex' : 'none' }}>
+        style={{ display: viewinsertalergia == 1 ? 'flex' : 'none', position: 'fixed' }}>
         <div className="janela"
           onClick={(e) => e.stopPropagation()}
           style={{ flexDirection: 'column' }}>

@@ -477,7 +477,7 @@ function Passometro() {
       <div
         id='mobile_pacientes'
         style={{
-          position: 'sticky', marginTop: -5, top: 0, left: 0, right: 0,
+          position: 'sticky', marginTop: 0, top: 0, left: 0, right: 0,
           display: window.innerWidth < 426 ? 'flex' : 'none',
           flexDirection: 'row', justifyContent: 'center',
           flex: 1,
@@ -1044,7 +1044,7 @@ function Passometro() {
           display: window.innerWidth < 426 && viewlista == 1 ? 'none' : atendimento == null ? 'none' : 'flex',
           flexDirection: 'row',
           flexWrap: 'wrap',
-          justifyContent: window.innerWidth < 426 ? 'space-evenly' : 'flex-start',
+          justifyContent: window.innerWidth < 426 ? 'space-between' : 'flex-start',
           alignContent: 'flex-start',
           height: window.innerHeight - 30,
           minHeight: window.innerHeight - 30,

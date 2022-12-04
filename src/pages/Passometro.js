@@ -36,6 +36,7 @@ import Precaucoes from '../cards/Precaucoes';
 import Riscos from '../cards/Riscos';
 import Alertas from '../cards/Alertas';
 import Interconsultas from '../cards/Interconsultas';
+import Exames from '../cards/Exames';
 
 function Passometro() {
 
@@ -201,6 +202,7 @@ function Passometro() {
       setcardculturas(settings.map(item => item.card_culturas).pop());
       setcardatb(settings.map(item => item.card_antibioticos).pop());
       setcardinterconsultas(settings.map(item => item.card_interconsultas).pop());
+      // setcardexames(settings.map(item => item.card_exames).pop());
     }
     // eslint-disable-next-line
   }, [pagina]);
@@ -1042,7 +1044,7 @@ function Passometro() {
           display: window.innerWidth < 426 && viewlista == 1 ? 'none' : atendimento == null ? 'none' : 'flex',
           flexDirection: 'row',
           flexWrap: 'wrap',
-          justifyContent: window.innerWidth < 426 ? 'space-evenly' : 'center',
+          justifyContent: window.innerWidth < 426 ? 'space-evenly' : 'flex-start',
           alignContent: 'flex-start',
           height: window.innerHeight - 30,
           minHeight: window.innerHeight - 30,
@@ -1094,6 +1096,22 @@ function Passometro() {
         {cartao(culturas.filter(item => item.data_resultado == null), 'CULTURAS', 'card-culturas', cardculturas, busyculturas)}
         {cartao(antibioticos.filter(item => moment().diff(item.prazo, 'days') > 0 && item.data_termino == null), 'ANTIBIÓTICOS', 'card-antibioticos', cardatb, busyatb)}
         {cartao(interconsultas, 'INTERCONSULTAS', 'card-interconsultas', cardinterconsultas, busyinterconsultas)}
+        <div id='exames' className="card-fechado"
+          style={{
+            display: card == '' ? 'flex' : 'none',
+            width: window.innerWidth > 425 && document.getElementById("conteúdo vazio") != null ? Math.ceil((document.getElementById("conteúdo vazio").offsetWidth / 4) - 43) :
+              window.innerWidth < 426 ? '' : '17.5vw',
+          }}
+          onClick={() => {
+            if (card == '') {
+              setcard('card-exames');
+            } else {
+              setcard('');
+            }
+          }}
+        >
+          <div className="text3">EXAMES RELEVANTES</div>
+        </div>
 
         <Alergias></Alergias>
         <Anamnese></Anamnese>
@@ -1110,6 +1128,7 @@ function Passometro() {
         <Riscos></Riscos>
         <Alertas></Alertas>
         <Interconsultas></Interconsultas>
+        <Exames></Exames>
 
       </div>
       <div id="conteúdo vazio"

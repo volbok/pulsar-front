@@ -27,7 +27,6 @@ function Evolucoes() {
     evolucoes, setevolucoes,
     arrayevolucoes, setarrayevolucoes,
     card, setcard,
-    altura
   } = useContext(Context);
 
   useEffect(() => {

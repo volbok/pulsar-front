@@ -749,7 +749,7 @@ function Passometro() {
           backgroundColor: sinal != null && sinal.length > 0 ? yellow : '',
           borderColor: sinal != null && sinal.length > 0 ? yellow : '',
           width: window.innerWidth > 425 && document.getElementById("conteúdo vazio") != null ? Math.ceil((document.getElementById("conteúdo vazio").offsetWidth / 4) - 43) :
-            window.innerWidth < 426 ? '' : '17.5vw',
+            window.innerWidth < 426 && document.getElementById("conteúdo vazio") != null  ? Math.ceil((document.getElementById("conteúdo cheio").offsetWidth / 2) - 49) : '',
         }}
         onClick={() => {
           if (card == opcao) {

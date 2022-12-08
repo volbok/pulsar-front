@@ -14,6 +14,7 @@ import prec_respiratorio from '../images/prec_respiratorio.svg';
 import esteto from '../images/esteto.svg';
 import preferencias from '../images/preferencias.svg';
 import imprimir from '../images/imprimir.svg';
+import clipimage from '../images/clipboard.svg';
 // funções.
 import toast from '../functions/toast';
 // router.
@@ -81,13 +82,13 @@ function Passometro() {
     // estados utilizados pela função getAllData (necessária para alimentar os card fechados).
     setalergias, alergias,
     setantibioticos, antibioticos,
-    setinvasoes,
-    setlesoes,
+    setinvasoes, invasoes,
+    setlesoes, lesoes,
     setprecaucoes, precaucoes,
     setriscos, riscos,
     setculturas, culturas,
     setdietas, dietas,
-    setevolucoes, setarrayevolucoes,
+    setevolucoes, evolucoes, setarrayevolucoes,
     setinfusoes, infusoes,
     setpropostas, propostas,
     setsinaisvitais, sinaisvitais,
@@ -227,6 +228,50 @@ function Passometro() {
           <img
             alt=""
             src={preferencias}
+            style={{
+              margin: 0,
+              height: 20,
+              width: 20,
+            }}
+          ></img>
+        </div>
+        <div className='button cor1hover'
+          style={{
+            display: window.innerWidth < 426 ? 'none' : 'flex',
+            minWidth: 25, maxWidth: 25, minHeight: 25, maxHeight: 25,
+            marginLeft: 0
+          }}
+          title={'COPIAR PARA A CLIPBOARD'}
+          onClick={() => {
+            let alergia = alergias.map(item => item.alergia).length > 0 ? 'ALERGIAS: ' + alergias.map(item => item.alergia) + '\n\n' : '';
+            let problemas = atendimentos.filter(item => item.id_atendimento == atendimento).map(item => item.problemas).length > 0 ? 'PROBLEMAS: ' + atendimentos.filter(item => item.id_atendimento == atendimento).map(item => item.problemas) + '\n\n' : '';
+            let evolucao = evolucoes.filter(item => item.id_atendimento == atendimento).length > 0 ? 'EVOLUÇÃO: ' + evolucoes.sort((a, b) => moment(a.data_evolucao) < moment(b.data_evolucao) ? -1 : 1).filter(item => item.id_atendimento == atendimento).slice(-1).map(item => item.evolucao) + '\n\n' : '';
+            let invasao = invasoes.filter(item => item.data_retirada == null).length > 0 ? 'INVASÕES:' + invasoes.filter(item => item.data_retirada == null).map(item => '\n' + item.dispositivo + ' - ' + item.local + ' - ' + moment(item.data_implante).format('DD/MM/YY')) + '\n\n' : '';
+            let ventilacao = vm.lenght > 0 ? 'VM:' + vm.sort((a, b) => moment(a.data_vm) < moment(b.data_vm) ? -1 : 1).slice(-1).map(item => '\n MODO: ' + item.modo + '\n PRESSÃO: ' + item.pressao + '\n VOLUME: ' + item.volume + '\n PEEP: ' + item.peep + '\n FI: ' + item.fi) + '\n\n' : '';
+            let infusao = infusoes.filter(item => item.data_termino == null).lenght > 0 ? 'INFUSÕES:' + infusoes.filter(item => item.data_termino == null).map(item => '\n' + item.droga + ' - ' + item.velocidade + 'ml/h') + '\n' : '';
+            let cultura = culturas.lenght > 0 ? 'CULTURAS:' + culturas.map(item => '\n' + item.material + ' (' + moment(item.data_pedido).format('DD/MM/YY') + '): ' + item.resultado) + '\n\n' : '';
+            let antibiotico = antibioticos.lenght > 0 ? 'ANTIBIÓTICOS:' + antibioticos.map(item => '\n' + item.antibiotico + ' - ' + moment(item.data_inicio).format('DD/MM/YY')) + '\n\n' : '';
+            let controle = sinaisvitais.lenght > 0 ? 'CONTROLES: ' + sinaisvitais.slice(-1).map(item => item.pas + ' x ' + item.pad) + ' ' + sinaisvitais.slice(-1).map(item => item.fc) + sinaisvitais.slice(-1).map(item => item.fr) + sinaisvitais.slice(-1).map(item => item.sao2) + sinaisvitais.slice(-1).map(item => item.tax) + sinaisvitais.slice(-1).map(item => item.balanco) + '\n\n' : '';
+            let proposta = propostas.lenght > 0 ? 'PROPOSTAS:' + propostas.filter(item => item.status == 0).map(item => '\n' + item.proposta) : '';
+
+            var clipboard = '## ' + plantao + ' ##\n\n' +
+              alergia + problemas + evolucao + invasao + ventilacao + infusao + cultura + antibiotico + controle + proposta;
+
+            console.log(clipboard);
+            setclipboard(clipboard);
+            setTimeout(() => {
+
+              setviewclipboard(1);
+              document.getElementById("clipboardTextarea").value = clipboard
+              if (navigator && navigator.clipboard && navigator.clipboard.writeText)
+                return navigator.clipboard.writeText(clipboard);
+              return Promise.reject('The Clipboard API is not available.');
+            }, 1000);
+          }}
+        >
+          <img
+            alt=""
+            src={clipimage}
             style={{
               margin: 0,
               height: 20,
@@ -715,6 +760,49 @@ function Passometro() {
     }
   }
 
+  // ## CLIPBOARD ## //
+  // Copia para a área de transferência todas as informações do atendimento, montando uma evolução completa a ser "colada" no PEP.
+  let plantao = parseInt(moment().format('HH')) < 19 ? 'PLANTÃO DIURNO' : 'PLANTÃO NOTURNO';
+  const [clipboard, setclipboard] = useState('');
+  const clipboardcontent = () => {
+    return (
+      plantao + '\n' +
+      'ALERGIAS: ' + alergias.map(item => item.alergia) + '\n' +
+      'ATENDIMENTOS: ' + atendimentos.filter(item => item.id_atendimento == atendimento).map(item => item.problemas) + '\n' +
+      'EVOLUÇÃO: ' + evolucoes.sort((a, b) => moment(a.data_evolucao) < moment(b.data_evolucao) ? -1 : 1).filter(item => item.id_atendimento == atendimento).slice(-1).map(item =>
+        item.evolucao) + '\n' +
+      'INVASÕES:' + invasoes.filter(item => item.data_retirada == null).map(item => '\n' + item.dispositivo + ' - ' + item.local + ' - ' + moment(item.data_implante).format('DD/MM/YY')) + '\n' +
+      'VM:' + vm.sort((a, b) => moment(a.data_vm) < moment(b.data_vm) ? -1 : 1).slice(-1).map(item => '\n MODO: ' + item.modo + '\n PRESSÃO: ' + item.pressao + '\n VOLUME: ' + item.volume + '\n PEEP: ' + item.peep + '\n FI: ' + item.fi) + '\n' +
+      'INFUSÕES:' + infusoes.filter(item => item.data_termino == null).map(item => '\n' + item.droga + ' - ' + item.velocidade + 'ml/h') + '\n' +
+      'CULTURAS:' + culturas.map(item => '\n' + item.material + ' (' + moment(item.data_pedido).format('DD/MM/YY') + '): ' + item.resultado) + '\n' +
+      'ANTIBIÓTICOS:' + antibioticos.map(item => '\n' + item.antibiotico + ' - ' + moment(item.data_inicio).format('DD/MM/YY')) + '\n' +
+      'CONTROLES: ' + sinaisvitais.slice(-1).map(item => item.pas + ' x ' + item.pad) + ' ' + sinaisvitais.slice(-1).map(item => item.fc) + sinaisvitais.slice(-1).map(item => item.fr) + sinaisvitais.slice(-1).map(item => item.sao2) + sinaisvitais.slice(-1).map(item => item.tax) + sinaisvitais.slice(-1).map(item => item.balanco) + '\n' +
+      'PROPOSTAS:' + propostas.filter(item => item.status == 0).map(item => '\n' + item.proposta)
+    )
+  }
+  const [viewclipboard, setviewclipboard] = useState(0);
+  const ViewClipboard = useCallback(() => {
+    return (
+      <div
+        className='fundo'
+        onClick={() => setviewclipboard(0)}
+        style={{ display: viewclipboard == 1 ? 'flex' : 'none' }}
+      >
+        <textarea id="clipboardTextarea" className='textarea'
+          onClick={(e) => e.stopPropagation()}
+          defaultValue={clipboard}
+          style={{
+            display: 'flex',
+            flexDirection: 'row',
+            justifyContent: 'center',
+            width: window.innerWidth < 426 ? '80vw' : '30vw',
+            height: '60vh',
+          }}>
+        </textarea>
+      </div>
+    )
+  }, [clipboard, viewclipboard]);
+
   // estado para alternância entre lista de pacientes e conteúdo do passômetro para versão mobile.
   const [viewlista, setviewlista] = useState(1);
 
@@ -1145,6 +1233,7 @@ function Passometro() {
         <div className='text1' style={{ opacity: 0.5 }}>{'SELECIONE UM PACIENTE DA LISTA PRIMEIRO'}</div>
       </div>
       <BtnOptions></BtnOptions>
+      <ViewClipboard></ViewClipboard>
     </div >
   );
 }

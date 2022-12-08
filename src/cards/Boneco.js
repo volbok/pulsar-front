@@ -95,17 +95,20 @@ function Boneco() {
           data_retirada: moment(),
         };
         axios.post(html + 'update_invasao/' + id_invasao, obj).then(() => {
-          // inserir a invasão "atualizada".
-          var obj = {
-            id_atendimento: atendimento,
-            local: localdispositivo,
-            dispositivo: dispositivo, // novo dispositivo!
-            data_implante: moment(pickdate1, 'DD/MM/YYYY HH:mm'),
-            data_retirada: null,
-          };
-          axios.post(html + 'insert_invasao', obj).then(() => {
-            loadInvasoes();
-          });
+          if (dispositivo != '' || dispositivo == null) {
+            // inserir a invasão "atualizada".
+            var obj = {
+              id_atendimento: atendimento,
+              local: localdispositivo,
+              dispositivo: dispositivo, // novo dispositivo!
+              data_implante: moment(pickdate1, 'DD/MM/YYYY HH:mm'),
+              data_retirada: null,
+            };
+            axios.post(html + 'insert_invasao', obj).then(() => {
+              loadInvasoes();
+            });
+          }
+          loadInvasoes();
         });
       } else {
         // inserir uma invasão.
@@ -204,7 +207,7 @@ function Boneco() {
       }}>
         {arraydispositivos.map((item) => (
           <button
-            key={'disposisitos: ' + item}
+            key={'dispositivos: ' + item}
             onClick={() => updateInvasoes(item)}
             className={dispositivo == item ? "button-red" : "button"}
             style={{ width: 150, margin: 2.5 }}

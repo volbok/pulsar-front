@@ -208,7 +208,7 @@ function Alertas() {
           flexWrap: 'wrap', marginTop: 10
         }}>
           <div style={{ display: estase > 200 ? 'flex' : 'none' }}>{'ESTASE GÁSTRICA: ' + estase + ' ml/12h'}</div>
-          <div style={{ display: dietas.map(item => item.tipo) == 'SNE' ? 'flex' : 'none' }}>{'ESTASE GÁSTRICA IMPORTANTE, CONSIDERAR REDUÇÃO OU SUSPENSÃO DA DIETA ENTERAL.'}</div>
+          <div style={{ display: dietas.map(item => item.tipo) == 'SNE' ? 'flex' : 'none' }}>{'CONSIDERAR REDUÇÃO OU SUSPENSÃO DA DIETA ENTERAL.'}</div>
           <div style={{ display: evacuacao.length == 0 ? 'flex' : 'none' }}>{'AUSÊNCIA DE EVACUAÇÃO HÁ 3 DIAS'}</div>
         </div>
       </div>

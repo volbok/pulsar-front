@@ -273,18 +273,22 @@ function Infusoes() {
     return (
       <div className='scroll'
         style={{
+          display: 'flex',
           overflowX: 'scroll', overflowY: 'hidden', justifyContent: 'flex-start', flexDirection: 'row',
-          width: window.innerWidth < 426 ? '70vw' : '95%',
+          width: window.innerWidth < 426 ? '70vw' : '60vw',
           height: 285, minHeight: 285,
           marginTop: 5,
+          alignSelf: 'center',
         }}>
         {datas.sort((a, b) => moment(a).milliseconds > moment(b).milliseconds ? 1 : -1).map(valor => (
           <div key={'datas ' + valor}>
             <div id={"drogas maepadas " + valor}
-              className="scroll"
+              className="scroll cor0"
               style={{
                 display: 'flex', flexDirection: 'column', justifyContent: 'flex-start',
-                backgroundColor: 'white', borderColor: 'white', borderRadius: 5, margin: 5,
+                // backgroundColor: 'white', 
+                borderColor: 'transparent',
+                borderRadius: 5, margin: 5,
                 height: 220, width: 200, minWidth: 200,
               }}>
               {infusoes.filter(item => moment(item.data_inicio).startOf('day') <= moment(valor, 'DD/MM/YYYY') && (moment(valor, 'DD/MM/YYYY') <= moment(item.data_termino).startOf('day') || item.data_termino == null))
@@ -303,7 +307,7 @@ function Infusoes() {
                         '',
                         */
 
-                        backgroundColor: '#5DADE2',
+                        // backgroundColor: '#5DADE2',
                         flexDirection: 'column', justifyContent: 'center',
                         alignSelf: 'center',
                         width: 170,
@@ -331,7 +335,10 @@ function Infusoes() {
   var timeout = null;
   return (
     <div id="scroll-infusao" className='card-aberto'
-      style={{ display: card == 'card-infusoes' ? 'flex' : 'none', flexDirection: 'column', justifyContent: 'flex-start' }}
+      style={{
+        display: card == 'card-infusoes' ? 'flex' : 'none', flexDirection: 'column', justifyContent: 'flex-start',
+        alignContent: 'center', alignItems: 'center',
+      }}
     >
       <div className="text3">INFUSÕES</div>
       <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'center', flexWrap: 'wrap' }}>
@@ -396,7 +403,7 @@ function Infusoes() {
                 <input id={"inputVelocidade " + item.id_infusao}
                   autoComplete="off"
                   placeholder="VAZÃO..."
-                  className="input"
+                  className="input cor2"
                   type="text"
                   inputMode='numeric'
                   title='VELOCIDADE DE INFUSÃO (ML/H).'
@@ -490,7 +497,8 @@ function Infusoes() {
       <div style={{
         display: infusoes.length > 0 ? 'flex' : 'none',
         flexDirection: 'column', justifyContent: 'center',
-        alignSelf: 'center', width: window.innerWidth < 426 ? '80vw' : '95%'
+        alignSelf: 'center', alignContent: 'center',
+        width: window.innerWidth < 426 ? '80vw' : '95%'
       }}>
         {graficoInfusoes()}
       </div>

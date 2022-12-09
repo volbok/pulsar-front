@@ -104,7 +104,7 @@ body {
 }
 
 .janela {
-  background-color: var(--cor3);
+  background-color: var(--cor2);
   border-radius: 5px;
   display: flex;
   flex-direction: column;
@@ -112,6 +112,11 @@ body {
   align-items: center;
   margin: 0;
   padding: 20px;
+}
+
+.cor0 {
+  background-color: var(--cor0) !important;
+  border-color: var(--cor0);
 }
 
 .cor1 {
@@ -123,8 +128,8 @@ body {
 }
 
 .cor2 {
-  background-color: var(--cor2);
-  border-color: var(--cor2);
+  background-color: var(--cor2) !important;
+  border-color: var(--cor2) !important;
 }
 
 .cor3 {
@@ -506,21 +511,21 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 .emptyinput {
   background-color: rgb(231, 76, 60, 0.4);
   border-color: transparent;
-  color: white;
+  color: var(--cor0);
 }
 
 .emptyplaceholder::-webkit-input-placeholder {
-  color: white;
+  color: var(--cor0);
 }
 
 .filledinput {
-  background-color: white;
-  border-color: white;
+  background-color: var(--cor0);
+  border-color: var(--cor0);
   color: var(--texto1);
 }
 
 .filledplaceholder::-webkit-input-placeholder {
-  color: rgb(97, 99, 110, 0.6);
+  color: var(--placeholder);
 }
 
 /* BOTÕES */

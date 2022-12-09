@@ -471,7 +471,7 @@ function Cadastro() {
   function FilterPaciente() {
     return (
       <input
-        className="input"
+        className="input cor2"
         autoComplete="off"
         placeholder="BUSCAR PACIENTE..."
         onFocus={(e) => (e.target.placeholder = '')}
@@ -985,7 +985,7 @@ function Cadastro() {
   }
 
   return (
-    <div className='main fadein cor7'
+    <div className='main'
       style={{ display: pagina == 2 ? 'flex' : 'none' }}>
       <div id="cadastro de pacientes e de atendimentos"
         style={{

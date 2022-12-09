@@ -253,23 +253,25 @@ function Interconsultas() {
                 ></img>
               </div>
             </div>
-            <div style={{
-              flex: 3,
-              display: 'flex',
-              flexDirection: 'column',
-              padding: 2.5,
-              backgroundColor: 'white',
-              borderTopLeftRadius: 0,
-              borderTopRightRadius: window.innerWidth < 426 ? 0 : 5,
-              borderBottomLeftRadius: window.innerWidth < 426 ? 5 : 0,
-              borderBottomRightRadius: window.innerWidth < 426 ? 5 : 5,
-            }}>
+            <div
+              className='cor0'
+              style={{
+                flex: 3,
+                display: 'flex',
+                flexDirection: 'column',
+                padding: 2.5,
+                // backgroundColor: 'white',
+                borderTopLeftRadius: 0,
+                borderTopRightRadius: window.innerWidth < 426 ? 0 : 5,
+                borderBottomLeftRadius: window.innerWidth < 426 ? 5 : 0,
+                borderBottomRightRadius: window.innerWidth < 426 ? 5 : 5,
+              }}>
               <div
-                className='button'
+                className='input'
                 style={{
                   margin: 0, padding: 0,
-                  backgroundColor: 'white',
-                  color: 'rgb(97, 99, 110, 1)'
+                  // backgroundColor: 'white',
+                  // color: 'rgb(97, 99, 110, 1)'
                 }}>
                 {item.especialidade}
               </div>

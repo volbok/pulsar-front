@@ -521,7 +521,7 @@ function SinaisVitais() {
           style={{
             display: 'flex', flexDirection: 'row', justifyContent: 'flex-start',
             overflowX: 'scroll', overflowY: 'hidden',
-            width: '90%',
+            width: window.innerWidth < 426 ? '70vw' : '60vw',
           }}>
           {sinaisvitais.slice(-15).map(item => (
             <div
@@ -531,11 +531,12 @@ function SinaisVitais() {
                 alignItems: 'center',
               }}>
               <div id="pack de barras"
+                className='cor0'
                 style={{
                   display: 'flex', flexDirection: 'column', justifyContent: 'flex-end',
                   alignItems: 'center',
                   backgroundColor: 'white',
-                  borderColor: 'white',
+                  // borderColor: 'white',
                   borderRadius: 5,
                   padding: 10, margin: 5,
                   height: '100%'
@@ -550,13 +551,13 @@ function SinaisVitais() {
                       display: selectgrafico == 0 || selectgrafico == 1 ? 'flex' : 'none',
                       flexDirection: 'column', justifyContent: 'center'
                     }}>
-                    <div id="barra PAM" className='button'
+                    <div id="barra PAM" className='button cor0'
                       style={{
                         display: 'flex',
                         width: 20,
                         height: Math.ceil((2 * parseInt(item.pad) + parseInt(item.pas)) / 3),
                         minHeight: Math.ceil((2 * parseInt(item.pad) + parseInt(item.pas)) / 3),
-                        backgroundImage: "linear-gradient(#5DADE2, #ffffff)",
+                        backgroundImage: "linear-gradient(#5DADE2, transparent)",
                       }}>
                       {Math.ceil((2 * parseInt(item.pad) + parseInt(item.pas)) / 3)}
                     </div>
@@ -567,13 +568,13 @@ function SinaisVitais() {
                       display: selectgrafico == 0 || selectgrafico == 2 ? 'flex' : 'none',
                       flexDirection: 'column', justifyContent: 'center'
                     }}>
-                    <div id="barraFC" className='button'
+                    <div id="barraFC" className='button cor0'
                       style={{
                         display: 'flex',
                         width: 20,
                         height: parseInt(item.fc),
                         minHeight: parseInt(item.fc),
-                        backgroundImage: "linear-gradient(#EC7063, #ffffff)",
+                        backgroundImage: "linear-gradient(#EC7063, transparent)",
                       }}>
                       {parseInt(item.fc)}
                     </div>
@@ -584,13 +585,13 @@ function SinaisVitais() {
                       display: isNaN(item.diurese) == false && (selectgrafico == 0 || selectgrafico == 3) ? 'flex' : 'none',
                       flexDirection: 'column', justifyContent: 'center'
                     }}>
-                    <div id="barraDIURESE (válida)" className='button'
+                    <div id="barraDIURESE (válida)" className='button cor0'
                       style={{
                         display: 'flex',
                         width: 20,
                         height: Math.ceil(parseInt(item.diurese) / 10),
                         minHeight: Math.ceil(parseInt(item.diurese) / 10),
-                        backgroundImage: "linear-gradient(#F4D03F, #ffffff)",
+                        backgroundImage: "linear-gradient(#F4D03F, transparent)",
                       }}>
                       {parseInt(item.diurese)}
                     </div>
@@ -601,13 +602,13 @@ function SinaisVitais() {
                       display: isNaN(item.diurese) == true && (selectgrafico == 0 || selectgrafico == 3) ? 'flex' : 'none',
                       flexDirection: 'column', justifyContent: 'center'
                     }}>
-                    <div id="barraDIURESE (inválida)" className='button' // muitas vezes a diurese é medida em cruzes (não quantificada).
+                    <div id="barraDIURESE (inválida)" className='button cor0' // muitas vezes a diurese é medida em cruzes (não quantificada).
                       style={{
                         display: 'flex',
                         width: 20,
                         height: 75,
                         minHeight: 75,
-                        backgroundImage: "linear-gradient(#F4D03F, #ffffff)",
+                        backgroundImage: "linear-gradient(#F4D03F, transparent)",
                         writingMode: 'vertical-rl',
                         textOrientation: 'mixed',
                       }}>
@@ -620,13 +621,13 @@ function SinaisVitais() {
                       display: selectgrafico == 0 || selectgrafico == 4 ? 'flex' : 'none',
                       flexDirection: 'column', justifyContent: 'center'
                     }}>
-                    <div id="barraTAX" className='button'
+                    <div id="barraTAX" className='button cor0'
                       style={{
                         display: 'flex',
                         width: 20,
                         height: parseFloat(item.tax),
                         minHeight: parseFloat(item.tax),
-                        backgroundImage: "linear-gradient(#58D68D, #ffffff)",
+                        backgroundImage: "linear-gradient(#58D68D, transparent)",
                       }}>
                       {parseFloat(item.tax)}
                     </div>

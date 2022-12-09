@@ -336,7 +336,7 @@ function Usuarios() {
   function FilterUsuario() {
     return (
       <input
-        className="input"
+        className="input cor2"
         autoComplete="off"
         placeholder="BUSCAR USUÁRIO..."
         onFocus={(e) => (e.target.placeholder = '')}
@@ -635,7 +635,7 @@ function Usuarios() {
   }
 
   return (
-    <div className='main fadein cor7'
+    <div className='main'
       style={{ display: pagina == 5 ? 'flex' : 'none' }}>
       <div id="cadastro de usuários e de acessos"
         style={{

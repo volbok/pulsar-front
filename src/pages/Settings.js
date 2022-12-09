@@ -40,7 +40,7 @@ function Settings() {
 
   // history (router).
   let history = useHistory();
-  
+
   const refreshApp = () => {
     setusuario(
       {
@@ -132,16 +132,26 @@ function Settings() {
       document.documentElement.style.setProperty('--texto3', '#48C9B0');
       document.documentElement.style.setProperty('--placeholder', 'rgb(97, 99, 110, 0.6)');
       document.documentElement.style.setProperty('--cor0', 'white');
-    } else { // tema PRETO.
-      document.documentElement.style.setProperty('--cor1', '#ABB2B9');
-      document.documentElement.style.setProperty('--cor1hover', '#808B96');
-      document.documentElement.style.setProperty('--cor2', '#212F3D');
-      document.documentElement.style.setProperty('--cor3', '#566573');
+    } else if (tema == 3) { // tema PRETO.
+      document.documentElement.style.setProperty('--cor1', 'rgb(86, 101, 115, 0.6)');
+      document.documentElement.style.setProperty('--cor1hover', 'rgb(86, 101, 115, 1)');
+      document.documentElement.style.setProperty('--cor2', 'rgb(23, 32, 42, 1)');
+      document.documentElement.style.setProperty('--cor3', 'black');
       document.documentElement.style.setProperty('--texto1', '#ffffff');
       document.documentElement.style.setProperty('--texto2', '#ffffff');
       document.documentElement.style.setProperty('--texto3', '#ffffff');
       document.documentElement.style.setProperty('--placeholder', 'rgb(255, 255, 255, 0.5)');
-      document.documentElement.style.setProperty('--cor0', '#212F3D');
+      document.documentElement.style.setProperty('--cor0', '#000000');
+    } else {
+      document.documentElement.style.setProperty('--cor1', 'rgba(64, 74, 131, 0.7)');
+      document.documentElement.style.setProperty('--cor1hover', 'rgba(64, 74, 131, 1)');
+      document.documentElement.style.setProperty('--cor2', 'rgba(242, 242, 242)');
+      document.documentElement.style.setProperty('--cor3', 'rgba(215, 219, 221)');
+      document.documentElement.style.setProperty('--texto1', 'rgba(97, 99, 110, 1)');
+      document.documentElement.style.setProperty('--texto2', '#ffffff');
+      document.documentElement.style.setProperty('--texto3', 'rgba(64, 74, 131, 1)');
+      document.documentElement.style.setProperty('--placeholder', 'rgb(97, 99, 110, 0.6)');
+      document.documentElement.style.setProperty('--cor0', 'white');
     }
   }
 

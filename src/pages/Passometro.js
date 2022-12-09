@@ -83,7 +83,7 @@ function Passometro() {
     setalergias, alergias,
     setantibioticos, antibioticos,
     setinvasoes, invasoes,
-    setlesoes, lesoes,
+    setlesoes,
     setprecaucoes, precaucoes,
     setriscos, riscos,
     setculturas, culturas,
@@ -237,7 +237,7 @@ function Passometro() {
         </div>
         <div className='button cor1hover'
           style={{
-            display: window.innerWidth < 426 ? 'none' : 'flex',
+            display: window.innerWidth < 426 || atendimento == null ? 'none' : 'flex',
             minWidth: 25, maxWidth: 25, minHeight: 25, maxHeight: 25,
             marginLeft: 0
           }}
@@ -281,7 +281,7 @@ function Passometro() {
         </div>
         <div className='button cor1hover'
           style={{
-            display: window.innerWidth < 426 ? 'none' : 'flex',
+            display: window.innerWidth < 426 || atendimento == null ? 'none' : 'flex',
             minWidth: 25, maxWidth: 25, minHeight: 25, maxHeight: 25,
             marginLeft: 0
           }}
@@ -371,7 +371,7 @@ function Passometro() {
   function FilterPaciente() {
     return (
       <input
-        className="input"
+        className="input cor2"
         autoComplete="off"
         placeholder={window.innerWidth < 426 ? "BUSCAR PACIENTE..." : "BUSCAR..."}
         onFocus={(e) => (e.target.placeholder = '')}
@@ -764,22 +764,6 @@ function Passometro() {
   // Copia para a área de transferência todas as informações do atendimento, montando uma evolução completa a ser "colada" no PEP.
   let plantao = parseInt(moment().format('HH')) < 19 ? 'PLANTÃO DIURNO' : 'PLANTÃO NOTURNO';
   const [clipboard, setclipboard] = useState('');
-  const clipboardcontent = () => {
-    return (
-      plantao + '\n' +
-      'ALERGIAS: ' + alergias.map(item => item.alergia) + '\n' +
-      'ATENDIMENTOS: ' + atendimentos.filter(item => item.id_atendimento == atendimento).map(item => item.problemas) + '\n' +
-      'EVOLUÇÃO: ' + evolucoes.sort((a, b) => moment(a.data_evolucao) < moment(b.data_evolucao) ? -1 : 1).filter(item => item.id_atendimento == atendimento).slice(-1).map(item =>
-        item.evolucao) + '\n' +
-      'INVASÕES:' + invasoes.filter(item => item.data_retirada == null).map(item => '\n' + item.dispositivo + ' - ' + item.local + ' - ' + moment(item.data_implante).format('DD/MM/YY')) + '\n' +
-      'VM:' + vm.sort((a, b) => moment(a.data_vm) < moment(b.data_vm) ? -1 : 1).slice(-1).map(item => '\n MODO: ' + item.modo + '\n PRESSÃO: ' + item.pressao + '\n VOLUME: ' + item.volume + '\n PEEP: ' + item.peep + '\n FI: ' + item.fi) + '\n' +
-      'INFUSÕES:' + infusoes.filter(item => item.data_termino == null).map(item => '\n' + item.droga + ' - ' + item.velocidade + 'ml/h') + '\n' +
-      'CULTURAS:' + culturas.map(item => '\n' + item.material + ' (' + moment(item.data_pedido).format('DD/MM/YY') + '): ' + item.resultado) + '\n' +
-      'ANTIBIÓTICOS:' + antibioticos.map(item => '\n' + item.antibiotico + ' - ' + moment(item.data_inicio).format('DD/MM/YY')) + '\n' +
-      'CONTROLES: ' + sinaisvitais.slice(-1).map(item => item.pas + ' x ' + item.pad) + ' ' + sinaisvitais.slice(-1).map(item => item.fc) + sinaisvitais.slice(-1).map(item => item.fr) + sinaisvitais.slice(-1).map(item => item.sao2) + sinaisvitais.slice(-1).map(item => item.tax) + sinaisvitais.slice(-1).map(item => item.balanco) + '\n' +
-      'PROPOSTAS:' + propostas.filter(item => item.status == 0).map(item => '\n' + item.proposta)
-    )
-  }
   const [viewclipboard, setviewclipboard] = useState(0);
   const ViewClipboard = useCallback(() => {
     return (
@@ -827,15 +811,15 @@ function Passometro() {
   };
 
   // função para renderização dos cards fechados.
-  let yellow = '#F1C40F';
+  let yellow = 'rgb(241, 196, 15, 0.8)';
   const cartao = (sinal, titulo, opcao, setting, busy) => {
     return (
       <div
-        className='card-fechado cor2'
+        className='card-fechado cor3'
         style={{
           display: card == '' && atendimento != null && setting == 1 ? 'flex' : 'none',
           backgroundColor: sinal != null && sinal.length > 0 ? yellow : '',
-          borderColor: sinal != null && sinal.length > 0 ? yellow : '',
+          borderColor: 'transparent',
           width: window.innerWidth > 425 && document.getElementById("conteúdo vazio") != null ? Math.ceil((document.getElementById("conteúdo vazio").offsetWidth / 4) - 43) :
             window.innerWidth < 426 && document.getElementById("conteúdo vazio") != null ? Math.ceil((document.getElementById("conteúdo cheio").offsetWidth / 2) - 48) : '',
         }}
@@ -1133,7 +1117,7 @@ function Passometro() {
           flexDirection: 'row',
           flexWrap: 'wrap',
           justifyContent: window.innerWidth < 426 ? 'space-between' : 'flex-start',
-          alignContent: 'flex-start',
+          alignContent: 'flex-start', alignSelf: 'center', alignItems: 'center',
           height: window.innerHeight - 30,
           minHeight: window.innerHeight - 30,
           width: window.innerWidth < 426 ? 'calc(95vw - 15px)' : '70vw',

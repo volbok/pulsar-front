@@ -376,7 +376,7 @@ function VentilacaoMecanica() {
         style={{
           display: vm.length > 0 && vm.slice(-1).map(item => item.modo != 'OFF') ? 'flex' : 'none',
           flexDirection: 'column', justifyContent: 'center',
-          width: window.innerWidth < 426 ? '80vw' : '100%', marginTop: 5,
+          width: window.innerWidth < 426 ? '80vw' : '65vw', marginTop: 5,
           alignSelf: 'center',
         }}>
         <div id="gráfico" className='scroll'
@@ -394,6 +394,7 @@ function VentilacaoMecanica() {
                 alignItems: 'center',
               }}>
               <div id="pack de barras"
+                className='cor0'
                 style={{
                   display: 'flex', flexDirection: 'column', justifyContent: 'flex-end',
                   alignItems: 'center',
@@ -413,13 +414,13 @@ function VentilacaoMecanica() {
                       display: 'flex',
                       flexDirection: 'column', justifyContent: 'center'
                     }}>
-                    <div id="barra PRESSÃO" className='button'
+                    <div id="barra PRESSÃO" className='button cor0'
                       style={{
                         display: 'flex',
                         width: 20,
                         height: parseInt(item.pressao),
                         minHeight: parseInt(item.pressao),
-                        backgroundImage: "linear-gradient(#EC7063, #ffffff)",
+                        backgroundImage: "linear-gradient(#EC7063, transparent)",
                       }}>
                       {parseInt(item.pressao)}
                     </div>
@@ -430,13 +431,13 @@ function VentilacaoMecanica() {
                       display: 'flex',
                       flexDirection: 'column', justifyContent: 'center'
                     }}>
-                    <div id="barra VOLUME" className='button'
+                    <div id="barra VOLUME" className='button cor0'
                       style={{
                         display: 'flex',
                         width: 20,
                         height: Math.ceil(parseInt(item.volume) / 3),
                         minHeight: Math.ceil(parseInt(item.volume) / 3),
-                        backgroundImage: "linear-gradient(#58D68D, #ffffff)",
+                        backgroundImage: "linear-gradient(#58D68D, transparent)",
                       }}>
                       {parseInt(item.volume)}
                     </div>
@@ -447,13 +448,13 @@ function VentilacaoMecanica() {
                       display: 'flex',
                       flexDirection: 'column', justifyContent: 'center'
                     }}>
-                    <div id="barra PEEP" className='button'
+                    <div id="barra PEEP" className='button cor0'
                       style={{
                         display: 'flex',
                         width: 20,
                         height: parseInt(item.peep),
                         minHeight: parseInt(item.peep),
-                        backgroundImage: "linear-gradient(#F4D03F, #ffffff)",
+                        backgroundImage: "linear-gradient(#F4D03F, transparent)",
                       }}>
                       {parseInt(item.peep)}
                     </div>
@@ -464,13 +465,13 @@ function VentilacaoMecanica() {
                       display: 'flex',
                       flexDirection: 'column', justifyContent: 'center'
                     }}>
-                    <div id="barra FIO2" className='button'
+                    <div id="barra FIO2" className='button cor0'
                       style={{
                         display: 'flex',
                         width: 20,
                         height: parseInt(item.fio2),
                         minHeight: parseInt(item.fio2),
-                        backgroundImage: "linear-gradient(#5DADE2, #ffffff)",
+                        backgroundImage: "linear-gradient(#5DADE2, transparent)",
                       }}>
                       {parseInt(item.fio2)}
                     </div>
@@ -491,7 +492,7 @@ function VentilacaoMecanica() {
   return (
     <div id="scroll-vm"
       className='card-aberto'
-      style={{ display: card == 'card-vm' ? 'flex' : 'none' }}
+      style={{ display: card == 'card-vm' ? 'flex' : 'none', alignContent: 'center', alignItems: 'center', alignSelf: 'center' }}
     >
       <div className="text3">
         VENTILAÇÃO MECÂNICA
@@ -512,6 +513,7 @@ function VentilacaoMecanica() {
           style={{
             display: item.modo == 'OFF' ? 'none' : 'flex',
             flexDirection: window.innerWidth < 426 ? 'column' : 'row',
+            width: '65vw'
           }}
         >
           <div id="identificador"

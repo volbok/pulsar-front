@@ -397,19 +397,21 @@ function Culturas() {
                   ></img>
                 </div>
               </div>
-              <div style={{
-                display: 'flex', flexDirection: 'column', justifyContent: 'space-between',
-                margin: 5, padding: 5,
-                borderTopLeftRadius: window.innerWidth < 426 ? 0 : 0,
-                borderTopRightRadius: window.innerWidth < 426 ? 0 : 5,
-                borderBottomLeftRadius: window.innerWidth < 426 ? 5 : 0,
-                borderBottomRightRadius: window.innerWidth < 426 ? 5 : 5,
-                marginTop: window.innerWidth < 426 ? 0 : 5,
-                marginLeft: window.innerWidth < 426 ? 5 : 0,
-                backgroundColor: 'white',
-                height: 200,
-                width: window.innerWidth < 426 ? '95%' : '',
-              }}>
+              <div
+                className='cor0'
+                style={{
+                  display: 'flex', flexDirection: 'column', justifyContent: 'space-between',
+                  margin: 5, padding: 5,
+                  borderTopLeftRadius: window.innerWidth < 426 ? 0 : 0,
+                  borderTopRightRadius: window.innerWidth < 426 ? 0 : 5,
+                  borderBottomLeftRadius: window.innerWidth < 426 ? 5 : 0,
+                  borderBottomRightRadius: window.innerWidth < 426 ? 5 : 5,
+                  marginTop: window.innerWidth < 426 ? 0 : 5,
+                  marginLeft: window.innerWidth < 426 ? 5 : 0,
+                  // backgroundColor: 'white',
+                  height: 200,
+                  width: window.innerWidth < 426 ? '95%' : '',
+                }}>
                 <input id={"inputMaterial " + item.id_cultura}
                   className="input"
                   autoComplete="off"
@@ -447,7 +449,7 @@ function Culturas() {
                 >
                 </input>
                 <textarea id={"inputResultado " + item.id_cultura}
-                  className="textarea"
+                  className={item.resultado == null || item.resultado.includes('NEGATIV') || item.resultado.includes('NHCB') ? "textarea cor2" : "textarea"}
                   autoComplete="off"
                   placeholder='RESULTADO...'
                   onFocus={(e) => (e.target.placeholder = '')}
@@ -479,7 +481,7 @@ function Culturas() {
                     flexDirection: 'center', justifyContent: 'center', alignSelf: 'center',
                     width: 'calc(100% - 30px)',
                     height: 100,
-                    backgroundColor: item.resultado == null || item.resultado.includes('NEGATIV') || item.resultado.includes('NHCB') ? '#F2F2F2' : item.resultado.includes('VRE') || item.resultado.includes('ESBL') || item.resultado.includes('KPC') ? 'rgb(231, 76, 60, 0.5)' : 'rgb(244, 208, 63, 0.5)',
+                    backgroundColor: item.resultado == null || item.resultado.includes('NEGATIV') || item.resultado.includes('NHCB') ? '' : item.resultado.includes('VRE') || item.resultado.includes('ESBL') || item.resultado.includes('KPC') ? 'rgba(231, 76, 60, 0.7)' : 'rgb(244, 208, 63, 0.5)',
                     borderColor: 'transparent',
                     color: item.resultado == null || item.resultado.includes('NEGATIV') || item.resultado.includes('NHCB') ? '' : item.resultado.includes('VRE') || item.resultado.includes('ESBL') || item.resultado.includes('KPC') ? 'white' : '',
                   }}

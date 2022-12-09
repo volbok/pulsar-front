@@ -337,15 +337,15 @@ function Propostas() {
                   flexDirection: 'column',
                   justifyContent: 'center'
                 }}>
-                  <div className='text2' style={{ color: '#ffffff' }}>{moment(item.data_proposta).format('DD/MM/YY')}</div>
-                  <div className='text2' style={{ color: '#ffffff', marginTop: 0 }}>{moment(item.data_proposta).format('HH:mm')}</div>
+                  <div className='text2 cor 1' >{moment(item.data_proposta).format('DD/MM/YY')}</div>
+                  <div className='text2 cor 1' >{moment(item.data_proposta).format('HH:mm')}</div>
                 </div>
                 <div style={{
                   display: window.innerWidth < 426 ? 'flex' : 'none',
                   flexDirection: 'column',
                   justifyContent: 'center'
                 }}>
-                  <div className='text2' style={{ color: '#ffffff' }}>{moment(item.data_proposta).format('DD/MM/YY - HH:mm')}</div>
+                  <div className='text2 cor 1'>{moment(item.data_proposta).format('DD/MM/YY - HH:mm')}</div>
                 </div>
                 <div className='button-red'
                   style={{ width: 25, minWidth: 25, height: 25, minHeight: 25 }}
@@ -365,11 +365,12 @@ function Propostas() {
                 </div>
               </div>
               <div id="conteúdo da proposta"
+                className='cor0'
                 style={{
                   display: 'flex', flexDirection: window.innerWidth < 426 ? 'column' : 'row',
                   justifyContent: 'center',
                   flex: 4,
-                  backgroundColor: 'white',
+                  // backgroundColor: 'white',
                   padding: 5,
                   paddingBottom: window.innerWidth < 426 ? 10 : 5,
                   height: window.innerWidth < 426 ? 100 : 130,
@@ -425,13 +426,14 @@ function Propostas() {
                   >
                   </textarea>
                   <div id="prazo"
+                    className="cor2"
                     style={{
                       position: 'relative',
                       display: 'flex', flexDirection: 'row', justifyContent: 'center',
                       alignItems: 'flex-end',
                       alignSelf: 'center',
                       padding: 10,
-                      backgroundColor: '#f2f2f2',
+                      // backgroundColor: '#f2f2f2',
                       borderRadius: 5,
                       height: 90,
                     }}>
@@ -450,7 +452,7 @@ function Propostas() {
                           pointerEvents: item.status == 1 ? 'none' : 'auto',
                           width: 50,
                           height: 50,
-                          backgroundColor: moment(item.prazo).diff(moment(), 'days') > 0 || item.status == 1 ? 'white' : 'rgb(231, 76, 60, 0.7)',
+                          backgroundColor: moment(item.prazo).diff(moment(), 'days') > 0 || item.status == 1 ? '' : 'rgb(231, 76, 60, 0.7)',
                           color: moment(item.prazo).diff(moment(), 'days') > 0 || item.status == 1 ? '' : 'white',
                         }}
                         defaultValue={
@@ -491,7 +493,7 @@ function Propostas() {
                       }}
                       alt=""
                       src={item.status == 1 ? flag : fail}
-                      className='cor2'
+                      className='cor0'
                       style={{
                         opacity: 1,
                         margin: 5,

@@ -405,9 +405,9 @@ function Antibioticos() {
                 </div>
               </div>
               <div
+                className='cor0'
                 style={{
                   display: 'flex', flexDirection: 'column', justifyContent: 'center',
-                  backgroundColor: 'white',
                   borderRadius: 5, padding: 10,
                   borderTopLeftRadius: window.innerWidth < 426 ? 0 : 0,
                   borderTopRightRadius: window.innerWidth < 426 ? 0 : 5,
@@ -429,16 +429,17 @@ function Antibioticos() {
                   alignSelf: 'center',
                   alignContent: 'center',
                 }}>
-                  <div id="antibiótico e datas" style={{
-                    flex: window.innerWidth < 426 ? 1 : 3,
-                    display: 'flex', flexDirection: 'column', justifyContent: 'center',
-                    alignSelf: 'center',
-                    alignItems: 'center',
-                    margin: 5, padding: 5,
-                    backgroundColor: 'white',
-                    height: 200,
-                    width: window.innerWidth < 426 ? '100%' : '10vw',
-                  }}>
+                  <div id="antibiótico e datas"
+                    className='cor0'
+                    style={{
+                      flex: window.innerWidth < 426 ? 1 : 3,
+                      display: 'flex', flexDirection: 'column', justifyContent: 'center',
+                      alignSelf: 'center',
+                      alignItems: 'center',
+                      margin: 5, padding: 5,
+                      height: 200,
+                      width: window.innerWidth < 426 ? '100%' : '10vw',
+                    }}>
                     <input id={"inputAntibiotico " + item.id_antibiotico}
                       className="input"
                       autoComplete="off"
@@ -476,7 +477,7 @@ function Antibioticos() {
                     >
                     </input>
                     <input id={"inputInicio " + item.id_antibiotico}
-                      className="input"
+                      className="input cor2"
                       autoComplete="off"
                       type="text"
                       inputMode='numeric'
@@ -524,13 +525,13 @@ function Antibioticos() {
                         display: 'flex',
                         flexDirection: 'center', justifyContent: 'center', alignSelf: 'center',
                         width: 'calc(100% - 10px)',
-                        backgroundColor: '#f2f2f2', borderColor: 'transparent',
+                        borderColor: 'transparent',
                         marginBottom: 0,
                       }}
                     >
                     </input>
                     <input id={"inputTermino " + item.id_antibiotico}
-                      className="input"
+                      className="input cor2"
                       autoComplete="off"
                       type="text"
                       inputMode='numeric'
@@ -579,7 +580,8 @@ function Antibioticos() {
                         display: 'flex',
                         flexDirection: 'center', justifyContent: 'center', alignSelf: 'center',
                         width: 'calc(100% - 10px)',
-                        backgroundColor: '#f2f2f2', borderColor: 'transparent',
+                        // backgroundColor: '#f2f2f2',
+                        borderColor: 'transparent',
                       }}
                     >
                     </input>
@@ -596,7 +598,7 @@ function Antibioticos() {
                       zIndex: 10,
                     }}>
                       <div className='text1' style={{ margin: 0 }}>PRAZO</div>
-                      <div className='input-special' style={{ width: 60, height: 60, alignSelf: 'center' }}>
+                      <div className='input-special cor0' style={{ width: 60, height: 60, alignSelf: 'center' }}>
                         <input
                           id={"inputDias " + item.id_antibiotico}
                           title='DIAS DE USO DO ANTIBIÓTICO.'
@@ -605,7 +607,7 @@ function Antibioticos() {
                           type="text"
                           inputMode='numeric'
                           maxLength={2}
-                          className="input"
+                          className="input cor2"
                           onFocus={(e) => (e.target.placeholder = '')}
                           onBlur={(e) => (e.target.placeholder = 'DIAS...')}
                           defaultValue={moment(item.prazo).diff(moment(item.data_inicio), 'days')}

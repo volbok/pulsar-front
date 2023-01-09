@@ -29,7 +29,7 @@ function App() {
   // const html = 'http://10.0.6.3:3333/'
   // const html = 'https://pulsarapi.herokuapp.com/'
 
-  var html = 'https://pulsar-api.up.railway.app/'
+  var html = 'https://pulsar-api-hsf.up.railway.app/'
 
   // estados do context.
   const [toast, settoast] = useState({ display: 'none', mensagem: '', cor: 'transparent' });

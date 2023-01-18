@@ -10,6 +10,7 @@ import Passometro from './pages/Passometro';
 import Settings from './pages/Settings';
 import Usuarios from './pages/Usuarios';
 import Pdf from './pages/Pdf';
+import Prescricao from './pages/Prescricao';
 // componentes.
 import Toast from './components/Toast';
 import Modal from './components/Modal';
@@ -66,6 +67,7 @@ function App() {
   const [cardatb, setcardatb] = useState(1);
   const [cardinterconsultas, setcardinterconsultas] = useState(1);
   const [cardexames, setcardexames] = useState(1);
+  const [cardprescricao, setcardprescricao] = useState(1);
 
   // estado para seleção dos cards do passômetro.
   const [card, setcard] = useState('');
@@ -94,6 +96,8 @@ function App() {
   const [sinaisvitais, setsinaisvitais] = useState([]);
   const [vm, setvm] = useState([]);
   const [interconsultas, setinterconsultas] = useState([]);
+
+  const [prescricao, setprescricao] = useState([]);
 
   // resolvendo a responsividade para o innerHeight nos celulares.
   const [altura, setaltura] = useState(`${window.innerHeight}px`);
@@ -149,6 +153,7 @@ function App() {
         cardatb, setcardatb,
         cardinterconsultas, setcardinterconsultas,
         cardexames, setcardexames,
+        cardprescricao, setcardprescricao,
 
         card, setcard,
 
@@ -175,7 +180,7 @@ function App() {
         sinaisvitais, setsinaisvitais,
         vm, setvm,
         interconsultas, setinterconsultas,
-
+        prescricao, setprescricao,
         altura, setaltura
       }}
     >
@@ -199,6 +204,9 @@ function App() {
             </Route>
             <Route path="/usuarios">
               <Usuarios></Usuarios>
+            </Route>
+            <Route path="/prescricao">
+              <Prescricao></Prescricao>
             </Route>
           </Switch>
         </Router>

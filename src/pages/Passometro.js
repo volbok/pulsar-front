@@ -38,6 +38,7 @@ import Riscos from '../cards/Riscos';
 import Alertas from '../cards/Alertas';
 import Interconsultas from '../cards/Interconsultas';
 import Exames from '../cards/Exames';
+import Prescricao from './Prescricao';
 
 function Passometro() {
 
@@ -71,7 +72,7 @@ function Passometro() {
     cardculturas, setcardculturas,
     cardatb, setcardatb,
     cardinterconsultas, setcardinterconsultas,
-
+    
     card, setcard,
 
     setpacientes, pacientes,
@@ -1184,6 +1185,19 @@ function Passometro() {
         >
           <div className="text3">EXAMES RELEVANTES</div>
         </div>
+        <div id='exames' className="card-fechado"
+          style={{
+            display: card == '' ? 'flex' : 'none',
+            width: window.innerWidth > 425 && document.getElementById("conteúdo vazio") != null ? Math.ceil((document.getElementById("conteúdo vazio").offsetWidth / 4) - 43) :
+              window.innerWidth < 426 && document.getElementById("conteúdo vazio") != null ? Math.ceil((document.getElementById("conteúdo cheio").offsetWidth / 2) - 48) : '',
+          }}
+          onClick={() => {
+            setpagina(10);
+            history.push('/prescricao');
+          }}
+        >
+          <div className="text3">PRESCRIÇÃO</div>
+        </div>
 
         <Alergias></Alergias>
         <Anamnese></Anamnese>
@@ -1201,6 +1215,7 @@ function Passometro() {
         <Alertas></Alertas>
         <Interconsultas></Interconsultas>
         <Exames></Exames>
+        <Prescricao></Prescricao>
 
       </div>
       <div id="conteúdo vazio"

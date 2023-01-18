@@ -104,7 +104,7 @@ body {
 }
 
 .janela {
-  background-color: var(--cor2);
+  background-color: var(--cor3);
   border-radius: 5px;
   display: flex;
   flex-direction: column;
@@ -116,7 +116,7 @@ body {
 
 .cor0 {
   background-color: var(--cor0) !important;
-  border-color: var(--cor0);
+  border-color: var(--cor0) !important;
 }
 
 .cor1 {

@@ -341,6 +341,7 @@ function Infusoes() {
       }}
     >
       <div className="text3">INFUSÕES</div>
+      <Botoes></Botoes>
       <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'center', flexWrap: 'wrap' }}>
         {infusoes.filter(item => item.data_termino == null).sort((a, b) => moment(a.data_inicio) < moment(b.data_inicio) ? 1 : -1).map((item) => (
           <div
@@ -503,7 +504,6 @@ function Infusoes() {
         {graficoInfusoes()}
       </div>
       <InsertInfusao></InsertInfusao>
-      <Botoes></Botoes>
     </div>
   )
 }

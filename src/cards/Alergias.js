@@ -171,9 +171,8 @@ function Alergias() {
       className='card-aberto'
       style={{ display: card == 'card-alergias' ? 'flex' : 'none' }}
     >
-      <div className="text3">
-        ALERGIAS
-      </div>
+      <div className="text3">ALERGIAS</div>
+      <Botoes></Botoes>
       <div
         style={{
           display: 'flex', flexDirection: 'row', justifyContent: 'center',
@@ -204,7 +203,6 @@ function Alergias() {
           </div>
         ))}
       </div>
-      <Botoes></Botoes>
       <InsertAlergia></InsertAlergia>
     </div>
   )

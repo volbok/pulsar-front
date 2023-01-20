@@ -143,36 +143,6 @@ function Riscos() {
       <div className="text3">
         RISCOS
       </div>
-      <div
-        style={{
-          display: 'flex', flexDirection: 'row', justifyContent: 'center',
-          flexWrap: 'wrap', width: '100%'
-        }}>
-        {riscos.map(item => (
-          <div className='button' key={'risco ' + item.id_risco}
-            style={{ width: 200, maxWidth: 200 }}>
-            <div style={{ width: '100%' }}>
-              {item.risco}
-            </div>
-            <div className='button-red'
-              style={{ width: 25, minWidth: 25, height: 25, minHeight: 25 }}
-              onClick={(e) => {
-                modal(setdialogo, 'CONFIRMAR EXCLUSÃO DO RISCO ' + item.risco + '?', deleteRisco, item.id_risco);
-                e.stopPropagation();
-              }}>
-              <img
-                alt=""
-                src={deletar}
-                style={{
-                  margin: 10,
-                  height: 25,
-                  width: 25,
-                }}
-              ></img>
-            </div>
-          </div>
-        ))}
-      </div>
       <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'center' }}>
         <div id="botão de retorno"
           className="button-red"
@@ -202,6 +172,36 @@ function Riscos() {
             }}
           ></img>
         </div>
+      </div>
+      <div
+        style={{
+          display: 'flex', flexDirection: 'row', justifyContent: 'center',
+          flexWrap: 'wrap', width: '100%'
+        }}>
+        {riscos.map(item => (
+          <div className='button' key={'risco ' + item.id_risco}
+            style={{ width: 200, maxWidth: 200 }}>
+            <div style={{ width: '100%' }}>
+              {item.risco}
+            </div>
+            <div className='button-red'
+              style={{ width: 25, minWidth: 25, height: 25, minHeight: 25 }}
+              onClick={(e) => {
+                modal(setdialogo, 'CONFIRMAR EXCLUSÃO DO RISCO ' + item.risco + '?', deleteRisco, item.id_risco);
+                e.stopPropagation();
+              }}>
+              <img
+                alt=""
+                src={deletar}
+                style={{
+                  margin: 10,
+                  height: 25,
+                  width: 25,
+                }}
+              ></img>
+            </div>
+          </div>
+        ))}
       </div>
       <InsertRisco></InsertRisco>
       <OpcoesRisco></OpcoesRisco>

@@ -256,6 +256,7 @@ function Evolucoes() {
       <div className="text3">
         EVOLUÇÕES
       </div>
+      <Botoes></Botoes>
       <div
         style={{
           position: 'relative', display: 'flex', flexDirection: 'column',
@@ -365,7 +366,6 @@ function Evolucoes() {
           </div>
         ))}
         <InsertEvolucao></InsertEvolucao>
-        <Botoes></Botoes>
       </div>
     </div>
   )

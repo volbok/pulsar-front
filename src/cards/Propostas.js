@@ -299,6 +299,7 @@ function Propostas() {
           flexDirection: 'column', justifyContent: 'center',
         }}>
         <div className="text3">PROPOSTAS</div>
+        <Botoes item={proposta}></Botoes>
         <FilterPropostas></FilterPropostas>
         {arraypropostas.sort((a, b) => moment(a.data_proposta) < moment(b.data_proposta) ? 1 : -1).map((item) => (
           <div
@@ -512,7 +513,6 @@ function Propostas() {
         ))}
       </div>
       <InsertProposta></InsertProposta>
-      <Botoes item={proposta}></Botoes>
     </div>
   )
 }

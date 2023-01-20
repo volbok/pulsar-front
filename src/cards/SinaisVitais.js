@@ -686,6 +686,7 @@ function SinaisVitais() {
       <div className="text3">
         SINAIS VITAIS
       </div>
+      <Botoes></Botoes>
       <div style={{
         display: 'flex',
         flexDirection: window.innerWidth < 426 ? 'column' : 'row',
@@ -710,7 +711,7 @@ function SinaisVitais() {
                 flexDirection: window.innerWidth < 426 ? 'row' : 'column',
                 justifyContent: 'center',
                 alignSelf: 'center',
-                margin: 0, 
+                margin: 0,
                 padding: 5,
                 height: window.innerWidth < 426 ? '200vh' : window.innerWidth > 425 && window.innerWidth < 769 ? '60vh' : '30vh',
                 width: window.innerWidth < 426 ? '90%' : 50,
@@ -801,7 +802,6 @@ function SinaisVitais() {
         ))}
       </div>
       {setDataGrafico()}
-      <Botoes></Botoes>
       <InsertSinaisVitais></InsertSinaisVitais>
     </div >
   )

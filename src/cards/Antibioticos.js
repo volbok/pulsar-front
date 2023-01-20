@@ -337,6 +337,7 @@ function Antibioticos() {
       <div className="text3">
         ANTIBIÓTICOS
       </div>
+      <Botoes></Botoes>
       <FilterAntibioticos></FilterAntibioticos>
       <div
         style={{
@@ -667,7 +668,6 @@ function Antibioticos() {
         ))}
       </div>
       <InsertAntibiotico></InsertAntibiotico>
-      <Botoes></Botoes>
     </div >
   )
 }

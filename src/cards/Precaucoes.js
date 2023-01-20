@@ -250,6 +250,7 @@ function Precaucoes() {
       <div className="text3">
         PRECAUÇÕES
       </div>
+      <Botoes></Botoes>
       <div
         style={{
           display: 'flex', flexDirection: 'row', justifyContent: 'center',
@@ -280,7 +281,6 @@ function Precaucoes() {
           </div>
         ))}
       </div>
-      <Botoes></Botoes>
       <InsertPrecaucao></InsertPrecaucao>
       <OpcoesPrecaucao></OpcoesPrecaucao>
     </div >

@@ -727,7 +727,7 @@ function Prescricao() {
 
   function ScrollOpcoesItens() {
     return (
-      <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'center' }}>
+      <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'center', height: '80vh' }}>
         <div id="coluna1" style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', height: '80vh' }}>
           <div className='text1' style={{ display: id == null ? 'flex' : 'none' }}>ITENS DISPONÍVEIS PARA PRESCRIÇÃO</div>
           <div id="scrollOpcoesItens" className='scroll cor0'
@@ -804,7 +804,7 @@ function Prescricao() {
           <div className='text1'>{id != null ? 'EDITAR ITEM SELECIONADO' : 'INSERIR NOVO ITEM'}</div>
           <InputsAndComponentes></InputsAndComponentes>
         </div>
-        <div id="coluna2" style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', marginLeft: 10 }}>
+        <div id="coluna2" style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', marginLeft: 10, height: '80vh' }}>
           <div style={{ display: id != null ? 'flex' : 'none' }} className='text1'>COMPONENTES DISPONÍVEIS PARA O ITEM SELECIONADO</div>
           <div id="scrollOpcoesComponentes" className='scroll cor0'
             style={{
@@ -940,7 +940,7 @@ function Prescricao() {
             onBlur={(e) => (e.target.placeholder = 'OBSERVAÇÕES')}
             style={{
               width: '100%',
-              height: 50, maxHeight: 50, minHeight: 50,
+              height: 52, maxHeight: 52, minHeight: 52,
               margin: 5,
             }}
             type="text"

@@ -331,6 +331,7 @@ function Culturas() {
       <div className="text3">
         CULTURAS
       </div>
+      <Botoes></Botoes>
       <FilterCulturas></FilterCulturas>
       <div
         style={{
@@ -503,7 +504,6 @@ function Culturas() {
         ))}
       </div>
       <InsertCultura></InsertCultura>
-      <Botoes></Botoes>
     </div>
   )
 }

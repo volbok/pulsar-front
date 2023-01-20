@@ -497,6 +497,7 @@ function VentilacaoMecanica() {
       <div className="text3">
         VENTILAÇÃO MECÂNICA
       </div>
+      <Botoes></Botoes>
       <div id="fora da vm" className='button-green'
         // ativada quando o paciente não está intubado ou traqueostomizado.
         style={{
@@ -605,7 +606,6 @@ function VentilacaoMecanica() {
         </div>
       ))}
       {setDataGrafico()}
-      <Botoes></Botoes>
       <InsertVm></InsertVm>
     </div>
   )

@@ -205,6 +205,7 @@ function Interconsultas() {
       <div className="text3">
         INTERCONSULTAS
       </div>
+      <Botoes></Botoes>
       <div
         style={{
           display: 'flex', flexDirection: 'row', justifyContent: 'center',
@@ -285,7 +286,6 @@ function Interconsultas() {
           </div>
         ))}
       </div>
-      <Botoes></Botoes>
       <InsertInterconsulta></InsertInterconsulta>
       <StatusInterconsulta></StatusInterconsulta>
     </div >

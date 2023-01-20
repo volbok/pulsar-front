@@ -2,7 +2,7 @@
 import React, { useContext, useEffect, useState, useCallback } from 'react';
 import axios from 'axios';
 import Context from './Context';
-import moment from 'moment';
+// import moment from 'moment';
 import 'moment/locale/pt-br';
 // router.
 import { useHistory } from 'react-router-dom';
@@ -23,11 +23,11 @@ function Prescricao() {
     html,
     pagina, setpagina,
     settoast,
-    unidade,
     prescricao, setprescricao,
     atendimentos,
     atendimento,
-    paciente,
+    // unidade,
+    // paciente,
   } = useContext(Context);
 
   // history (router).
@@ -226,7 +226,10 @@ function Prescricao() {
       });
   }
 
+  var timeout = null;
+
   // registrando um novo item de prescrição.
+  /*
   const insertItemPrescricao = (item, pai) => {
     var obj = {
       id_unidade: unidade,
@@ -257,6 +260,7 @@ function Prescricao() {
         }, 5000);
       });
   }
+  
 
   // atualizando um registro de prescrição.
   const updateItemPrescricao = (item, qtde, via, freq, agora, acm, sn, obs) => {
@@ -304,8 +308,6 @@ function Prescricao() {
       });
   }
 
-  var timeout = null;
-
   const [filterprescricao, setfilterprescricao] = useState('');
   var searchprescricao = '';
   const filterItemPrescricao = () => {
@@ -349,7 +351,7 @@ function Prescricao() {
       ></input>
     )
   }
-
+  */
   const [filteropcoesprescricao, setfilteropcoesprescricao] = useState('');
   var searchopcoesprescricao = '';
   const filterOpcoesItemPrescricao = () => {
@@ -445,18 +447,15 @@ function Prescricao() {
   }
 
   // modificadores dos itens de prescrição.
-  const [id_pai, setid_pai] = useState(0);
   const [nome, setnome] = useState(null);
 
   // categoria do item prescrito.
   let arraycategorias = ['0. DIETA', '1. ANTIMICROBIANOS', '2. DIVERSOS', '3. CURATIVOS', '4. CUIDADOS']
-  const [categoriamenu, setcategoriamenu] = useState(0);
   const [categoria, setcategoria] = useState('CATEGORIA');
   const [qtde, setqtde] = useState(null);
 
   // via de administração do item prescrito.
   let arrayvias = ['VO', 'SNE', 'GGT', 'IV', 'IM', 'SC']
-  const [viamenu, setviamenu] = useState(0);
 
   const [via, setvia] = useState('VIA');
   const [freq, setfreq] = useState(null);
@@ -540,7 +539,6 @@ function Prescricao() {
   }
 
   // função para permitir apenas a inserção de números no input (obedecendo a valores de referência).
-  var timeout = null;
   const checkNumberInput = (input, setstate, min, max) => {
     clearTimeout(timeout);
     timeout = setTimeout(() => {
@@ -557,8 +555,9 @@ function Prescricao() {
     }, 1000);
   }
 
-  const [selectitemprescricao, setselectitemprescricao] = useState([]);
+  // const [selectitemprescricao, setselectitemprescricao] = useState([]);
   const ListaPrescricoes = useCallback(() => {
+    var timeout = null;
     return (
       <div className='scroll cor0'
         style={{
@@ -578,7 +577,7 @@ function Prescricao() {
                 flex: 6, margin: 0,
               }}
               onClick={() => {
-                setselectitemprescricao(item);
+                // setselectitemprescricao(item);
                 setTimeout(() => {
                   document.getElementById('expansivel ' + item.id).classList.toggle("expand");
                   document.getElementById('informações ' + item.id).classList.toggle("show");
@@ -851,6 +850,7 @@ function Prescricao() {
 
   const [opcoesitensmenu, setopcoesitensmenu] = useState(0);
   const InputsAndComponentes = useCallback(() => {
+    var timeout = null;
     return (
       <div style={{
         display: 'flex', flexDirection: 'column', justifyContent: 'center',
@@ -1063,6 +1063,7 @@ function Prescricao() {
 
       </div >
     )
+    // eslint-disable-next-line
   }, [opcoesprescricao, arrayopcoesprescricao, id]);
 
   function ManageOpcoesItensPrescricao() {
@@ -1117,7 +1118,7 @@ function Prescricao() {
               }}
             ></img>
           </div>
-          <FilterItemPrescricao></FilterItemPrescricao>
+          
           <div className='button-green'
             style={{ margin: 0, marginLeft: 10, width: 50, height: 50 }}
             title={'GERENCIADOR DE ITENS DE PRESCRIÇÃO'}

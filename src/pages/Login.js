@@ -420,9 +420,14 @@ function Login() {
         }}>
         <Logo height={100} width={100}></Logo>
       </div>
-      <a className="text2" href="/site/index.html" target="_blank" rel="noreferrer">
-        SAIBA MAIS
-      </a>
+      <div style={{display: 'flex', flexDirection: 'row', justifyContent: 'center'}}>
+        <a className="text2" style={{cursor: 'pointer'}} href="/site/index.html" target="_blank" rel="noreferrer">
+          SAIBA MAIS
+        </a>
+        <a className="text2" style={{cursor: 'pointer'}} href="/integracoes/index.html" target="_blank" rel="noreferrer">
+          INTEGRAÇÕES
+        </a>
+      </div>
       <div className="text2"
         style={{
           display: window.innerWidth < 426 && viewalterarsenha == 1 ? 'none' : 'flex',

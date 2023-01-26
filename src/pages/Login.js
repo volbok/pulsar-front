@@ -420,6 +420,9 @@ function Login() {
         }}>
         <Logo height={100} width={100}></Logo>
       </div>
+      <a className="text2" href="/site/index.html" target="_blank" rel="noreferrer">
+        SAIBA MAIS
+      </a>
       <div className="text2"
         style={{
           display: window.innerWidth < 426 && viewalterarsenha == 1 ? 'none' : 'flex',

@@ -30,7 +30,8 @@ function App() {
   // const html = 'http://10.0.6.3:3333/'
   // const html = 'https://pulsarapi.herokuapp.com/'
 
-  var html = 'https://pulsar-api-hsf.up.railway.app/'
+  // var html = 'https://pulsar-api-hsf.up.railway.app/'
+  var html = 'http://localhost:3333/'
 
   // estados do context.
   const [toast, settoast] = useState({ display: 'none', mensagem: '', cor: 'transparent' });
@@ -40,6 +41,7 @@ function App() {
   const [pickdate1, setpickdate1] = useState();
   const [pickdate2, setpickdate2] = useState();
 
+  const [clientes, setclientes] = useState([]); // hospitais.
   const [unidades, setunidades] = useState([]);
   const [hospital, sethospital] = useState([]);
   const [unidade, setunidade] = useState([]);
@@ -127,6 +129,7 @@ function App() {
         pickdate1, setpickdate1,
         pickdate2, setpickdate2,
 
+        clientes, setclientes,
         unidades, setunidades,
         hospital, sethospital,
         unidade, setunidade,

@@ -295,6 +295,7 @@ body {
   align-self: center;
   overflow-y: scroll;
   overflow-x: hidden;
+  overflow-anchor: none;
   background-color: var(--cor2);
   border-color: var(--cor2);
   border-style: solid;
@@ -721,7 +722,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
   flex-direction: row;
   justify-content: space-evenly;
   opacity: 1;
-  height: 1600px;
+  height: 1000px;
   margin: 5px;
   padding: 10px;
   border-radius: 5px;
@@ -1195,7 +1196,7 @@ ESTILOS VARIÁVEIS CONFORME A RESPONSIVIDADE.
     flex-direction: row;
     justify-content: space-evenly;
     opacity: 1;
-    height: 1500px;
+    height: 1700px;
     margin: 5px;
     padding: 10px;
     border-radius: 5px;
@@ -1264,7 +1265,7 @@ ESTILOS VARIÁVEIS CONFORME A RESPONSIVIDADE.
     flex-direction: row;
     justify-content: space-evenly;
     opacity: 1;
-    height: 1300px;
+    height: 1700px;
     margin: 5px;
     padding: 10px;
     border-radius: 5px;

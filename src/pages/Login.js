@@ -26,6 +26,7 @@ function Login() {
     setunidades,
     setusuario,
     usuario,
+    cliente,
   } = useContext(Context);
 
   // history (router).
@@ -33,12 +34,20 @@ function Login() {
 
   useEffect(() => {
     if (pagina == 0) {
+      sethospital(cliente.id_cliente);
+      console.log(cliente.id_cliente);
       setusuario({
         id: 0,
         nome_usuario: "LOGOFF",
         dn_usuario: null,
         cpf_usuario: null,
         email_usuario: null,
+        paciente: null,
+        prontuario: null,
+        farmacia: null,
+        laboratorio: null,
+        faturamento: null,
+        usuarios: null,
       });
       setviewlistaunidades(0);
       loadUnidades();
@@ -303,7 +312,17 @@ function Login() {
               dn_usuario: x.dn,
               cpf_usuario: x.cpf,
               email_usuario: x.email,
+              conselho: x.conselho,
+              n_conselho: x.n_conselho,
+              tipo_usuario: x.tipo_usuario,
+              paciente: x.paciente,
+              prontuario: x.prontuario,
+              laboratorio: x.laboratorio,
+              farmacia: x.farmacia,
+              faturamento: x.faturamento,
+              usuarios: x.usuarios,
             });
+            console.log(x);
             // armazenando o context na localStorage.
             localStorage.setItem("usuario", usuario);
             loadAcessos(x.id);
@@ -411,7 +430,7 @@ function Login() {
             className="button"
             style={{ flex: 1, padding: 10 }}
             onClick={() => {
-              sethospital(item.id_cliente);
+              console.log(cliente.map((item) => item.id_cliente));
               setunidade(item.id_unidade);
               setpagina(1);
               history.push("/passometro");
@@ -427,6 +446,85 @@ function Login() {
     );
     // eslint-disable-next-line
   }, [viewlistaunidades, viewalterarsenha]);
+
+  function AcessoModulos() {
+    return (
+      <div
+        style={{
+          display: "flex",
+          flexDirection: "row",
+          flexWrap: "wrap",
+          justifyContent: "center",
+          width: window.innerWidth > 425 ? "80vw" : "80vw",
+        }}
+      >
+        <div
+          className="button"
+          style={{
+            display: usuario.paciente == 1 ? "flex" : "none",
+            width: 150,
+            height: 150,
+          }}
+          onClick={() => {
+            history.push("/cadastro");
+            setpagina(2);
+          }}
+        >
+          GESTÃO DE PACIENTES, ATENDIMENTOS E LEITOS
+        </div>
+        <div
+          className="button"
+          style={{
+            display: usuario.usuarios == 1 ? "flex" : "none",
+            width: 150,
+            height: 150,
+          }}
+          onClick={() => {
+            history.push("/usuarios");
+            setpagina(5);
+          }}
+        >
+          GESTÃO DE USUÁRIOS
+        </div>
+        <div
+          className="button"
+          style={{
+            display: usuario.farmacia == 1 ? "flex" : "none",
+            width: 150,
+            height: 150,
+          }}
+          onClick={() => {
+            history.push("/farmacia");
+            // setpagina(20);
+          }}
+        ></div>
+        <div
+          className="button"
+          style={{
+            display: usuario.laboratorio == 1 ? "flex" : "none",
+            width: 150,
+            height: 150,
+          }}
+          onClick={() => {
+            history.push("/laboratorio");
+            // setpagina(30);
+          }}
+        ></div>
+        <div
+          className="button"
+          style={{
+            display: usuario.faturamento == 1 ? "flex" : "none",
+            width: 150,
+            height: 150,
+          }}
+          onClick={() => {
+            history.push("/faturamento");
+            // setpagina(40);
+          }}
+        ></div>
+      </div>
+    );
+  }
 
   // ## TROCA DE SENHA ## //
   // atualizar usuário.
@@ -614,6 +712,7 @@ function Login() {
       </div>
       <Inputs></Inputs>
       <ListaDeAcessos></ListaDeAcessos>
+      <AcessoModulos></AcessoModulos>
       <div
         className="text1"
         style={{

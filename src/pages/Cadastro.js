@@ -13,6 +13,7 @@ import checkinput from "../functions/checkinput";
 import salvar from "../images/salvar.svg";
 import deletar from "../images/deletar.svg";
 import back from "../images/back.svg";
+import power from "../images/power.svg";
 import novo from "../images/novo.svg";
 import modal from "../functions/modal";
 
@@ -28,8 +29,6 @@ function Cadastro() {
     unidade,
     setunidade,
     hospital,
-    clientes,
-    setclientes,
     unidades,
     pacientes,
     setpacientes,
@@ -57,7 +56,6 @@ function Cadastro() {
 
   useEffect(() => {
     if (pagina == 2) {
-      loadClientes();
       loadPacientes();
       loadAtendimentos();
     }
@@ -77,41 +75,7 @@ function Cadastro() {
         if (error.response == undefined) {
           toast(
             settoast,
-            "ERRO DE CONEXÃO, REINICIANDO APLICAÇÃO.",
-            "black",
-            3000
-          );
-          setTimeout(() => {
-            setpagina(0);
-            history.push("/");
-          }, 3000);
-        } else {
-          toast(
-            settoast,
-            error.response.data.message + " REINICIANDO APLICAÇÃO.",
-            "black",
-            3000
-          );
-          setTimeout(() => {
-            setpagina(0);
-            history.push("/");
-          }, 3000);
-        }
-      });
-  };
-
-  const loadClientes = () => {
-    // hospitais.
-    axios
-      .get(html + "list_hospitais")
-      .then((response) => {
-        setclientes(response.data.rows);
-      })
-      .catch(function (error) {
-        if (error.response == undefined) {
-          toast(
-            settoast,
-            "ERRO DE CONEXÃO, REINICIANDO APLICAÇÃO.",
+            "ERRO DE CONEXÃO, REINICIANDO APLICAÇÃO: " + error,
             "black",
             3000
           );
@@ -144,7 +108,7 @@ function Cadastro() {
       .catch(function () {
         toast(
           settoast,
-          "ERRO DE CONEXÃO, REINICIANDO APLICAÇÃO.",
+          "ERRO AO CARREGAR ATENDIMENTOS, REINICIANDO APLICAÇÃO.",
           "black",
           5000
         );
@@ -168,16 +132,12 @@ function Cadastro() {
         document.getElementById("inputNovaDn").value,
         "DD/MM/YYYY"
       ),
-      antecedentes_pessoais: document
-        .getElementById("inputNovoAntecedentesPessoais")
-        .value.toUpperCase(),
-      medicacoes_previas: document
-        .getElementById("inputNovoMedicacoesPrevias")
-        .value.toUpperCase(),
-      exames_previos: document
-        .getElementById("inputNovoExamesPrevios")
-        .value.toUpperCase(),
+
+      antecedentes_pessoais: null,
+      medicacoes_previas: null,
+      exames_previos: null,
       exames_atuais: null,
+
       tipo_documento: document
         .getElementById("inputNovoTipoDocumento")
         .value.toUpperCase(),
@@ -207,7 +167,7 @@ function Cadastro() {
       .catch(function () {
         toast(
           settoast,
-          "ERRO DE CONEXÃO, REINICIANDO APLICAÇÃO.",
+          "ERRO AO INSERIR PACIENTE, REINICIANDO APLICAÇÃO.",
           "black",
           5000
         );
@@ -764,86 +724,92 @@ function Cadastro() {
                 }}
               ></textarea>
             </div>
-            <div
-              id="antecedentes pessoais"
-              style={{
-                display: "flex",
-                flexDirection: "column",
-                justifyContent: "center",
-              }}
-            >
-              <div className="text1">ANTECEDENTES PESSOAIS</div>
-              <textarea
-                className="textarea"
-                placeholder="ANTECEDENTES PESSOAIS"
-                onFocus={(e) => (e.target.placeholder = "")}
-                onBlur={(e) => (e.target.placeholder = "ANTECEDENTES PESSOAIS")}
+
+            <div style={{ display: "none" }}>
+              <div
+                id="antecedentes pessoais"
                 style={{
                   display: "flex",
-                  flexDirection: "center",
+                  flexDirection: "column",
                   justifyContent: "center",
-                  alignSelf: "center",
-                  width: window.innerWidth > 425 ? "50vw" : "70vw",
-                  whiteSpace: "pre-wrap",
                 }}
-                id="inputNovoAntecedentesPessoais"
-                title="ANTECEDENTES PESSOAIS."
-              ></textarea>
-            </div>
-            <div
-              id="medicações de uso domiciliar"
-              style={{
-                display: "flex",
-                flexDirection: "column",
-                justifyContent: "center",
-              }}
-            >
-              <div className="text1">MEDICAÇÕES DE USO DOMICILIAR</div>
-              <textarea
-                className="textarea"
-                placeholder="MEDICAÇÕES DE USO DOMICILIAR"
-                onFocus={(e) => (e.target.placeholder = "")}
-                onBlur={(e) =>
-                  (e.target.placeholder = "MEDICAÇÕES DE USO DOMICILIAR")
-                }
+              >
+                <div className="text1">ANTECEDENTES PESSOAIS</div>
+                <textarea
+                  className="textarea"
+                  placeholder="ANTECEDENTES PESSOAIS"
+                  onFocus={(e) => (e.target.placeholder = "")}
+                  onBlur={(e) =>
+                    (e.target.placeholder = "ANTECEDENTES PESSOAIS")
+                  }
+                  style={{
+                    display: "flex",
+                    flexDirection: "center",
+                    justifyContent: "center",
+                    alignSelf: "center",
+                    width: window.innerWidth > 425 ? "50vw" : "70vw",
+                    whiteSpace: "pre-wrap",
+                  }}
+                  id="inputNovoAntecedentesPessoais"
+                  title="ANTECEDENTES PESSOAIS."
+                ></textarea>
+              </div>
+              <div
+                id="medicações de uso domiciliar"
                 style={{
                   display: "flex",
-                  flexDirection: "center",
+                  flexDirection: "column",
                   justifyContent: "center",
-                  alignSelf: "center",
-                  width: window.innerWidth > 425 ? "50vw" : "70vw",
-                  whiteSpace: "pre-wrap",
                 }}
-                id="inputNovoMedicacoesPrevias"
-                title="MEDICAÇÕES DE USO DOMICILIAR."
-              ></textarea>
-            </div>
-            <div
-              id="exames prévios"
-              style={{
-                display: "flex",
-                flexDirection: "column",
-                justifyContent: "center",
-              }}
-            >
-              <div className="text1">EXAMES PRÉVIOS</div>
-              <textarea
-                className="textarea"
-                placeholder="EXAMES PRÉVIOS"
-                onFocus={(e) => (e.target.placeholder = "")}
-                onBlur={(e) => (e.target.placeholder = "EXAMES PRÉVIOS")}
+              >
+                <div className="text1">MEDICAÇÕES DE USO DOMICILIAR</div>
+                <textarea
+                  className="textarea"
+                  placeholder="MEDICAÇÕES DE USO DOMICILIAR"
+                  onFocus={(e) => (e.target.placeholder = "")}
+                  onBlur={(e) =>
+                    (e.target.placeholder = "MEDICAÇÕES DE USO DOMICILIAR")
+                  }
+                  style={{
+                    display: "flex",
+                    flexDirection: "center",
+                    justifyContent: "center",
+                    alignSelf: "center",
+                    width: window.innerWidth > 425 ? "50vw" : "70vw",
+                    whiteSpace: "pre-wrap",
+                  }}
+                  id="inputNovoMedicacoesPrevias"
+                  title="MEDICAÇÕES DE USO DOMICILIAR."
+                ></textarea>
+              </div>
+              <div
+                id="exames prévios"
                 style={{
                   display: "flex",
-                  flexDirection: "center",
+                  flexDirection: "column",
                   justifyContent: "center",
-                  alignSelf: "center",
-                  width: window.innerWidth > 425 ? "50vw" : "70vw",
-                  whiteSpace: "pre-wrap",
                 }}
-                id="inputNovoExamesPrevios"
-                title="EXAMES PRÉVIOS."
-              ></textarea>
+              >
+                <div className="text1">EXAMES PRÉVIOS</div>
+                <textarea
+                  className="textarea"
+                  placeholder="EXAMES PRÉVIOS"
+                  onFocus={(e) => (e.target.placeholder = "")}
+                  onBlur={(e) => (e.target.placeholder = "EXAMES PRÉVIOS")}
+                  style={{
+                    display: "flex",
+                    flexDirection: "center",
+                    justifyContent: "center",
+                    alignSelf: "center",
+                    width: window.innerWidth > 425 ? "50vw" : "70vw",
+                    whiteSpace: "pre-wrap",
+                  }}
+                  id="inputNovoExamesPrevios"
+                  title="EXAMES PRÉVIOS."
+                ></textarea>
+              </div>
             </div>
+
             <div
               style={{
                 display: "flex",
@@ -863,9 +829,6 @@ function Cadastro() {
                       "inputNovoNomePaciente",
                       "inputNovaDn",
                       "inputNovoNomeMae",
-                      "inputNovoAntecedentesPessoais",
-                      "inputNovoMedicacoesPrevias",
-                      "inputNovoExamesPrevios",
                       "inputNovoTipoDocumento",
                       "inputNovoNumeroDocumento",
                       "inputNovoEndereco",
@@ -1016,99 +979,99 @@ function Cadastro() {
               : window.innerHeight - 130,
         }}
       >
-        {arraypacientes.map((item) => (
-          <div
-            key={"paciente " + item.id_paciente}
-            style={{
-              display: arraypacientes.length > 0 ? "flex" : "none",
-              flexDirection: "column",
-              justifyContent: "center",
-            }}
-          >
+        {arraypacientes
+          .sort((a, b) => (a.nome_paciente > b.nome_paciente ? 1 : -1))
+          .map((item) => (
             <div
-              className="row"
+              key={"paciente " + item.id_paciente}
               style={{
-                justifyContent:
-                  window.innerWidth > 425 ? "space-between" : "center",
-                flex: 6,
-                margin: 0,
-              }}
-              onClick={() => {
-                setpaciente(item);
-                setTimeout(() => {
-                  document
-                    .getElementById("expandlist " + item.id_paciente)
-                    .classList.toggle("expand");
-                  document
-                    .getElementById(
-                      "informações do paciente " + item.id_paciente
-                    )
-                    .classList.toggle("show");
-                }, 100);
+                display: arraypacientes.length > 0 ? "flex" : "none",
+                flexDirection: "column",
+                justifyContent: "center",
               }}
             >
               <div
-                className="button"
+                className="row"
                 style={{
-                  flex: window.innerWidth < 426 ? 6 : 2,
+                  justifyContent:
+                    window.innerWidth > 425 ? "space-between" : "center",
+                  flex: 6,
+                  margin: 0,
+                }}
+                onClick={() => {
+                  setpaciente(item);
+                  setTimeout(() => {
+                    document
+                      .getElementById("expandlist " + item.id_paciente)
+                      .classList.toggle("expand");
+                    document
+                      .getElementById(
+                        "informações do paciente " + item.id_paciente
+                      )
+                      .classList.toggle("show");
+                  }, 100);
                 }}
               >
-                {item.nome_paciente}
-              </div>
-              <div
-                className="button"
-                style={{
-                  display: window.innerWidth > 425 ? "flex" : "none",
-                  flex: 1,
-                }}
-              >
-                {moment(item.dn_paciente).format("DD/MM/YY")}
-              </div>
-              <div
-                className="button"
-                style={{
-                  display: window.innerWidth > 425 ? "flex" : "none",
-                  flex: 2,
-                }}
-              >
-                {item.nome_mae_paciente}
-              </div>
-              <div
-                className={
-                  atendimentos.filter(
+                <div
+                  className="button"
+                  style={{
+                    flex: window.innerWidth < 426 ? 6 : 2,
+                  }}
+                >
+                  {item.nome_paciente}
+                </div>
+                <div
+                  className="button"
+                  style={{
+                    display: window.innerWidth > 425 ? "flex" : "none",
+                    flex: 1,
+                  }}
+                >
+                  {moment(item.dn_paciente).format("DD/MM/YY")}
+                </div>
+                <div
+                  className="button"
+                  style={{
+                    display: window.innerWidth > 425 ? "flex" : "none",
+                    flex: 2,
+                  }}
+                >
+                  {item.nome_mae_paciente}
+                </div>
+                <div
+                  className={
+                    atendimentos.filter(
+                      (valor) =>
+                        valor.id_paciente == item.id_paciente &&
+                        valor.data_termino == null
+                    ).length > 0
+                      ? "button-green"
+                      : "button"
+                  }
+                  style={{
+                    display: window.innerWidth > 425 ? "flex" : "none",
+                    flex: 1,
+                  }}
+                >
+                  {atendimentos.filter(
                     (valor) =>
                       valor.id_paciente == item.id_paciente &&
-                      valor.data_termino == null &&
-                      valor.id_unidade == unidade
+                      valor.data_termino == null
                   ).length > 0
-                    ? "button-green"
-                    : "button"
-                }
-                style={{
-                  display: window.innerWidth > 425 ? "flex" : "none",
-                  flex: 1,
-                }}
-              >
-                {atendimentos.filter(
+                    ? "EM ATENDIMENTO"
+                    : "INICIAR ATENDIMENTO"}
+                </div>
+              </div>
+              {DadosPacienteAtendimento(
+                item,
+                atendimentos.filter(
                   (valor) =>
                     valor.id_paciente == item.id_paciente &&
-                    valor.data_termino == null &&
-                    valor.id_unidade == unidade
-                ).length > 0
-                  ? "EM ATENDIMENTO"
-                  : "INICIAR ATENDIMENTO"}
-              </div>
+                    valor.data_termino == null
+                )
+              )}
             </div>
-            {DadosPacienteAtendimento(
-              item,
-              atendimentos.filter(
-                (valor) =>
-                  valor.id_paciente == item.id_paciente &&
-                  valor.data_termino == null
-              )
-            )}
-          </div>
-        ))}
+          ))}
         <div
           className="text1"
           style={{
@@ -1201,18 +1164,12 @@ function Cadastro() {
           document.getElementById("inputDn " + id).value,
           "DD/MM/YYYY"
         ),
-        antecedentes_pessoais: document
-          .getElementById("inputAntecedentesPessoais " + id)
-          .value.toUpperCase(),
-        medicacoes_previas: document
-          .getElementById("inputMedicacoesPrevias " + id)
-          .value.toUpperCase(),
-        exames_previos: document
-          .getElementById("inputExamesPrevios " + id)
-          .value.toUpperCase(),
-        exames_atuais: document
-          .getElementById("inputExamesAtuais " + id)
-          .value.toUpperCase(),
+
+        antecedentes_pessoais: null,
+        medicacoes_previas: null,
+        exames_previos: null,
+        exames_atuais: null,
+
         tipo_documento: document
           .getElementById("inputTipoDocumento " + id)
           .value.toUpperCase(),
@@ -1647,103 +1604,25 @@ function Cadastro() {
                 }}
               ></textarea>
             </div>
-            <div
-              id="antecedentes pessoais"
-              style={{
-                display: "flex",
-                flexDirection: "column",
-                justifyContent: "center",
-              }}
-            >
-              <div className="text1">ANTECEDENTES PESSOAIS</div>
-              <textarea
-                className="textarea"
-                placeholder="ANTECEDENTES PESSOAIS"
-                onFocus={(e) => (e.target.placeholder = "")}
-                onBlur={(e) => (e.target.placeholder = "ANTECEDENTES PESSOAIS")}
-                defaultValue={paciente.antecedentes_pessoais}
-                style={{
-                  display: "flex",
-                  flexDirection: "center",
-                  justifyContent: "center",
-                  alignSelf: "center",
-                  width: window.innerWidth > 425 ? "50vw" : "70vw",
-                  whiteSpace: "pre-wrap",
-                }}
-                id={"inputAntecedentesPessoais " + paciente.id_paciente}
-                title="ANTECEDENTES PESSOAIS."
-              ></textarea>
-            </div>
-            <div
-              id="medicações de uso domiciliar "
-              style={{
-                display: "flex",
-                flexDirection: "column",
-                justifyContent: "center",
-              }}
-            >
-              <div className="text1">MEDICAÇÕES DE USO DOMICILIAR</div>
-              <textarea
-                className="textarea"
-                placeholder="MEDICAÇÕES DE USO DOMICILIAR"
-                onFocus={(e) => (e.target.placeholder = "")}
-                onBlur={(e) =>
-                  (e.target.placeholder = "MEDICAÇÕES DE USO DOMICILIAR")
-                }
-                defaultValue={paciente.medicacoes_previas}
-                style={{
-                  display: "flex",
-                  flexDirection: "center",
-                  justifyContent: "center",
-                  alignSelf: "center",
-                  width: window.innerWidth > 425 ? "50vw" : "70vw",
-                  whiteSpace: "pre-wrap",
-                }}
-                id={"inputMedicacoesPrevias " + paciente.id_paciente}
-                title="MEDICAÇÕES DE USO DOMICILIAR."
-              ></textarea>
-            </div>
-            <div
-              id="exames prévios"
-              style={{
-                display: "flex",
-                flexDirection: "column",
-                justifyContent: "center",
-              }}
-            >
-              <div className="text1">EXAMES PRÉVIOS</div>
-              <textarea
-                className="textarea"
-                placeholder="EXAMES PRÉVIOS"
-                onFocus={(e) => (e.target.placeholder = "")}
-                onBlur={(e) => (e.target.placeholder = "EXAMES PRÉVIOS")}
-                defaultValue={paciente.exames_previos}
-                style={{
-                  display: "flex",
-                  flexDirection: "center",
-                  justifyContent: "center",
-                  alignSelf: "center",
-                  width: window.innerWidth > 425 ? "50vw" : "70vw",
-                  whiteSpace: "pre-wrap",
-                }}
-                id={"inputExamesPrevios " + paciente.id_paciente}
-                title="EXAMES PRÉVIOS."
-              ></textarea>
+
+            <div style={{ display: "none" }}>
               <div
-                id="exames atuais"
+                id="antecedentes pessoais"
                 style={{
                   display: "flex",
                   flexDirection: "column",
                   justifyContent: "center",
                 }}
               >
-                <div className="text1">EXAMES ATUAIS</div>
+                <div className="text1">ANTECEDENTES PESSOAIS</div>
                 <textarea
                   className="textarea"
-                  placeholder="EXAMES ATUAIS"
+                  placeholder="ANTECEDENTES PESSOAIS"
                   onFocus={(e) => (e.target.placeholder = "")}
-                  onBlur={(e) => (e.target.placeholder = "EXAMES ATUAIS")}
-                  defaultValue={paciente.exames_atuais}
+                  onBlur={(e) =>
+                    (e.target.placeholder = "ANTECEDENTES PESSOAIS")
+                  }
+                  defaultValue={paciente.antecedentes_pessoais}
                   style={{
                     display: "flex",
                     flexDirection: "center",
@@ -1752,11 +1631,95 @@ function Cadastro() {
                     width: window.innerWidth > 425 ? "50vw" : "70vw",
                     whiteSpace: "pre-wrap",
                   }}
-                  id={"inputExamesAtuais " + paciente.id_paciente}
-                  title="EXAMES ATUAIS."
+                  id={"inputAntecedentesPessoais " + paciente.id_paciente}
+                  title="ANTECEDENTES PESSOAIS."
                 ></textarea>
               </div>
+              <div
+                id="medicações de uso domiciliar "
+                style={{
+                  display: "flex",
+                  flexDirection: "column",
+                  justifyContent: "center",
+                }}
+              >
+                <div className="text1">MEDICAÇÕES DE USO DOMICILIAR</div>
+                <textarea
+                  className="textarea"
+                  placeholder="MEDICAÇÕES DE USO DOMICILIAR"
+                  onFocus={(e) => (e.target.placeholder = "")}
+                  onBlur={(e) =>
+                    (e.target.placeholder = "MEDICAÇÕES DE USO DOMICILIAR")
+                  }
+                  defaultValue={paciente.medicacoes_previas}
+                  style={{
+                    display: "flex",
+                    flexDirection: "center",
+                    justifyContent: "center",
+                    alignSelf: "center",
+                    width: window.innerWidth > 425 ? "50vw" : "70vw",
+                    whiteSpace: "pre-wrap",
+                  }}
+                  id={"inputMedicacoesPrevias " + paciente.id_paciente}
+                  title="MEDICAÇÕES DE USO DOMICILIAR."
+                ></textarea>
+              </div>
+              <div
+                id="exames prévios"
+                style={{
+                  display: "flex",
+                  flexDirection: "column",
+                  justifyContent: "center",
+                }}
+              >
+                <div className="text1">EXAMES PRÉVIOS</div>
+                <textarea
+                  className="textarea"
+                  placeholder="EXAMES PRÉVIOS"
+                  onFocus={(e) => (e.target.placeholder = "")}
+                  onBlur={(e) => (e.target.placeholder = "EXAMES PRÉVIOS")}
+                  defaultValue={paciente.exames_previos}
+                  style={{
+                    display: "flex",
+                    flexDirection: "center",
+                    justifyContent: "center",
+                    alignSelf: "center",
+                    width: window.innerWidth > 425 ? "50vw" : "70vw",
+                    whiteSpace: "pre-wrap",
+                  }}
+                  id={"inputExamesPrevios " + paciente.id_paciente}
+                  title="EXAMES PRÉVIOS."
+                ></textarea>
+                <div
+                  id="exames atuais"
+                  style={{
+                    display: "flex",
+                    flexDirection: "column",
+                    justifyContent: "center",
+                  }}
+                >
+                  <div className="text1">EXAMES ATUAIS</div>
+                  <textarea
+                    className="textarea"
+                    placeholder="EXAMES ATUAIS"
+                    onFocus={(e) => (e.target.placeholder = "")}
+                    onBlur={(e) => (e.target.placeholder = "EXAMES ATUAIS")}
+                    defaultValue={paciente.exames_atuais}
+                    style={{
+                      display: "flex",
+                      flexDirection: "center",
+                      justifyContent: "center",
+                      alignSelf: "center",
+                      width: window.innerWidth > 425 ? "50vw" : "70vw",
+                      whiteSpace: "pre-wrap",
+                    }}
+                    id={"inputExamesAtuais " + paciente.id_paciente}
+                    title="EXAMES ATUAIS."
+                  ></textarea>
+                </div>
+              </div>
             </div>
+
             <div
               style={{
                 display: "flex",
@@ -1774,10 +1737,6 @@ function Cadastro() {
                     "inputNomePaciente " + paciente.id_paciente,
                     "inputDn " + paciente.id_paciente,
                     "inputNomeMae " + paciente.id_paciente,
-                    "inputAntecedentesPessoais " + paciente.id_paciente,
-                    "inputMedicacoesPrevias " + paciente.id_paciente,
-                    "inputExamesPrevios " + paciente.id_paciente,
-                    "inputExamesAtuais " + paciente.id_paciente,
                     "inputTipoDocumento " + paciente.id_paciente,
                     "inputNumeroDocumento " + paciente.id_paciente,
                     "inputEndereco " + paciente.id_paciente,
@@ -1799,7 +1758,6 @@ function Cadastro() {
                   if (check == 0) {
                     updatePaciente(paciente.id_paciente);
                   } else {
-                    console.log("SHIT");
                     toastypacientes(
                       settoastpacientes,
                       "CAMPO(S) OBRIGATÓRIO(S) EM BRANCO!",
@@ -1930,35 +1888,18 @@ function Cadastro() {
                 ALTERAR LEITO
               </div>
               <div
-                style={{
-                  display: "flex",
-                  flexDirection: "row",
-                  justifyContent: "center",
+                className="button-red"
+                title="ENCERRAR ATENDIMENTO"
+                onClick={() => {
+                  modal(
+                    setdialogo,
+                    "TEM CERTEZA DE QUE DESEJA ENCERRAR ESTE ATENDIMENTO? ESTA OPERAÇÃO É IRREVERSÍVEL.",
+                    closeAtendimento,
+                    atendimento
+                  );
                 }}
               >
-                <div
-                  className="button-red"
-                  title="ENCERRAR ATENDIMENTO"
-                  style={{ width: 50, height: 50, alignSelf: "center" }}
-                  onClick={() => {
-                    modal(
-                      setdialogo,
-                      "TEM CERTEZA DE QUE DESEJA ENCERRAR ESTE ATENDIMENTO? ESTA OPERAÇÃO É IRREVERSÍVEL.",
-                      closeAtendimento,
-                      atendimento
-                    );
-                  }}
-                >
-                  <img
-                    alt=""
-                    src={deletar}
-                    style={{
-                      margin: 10,
-                      height: 30,
-                      width: 30,
-                    }}
-                  ></img>
-                </div>
+                ENCERRAR ATENDIMENTO
               </div>
             </div>
             <div
@@ -1983,25 +1924,7 @@ function Cadastro() {
               }}
             >
               <div className="text1">
-                {"PACIENTE COM ATENDIMENTO ATIVO EM OUTRO SERVIÇO: " +
-                  atendimentos
-                    .filter(
-                      (item) =>
-                        item.id_paciente == paciente.id_paciente &&
-                        item.id_cliente != hospital &&
-                        item.data_termino == null
-                    )
-                    .map(
-                      (item) =>
-                        "HOSPITAL: " +
-                        clientes
-                          .filter((x) => x.id_cliente == item.id_cliente)
-                          .map((y) => y.nome_cliente) +
-                        " - UNIDADE: " +
-                        item.id_unidade +
-                        " - LEITO: " +
-                        item.leito
-                    )}
+                {"PACIENTE COM ATENDIMENTO ATIVO EM OUTRO SERVIÇO"}
               </div>
               <div className="button" onClick={() => setviewseletorunidades(1)}>
                 ALTERAR LEITO
@@ -2058,6 +1981,7 @@ function Cadastro() {
                   setselectedunidade(item.id_unidade);
                   setunidade(item.id_unidade);
                   geraLeitos(item.total_leitos);
+                  loadLeitos(item.id_unidade);
                 }}
               >
                 <div>{item.nome_unidade}</div>
@@ -2078,6 +2002,27 @@ function Cadastro() {
     );
   }
 
+  const [statusleitos, setstatusleitos] = useState([]);
+  const loadLeitos = (unidade) => {
+    axios
+      .get(html + "list_leitos/" + unidade)
+      .then((response) => {
+        setstatusleitos(response.data.rows);
+      })
+      .catch(function (error) {
+        toast(
+          settoast,
+          "ERRO AO CARREGAR LEITOS, REINICIANDO APLICAÇÃO. " + error,
+          "black",
+          5000
+        );
+        setTimeout(() => {
+          setpagina(0);
+          history.push("/");
+        }, 5000);
+      });
+  };
+
   const [arrayleitos, setarrayleitos] = useState([]);
   const geraLeitos = (leitos) => {
     let arrayleitos = [];
@@ -2091,6 +2036,102 @@ function Cadastro() {
   };
 
   function SeletorDeLeitos() {
+    const insertLeito = (status) => {
+      console.log(localStorage.getItem("leito"));
+      var obj = {
+        id_unidade: unidade,
+        leito: localStorage.getItem("leito"),
+        status: status,
+      };
+      axios
+        .post(html + "inserir_leito", obj)
+        .then(() => {
+          loadLeitos(unidade);
+        })
+        .catch(function () {
+          toast(
+            settoast,
+            "ERRO DE CONEXÃO, REINICIANDO APLICAÇÃO.",
+            "black",
+            5000
+          );
+          setTimeout(() => {
+            setpagina(0);
+            history.push("/");
+          }, 5000);
+        });
+    };
+
+    const updateLeito = (status) => {
+      console.log(localStorage.getItem("leito"));
+      var id = JSON.parse(localStorage.getItem("leito")).pop().id_leito;
+      var leito = JSON.parse(localStorage.getItem("leito")).pop().leito;
+      console.log(id + " - " + leito);
+      var obj = {
+        id_unidade: unidade,
+        leito: leito,
+        status: status,
+      };
+      console.log(obj);
+      axios
+        .post(html + "update_leito/" + id, obj)
+        .then(() => {
+          loadLeitos(unidade);
+        })
+        .catch(function () {
+          toast(
+            settoast,
+            "ERRO DE CONEXÃO, REINICIANDO APLICAÇÃO.",
+            "black",
+            5000
+          );
+          setTimeout(() => {
+            setpagina(0);
+            history.push("/");
+          }, 5000);
+        });
+    };
+
+    const [viewstatusleito, setviewstatusleito] = useState(0);
+    function ViewStatusLeito() {
+      let arraystatusleitos = [
+        "LIVRE",
+        "OCUPADO",
+        "LIMPEZA",
+        "MANUTENÇÃO",
+        "DESATIVADO",
+      ];
+      return (
+        <div
+          className="fundo"
+          style={{ display: viewstatusleito == 1 ? "flex" : "none" }}
+          onClick={() => {
+            setviewstatusleito(0);
+          }}
+        >
+          <div className="janela" onClick={(e) => e.stopPropagation()}>
+            {arraystatusleitos.map((item) => (
+              <div
+                className="button"
+                style={{ width: 150 }}
+                onClick={() => {
+                  if (localStorage.getItem("leito").length < 4) {
+                    console.log("INSERINDO STATUS PARA O LEITO...");
+                    insertLeito(item);
+                  } else {
+                    console.log("ATUALIZANDO STATUS PARA O LEITO...");
+                    updateLeito(item);
+                  }
+                }}
+              >
+                {item}
+              </div>
+            ))}
+          </div>
+        </div>
+      );
+    }
+
     return (
       <div
         style={{
@@ -2114,6 +2155,7 @@ function Cadastro() {
             <div
               className="button"
               style={{
+                position: "relative",
                 width: 150,
                 height: 150,
                 display: "flex",
@@ -2123,26 +2165,36 @@ function Cadastro() {
                   atendimentos.filter(
                     (valor) =>
                       valor.id_cliente == hospital &&
-                      valor.id_unidade == unidade &&
+                      valor.id_unidade == selectedunidade &&
                       valor.data_termino == null &&
                       valor.leito == item
                   ).length > 0
-                    ? 0.5
+                    ? 1
                     : 1,
+              }}
+              onMouseOver={() => {
+                if (
+                  statusleitos.filter((valor) => valor.leito == item).length > 0
+                ) {
+                  localStorage.setItem(
+                    "leito",
+                    JSON.stringify(
+                      statusleitos.filter((valor) => valor.leito == item)
+                    )
+                  );
+                  console.log(JSON.parse(localStorage.getItem("leito")));
+                } else {
+                  localStorage.setItem("leito", item);
+                  console.log(JSON.parse(localStorage.getItem("leito")));
+                }
               }}
               onClick={() => {
                 if (
-                  // existe um atendimento alocado no leito selecionado.
-                  atendimentos.filter(
-                    (valor) =>
-                      valor.id_cliente == hospital &&
-                      valor.id_unidade == unidade &&
-                      valor.data_termino == null &&
-                      valor.leito == item
-                  ).length > 0 &&
                   // o atendimento ativo para o leito selecionado é do paciente selecionado.
                   atendimentos.filter(
                     (valor) =>
+                      valor.id_cliente == hospital &&
+                      valor.id_unidade == selectedunidade &&
                       valor.id_paciente == paciente.id_paciente &&
                       valor.data_termino == null &&
                       valor.leito == item
@@ -2150,21 +2202,15 @@ function Cadastro() {
                 ) {
                   console.log("NADA A FAZER. O PACIENTE JÁ ESTÁ NESTE LEITO");
                 } else if (
-                  // existe um atendimento alocado no leito selecionado.
+                  // existe um atendimento alocado no leito selecionado, para outro paciente.
                   atendimentos.filter(
                     (valor) =>
                       valor.id_cliente == hospital &&
-                      valor.id_unidade == unidade &&
+                      valor.id_unidade == selectedunidade &&
+                      valor.id_paciente != paciente.id_paciente &&
                       valor.data_termino == null &&
                       valor.leito == item
-                  ).length > 0 &&
-                  // o atendimento ativo para o leito selecionado não é do paciente selecionado.
-                  atendimentos.filter(
-                    (valor) =>
-                      valor.id_paciente == paciente.id_paciente &&
-                      valor.data_termino == null &&
-                      valor.leito == item
-                  ).length == 0
+                  ).length > 0
                 ) {
                   console.log(
                     "NÃO É POSSÍVEL ALOCAR O PACIENTE NESTE LEITO, QUE JÁ ESTÁ OCUPADO POR OUTRO PACIENTE."
@@ -2174,7 +2220,7 @@ function Cadastro() {
                   atendimentos.filter(
                     (valor) =>
                       valor.id_cliente == hospital &&
-                      valor.id_unidade == unidade &&
+                      valor.id_unidade == selectedunidade &&
                       valor.data_termino == null &&
                       valor.leito == item
                   ).length == 0 &&
@@ -2195,6 +2241,59 @@ function Cadastro() {
                         valor.id_paciente == paciente.id_paciente
                     )
                   );
+                  // inserindo ou atualizando status do leito selecionado para ocupado.
+                  if (localStorage.getItem("leito").length < 4) {
+                    var obj = {
+                      id_unidade: unidade,
+                      leito: localStorage.getItem("leito"),
+                      status: "OCUPADO",
+                    };
+                    axios
+                      .post(html + "inserir_leito", obj)
+                      .then(() => {
+                        loadLeitos(unidade);
+                      })
+                      .catch(function () {
+                        toast(
+                          settoast,
+                          "ERRO DE CONEXÃO, REINICIANDO APLICAÇÃO.",
+                          "black",
+                          5000
+                        );
+                        setTimeout(() => {
+                          setpagina(0);
+                          history.push("/");
+                        }, 5000);
+                      });
+                  } else {
+                    var id = JSON.parse(localStorage.getItem("leito")).pop()
+                      .id_leito;
+                    var leito = JSON.parse(localStorage.getItem("leito")).pop()
+                      .leito;
+                    obj = {
+                      id_unidade: unidade,
+                      leito: leito,
+                      status: "OCUPADO",
+                    };
+                    console.log(obj);
+                    axios
+                      .post(html + "update_leito/" + id, obj)
+                      .then(() => {
+                        loadLeitos(unidade);
+                      })
+                      .catch(function () {
+                        toast(
+                          settoast,
+                          "ERRO DE CONEXÃO, REINICIANDO APLICAÇÃO.",
+                          "black",
+                          5000
+                        );
+                        setTimeout(() => {
+                          setpagina(0);
+                          history.push("/");
+                        }, 5000);
+                      });
+                  }
                 } else if (
                   // não existe um atendimento alocado no leito selecionado.
                   atendimentos.filter(
@@ -2216,6 +2315,58 @@ function Cadastro() {
                     paciente.nome_paciente,
                     item
                   );
+                  if (localStorage.getItem("leito").length < 4) {
+                    obj = {
+                      id_unidade: unidade,
+                      leito: localStorage.getItem("leito"),
+                      status: "OCUPADO",
+                    };
+                    axios
+                      .post(html + "inserir_leito", obj)
+                      .then(() => {
+                        loadLeitos(unidade);
+                      })
+                      .catch(function () {
+                        toast(
+                          settoast,
+                          "ERRO DE CONEXÃO, REINICIANDO APLICAÇÃO.",
+                          "black",
+                          5000
+                        );
+                        setTimeout(() => {
+                          setpagina(0);
+                          history.push("/");
+                        }, 5000);
+                      });
+                  } else {
+                    id = JSON.parse(localStorage.getItem("leito")).pop()
+                      .id_leito;
+                    leito = JSON.parse(localStorage.getItem("leito")).pop()
+                      .leito;
+                    obj = {
+                      id_unidade: unidade,
+                      leito: leito,
+                      status: "OCUPADO",
+                    };
+                    console.log(obj);
+                    axios
+                      .post(html + "update_leito/" + id, obj)
+                      .then(() => {
+                        loadLeitos(unidade);
+                      })
+                      .catch(function () {
+                        toast(
+                          settoast,
+                          "ERRO DE CONEXÃO, REINICIANDO APLICAÇÃO.",
+                          "black",
+                          5000
+                        );
+                        setTimeout(() => {
+                          setpagina(0);
+                          history.push("/");
+                        }, 5000);
+                      });
+                  }
                 } else {
                 }
               }}
@@ -2243,11 +2394,61 @@ function Cadastro() {
                       valor.data_termino == null &&
                       valor.leito == item
                   )
-                  .map((valor) => valor.nome_paciente)}
+                  .map((valor) => valor.nome_paciente.substring(0, 20) + "...")}
+              </div>
+              <div
+                className="button"
+                style={{
+                  height: 25,
+                  width: 25,
+                  minHeight: 25,
+                  minWidth: 25,
+                  borderRadius: 5,
+                  position: "absolute",
+                  top: 5,
+                  right: 5,
+                  fontSize: 12,
+                  backgroundColor: statusleitos
+                    .filter((valor) => valor.leito == item)
+                    .map((valor) =>
+                      valor.status == "LIVRE"
+                        ? "green"
+                        : valor.status == "OCUPADO"
+                        ? "orange"
+                        : valor.status == "MANUTENÇÃO"
+                        ? "gray"
+                        : valor.status == "DESATIVADO"
+                        ? "red"
+                        : valor.status == "LIMPEZA"
+                        ? "blue"
+                        : "rgba(82, 190, 128, 0.7)"
+                    ),
+                }}
+                onClick={(e) => {
+                  setviewstatusleito(1);
+                  e.stopPropagation();
+                }}
+              >
+                {statusleitos
+                  .filter((valor) => valor.leito == item)
+                  .map((valor) =>
+                    valor.status == "LIVRE"
+                      ? "L"
+                      : valor.status == "OCUPADO"
+                      ? "O"
+                      : valor.status == "MANUTENÇÃO"
+                      ? "M"
+                      : valor.status == "LIMPEZA"
+                      ? "H"
+                      : valor.status == "DESATIVADO"
+                      ? "D"
+                      : ""
+                  )}
               </div>
             </div>
           ))}
         </div>
+        <ViewStatusLeito></ViewStatusLeito>
       </div>
     );
   }
@@ -2272,16 +2473,23 @@ function Cadastro() {
           }}
         >
           <div
-            className="button-red"
+            className="text3"
             style={{
               position: "absolute",
               top: 10,
-              right: 10,
-              margin: 0,
-              width: 50,
-              height: 50,
+              left: 10,
+              margin: 5,
+              padding: 5,
             }}
-            title={"VOLTAR PARA A TELA DE PACIENTES E ATENDIMENTOS"}
+          >
+            {paciente.nome_paciente +
+              ", " +
+              moment().diff(moment(paciente.dn_paciente), "years") +
+              " ANOS."}
+          </div>
+          <div
+            className="button-red"
+            style={{ position: "absolute", top: 10, right: 10 }}
             onClick={() => {
               setviewseletorunidades(0);
             }}
@@ -2328,15 +2536,15 @@ function Cadastro() {
           <div
             className="button-red"
             style={{ margin: 0, marginRight: 10, width: 50, height: 50 }}
-            title={"VOLTAR PARA O PASSÔMETRO"}
+            title={"VOLTAR PARA O LOGIN"}
             onClick={() => {
-              setpagina(1);
-              history.push("/passometro");
+              setpagina(0);
+              history.push("/");
             }}
           >
             <img
               alt=""
-              src={back}
+              src={power}
               style={{
                 margin: 0,
                 height: 30,

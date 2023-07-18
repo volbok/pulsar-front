@@ -1,20 +1,20 @@
-import './App.css';
-import './design.css';
+import "./App.css";
+import "./design.css";
 // import 'animate.css';
-import React, { useState } from 'react';
-import Context from './pages/Context';
+import React, { useState } from "react";
+import Context from "./pages/Context";
 // páginas.
-import Login from './pages/Login';
-import Cadastro from './pages/Cadastro';
-import Passometro from './pages/Passometro';
-import Settings from './pages/Settings';
-import Usuarios from './pages/Usuarios';
-import Pdf from './pages/Pdf';
-import Prescricao from './pages/Prescricao';
+import Login from "./pages/Login";
+import Cadastro from "./pages/Cadastro";
+import Passometro from "./pages/Passometro";
+import Settings from "./pages/Settings";
+import Usuarios from "./pages/Usuarios";
+import Pdf from "./pages/Pdf";
+import Prescricao from "./pages/Prescricao";
 // componentes.
-import Toast from './components/Toast';
-import Modal from './components/Modal';
-import DatePicker from './components/DatePicker';
+import Toast from "./components/Toast";
+import Modal from "./components/Modal";
+import DatePicker from "./components/DatePicker";
 
 // router.
 import {
@@ -22,7 +22,7 @@ import {
   HashRouter as Router,
   Switch,
   Route,
-} from 'react-router-dom'
+} from "react-router-dom";
 
 function App() {
   // api.
@@ -31,17 +31,25 @@ function App() {
   // const html = 'https://pulsarapi.herokuapp.com/'
 
   // var html = 'https://pulsar-api-hsf.up.railway.app/'
-  var html = 'http://localhost:3333/'
+  var html = "http://localhost:3333/";
 
   // estados do context.
-  const [toast, settoast] = useState({ display: 'none', mensagem: '', cor: 'transparent' });
-  const [dialogo, setdialogo] = useState({ id: 0, mensagem: '', funcao: null });
+  const [toast, settoast] = useState({
+    display: "none",
+    mensagem: "",
+    cor: "transparent",
+  });
+  const [dialogo, setdialogo] = useState({ id: 0, mensagem: "", funcao: null });
 
   const [viewdatepicker, setviewdatepicker] = useState(0);
   const [pickdate1, setpickdate1] = useState();
   const [pickdate2, setpickdate2] = useState();
 
-  const [clientes, setclientes] = useState([]); // hospitais.
+  const [cliente, setcliente] = useState({
+    id_cliente: 1,
+    razao_social: "HOSPITAL EXEMPLO",
+    cnpj: "1001/001",
+  }); // hospitais.
   const [unidades, setunidades] = useState([]);
   const [hospital, sethospital] = useState([]);
   const [unidade, setunidade] = useState([]);
@@ -72,7 +80,7 @@ function App() {
   const [cardprescricao, setcardprescricao] = useState(1);
 
   // estado para seleção dos cards do passômetro.
-  const [card, setcard] = useState('');
+  const [card, setcard] = useState("");
 
   const [pacientes, setpacientes] = useState([]);
   const [paciente, setpaciente] = useState([]);
@@ -104,10 +112,10 @@ function App() {
   // resolvendo a responsividade para o innerHeight nos celulares.
   const [altura, setaltura] = useState(`${window.innerHeight}px`);
   const documentHeight = () => {
-    const doc = document.documentElement
-    doc.style.setProperty('--doc-height', `${window.innerHeight}px`)
-  }
-  window.addEventListener('resize', documentHeight)
+    const doc = document.documentElement;
+    doc.style.setProperty("--doc-height", `${window.innerHeight}px`);
+  };
+  window.addEventListener("resize", documentHeight);
   documentHeight();
 
   window.history.pushState({ page: 1 }, "", "");
@@ -115,76 +123,132 @@ function App() {
     if (event) {
       window.history.pushState({ page: 1 }, "", "");
     }
-  }
+  };
 
   return (
     <Context.Provider
       value={{
         html,
 
-        toast, settoast,
-        dialogo, setdialogo,
+        toast,
+        settoast,
+        dialogo,
+        setdialogo,
 
-        viewdatepicker, setviewdatepicker,
-        pickdate1, setpickdate1,
-        pickdate2, setpickdate2,
+        viewdatepicker,
+        setviewdatepicker,
+        pickdate1,
+        setpickdate1,
+        pickdate2,
+        setpickdate2,
 
-        clientes, setclientes,
-        unidades, setunidades,
-        hospital, sethospital,
-        unidade, setunidade,
-        usuario, setusuario,
+        cliente,
+        setcliente,
+        unidades,
+        setunidades,
+        hospital,
+        sethospital,
+        unidade,
+        setunidade,
+        usuario,
+        setusuario,
 
-        pagina, setpagina,
+        pagina,
+        setpagina,
 
-        settings, setsettings,
-        tema, settema,
-        carddiasinternacao, setcarddiasinternacao,
-        cardalergias, setcardalergias,
-        cardanamnese, setcardanamnese,
-        cardevolucoes, setcardevolucoes,
-        cardpropostas, setcardpropostas,
-        cardprecaucoes, setcardprecaucoes,
-        cardriscos, setcardriscos,
-        cardalertas, setcardalertas,
-        cardsinaisvitais, setcardsinaisvitais,
-        cardbody, setcardbody,
-        cardvm, setcardvm,
-        cardinfusoes, setcardinfusoes,
-        carddieta, setcarddieta,
-        cardculturas, setcardculturas,
-        cardatb, setcardatb,
-        cardinterconsultas, setcardinterconsultas,
-        cardexames, setcardexames,
-        cardprescricao, setcardprescricao,
+        settings,
+        setsettings,
+        tema,
+        settema,
+        carddiasinternacao,
+        setcarddiasinternacao,
+        cardalergias,
+        setcardalergias,
+        cardanamnese,
+        setcardanamnese,
+        cardevolucoes,
+        setcardevolucoes,
+        cardpropostas,
+        setcardpropostas,
+        cardprecaucoes,
+        setcardprecaucoes,
+        cardriscos,
+        setcardriscos,
+        cardalertas,
+        setcardalertas,
+        cardsinaisvitais,
+        setcardsinaisvitais,
+        cardbody,
+        setcardbody,
+        cardvm,
+        setcardvm,
+        cardinfusoes,
+        setcardinfusoes,
+        carddieta,
+        setcarddieta,
+        cardculturas,
+        setcardculturas,
+        cardatb,
+        setcardatb,
+        cardinterconsultas,
+        setcardinterconsultas,
+        cardexames,
+        setcardexames,
+        cardprescricao,
+        setcardprescricao,
 
-        card, setcard,
+        card,
+        setcard,
 
-        pacientes, setpacientes,
-        paciente, setpaciente,
-        atendimentos, setatendimentos,
-        atendimento, setatendimento,
+        pacientes,
+        setpacientes,
+        paciente,
+        setpaciente,
+        atendimentos,
+        setatendimentos,
+        atendimento,
+        setatendimento,
 
-        alergias, setalergias,
-        lesoes, setlesoes,
-        precaucoes, setprecaucoes,
-        riscos, setriscos,
-        culturas, setculturas,
-        arrayculturas, setarrayculturas,
-        antibioticos, setantibioticos,
-        arrayantibioticos, setarrayantibioticos,
-        dietas, setdietas,
-        evolucoes, setevolucoes,
-        arrayevolucoes, setarrayevolucoes,
-        infusoes, setinfusoes,
-        invasoes, setinvasoes,
-        propostas, setpropostas,
-        arraypropostas, setarraypropostas,
-        sinaisvitais, setsinaisvitais,
-        vm, setvm,
-        interconsultas, setinterconsultas,
-        prescricao, setprescricao,
-        altura, setaltura
+        alergias,
+        setalergias,
+        lesoes,
+        setlesoes,
+        precaucoes,
+        setprecaucoes,
+        riscos,
+        setriscos,
+        culturas,
+        setculturas,
+        arrayculturas,
+        setarrayculturas,
+        antibioticos,
+        setantibioticos,
+        arrayantibioticos,
+        setarrayantibioticos,
+        dietas,
+        setdietas,
+        evolucoes,
+        setevolucoes,
+        arrayevolucoes,
+        setarrayevolucoes,
+        infusoes,
+        setinfusoes,
+        invasoes,
+        setinvasoes,
+        propostas,
+        setpropostas,
+        arraypropostas,
+        setarraypropostas,
+        sinaisvitais,
+        setsinaisvitais,
+        vm,
+        setvm,
+        interconsultas,
+        setinterconsultas,
+        prescricao,
+        setprescricao,
+        altura,
+        setaltura,
       }}
     >
       <div>

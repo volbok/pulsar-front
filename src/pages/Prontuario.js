@@ -40,7 +40,7 @@ import Interconsultas from '../cards/Interconsultas';
 import Exames from '../cards/Exames';
 import Prescricao from './Prescricao';
 
-function Passometro() {
+function Prontuario() {
 
   // context.
   const {
@@ -1237,4 +1237,4 @@ function Passometro() {
   );
 }
 
-export default Passometro;
+export default Prontuario;

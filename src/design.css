@@ -79,7 +79,7 @@ body {
   padding: 0px;
   cursor: default;
   background-color: var(--cor3);
-  overflow-y: hidden;
+  overflow-y: auto;
   overflow-x: hidden;
 }
 
@@ -125,6 +125,7 @@ body {
 
 .cor1hover {
   background-color: var(--cor1hover);
+  border-color: var(--cor1hover);
 }
 
 .cor2 {
@@ -160,20 +161,20 @@ body {
 .destaque {
   animation-name: destaque;
   animation-iteration-count: infinite;
-  animation-duration: 2s;
+  animation-duration: 1s;
 }
 
 @keyframes destaque {
   0% {
-    opacity: 0;
+    opacity: 0.8;
     transform: scale(1, 1);
   }
   50% {
     opacity: 1;
-    transform: scale(2, 2);
+    transform: scale(1.1, 1.1);
   }
   100% {
-    opacity: 0;
+    opacity: 0.8;
     transform: scale(1, 1);
   }
 }
@@ -428,6 +429,12 @@ body {
   height: 50px;
   min-height: 50px;
   cursor: default;
+}
+
+.destacaborda {
+  border-color: var(--cor1);
+  border-style: dashed;
+  border-width: 1px;
 }
 
 input::-webkit-outer-spin-button,

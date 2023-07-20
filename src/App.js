@@ -6,7 +6,7 @@ import Context from "./pages/Context";
 // páginas.
 import Login from "./pages/Login";
 import Cadastro from "./pages/Cadastro";
-import Passometro from "./pages/Passometro";
+import Prontuario from "./pages/Prontuario";
 import Settings from "./pages/Settings";
 import Usuarios from "./pages/Usuarios";
 import Pdf from "./pages/Pdf";
@@ -257,8 +257,8 @@ function App() {
             <Route exact path="/">
               <Login></Login>
             </Route>
-            <Route path="/passometro">
-              <Passometro></Passometro>
+            <Route path="/prontuario">
+              <Prontuario></Prontuario>
             </Route>
             <Route path="/pdf">
               <Pdf></Pdf>

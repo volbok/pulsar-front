@@ -9,11 +9,12 @@ import { useHistory } from "react-router-dom";
 // funções.
 import toast from "../functions/toast";
 import checkinput from "../functions/checkinput";
+import maskdate from "../functions/maskdate";
+import maskphone from "../functions/maskphone";
 // imagens.
 import salvar from "../images/salvar.svg";
 import deletar from "../images/deletar.svg";
 import back from "../images/back.svg";
-import power from "../images/power.svg";
 import novo from "../images/novo.svg";
 import modal from "../functions/modal";
 
@@ -150,7 +151,7 @@ function Cadastro() {
       telefone: document
         .getElementById("inputNovoTelefone")
         .value.toUpperCase(),
-      email: document.getElementById("inputNovoEmail").value.toUpperCase(),
+      email: document.getElementById("inputNovoEmail").value,
     };
     axios
       .post(html + "insert_paciente", obj)
@@ -395,9 +396,16 @@ function Cadastro() {
                 className="button"
                 style={{ width: 100 }}
                 onClick={() => {
-                  document.getElementById("inputNovoTipoDocumento").value =
-                    item;
-                  setviewtipodocumento(0);
+                  if (viewnewpaciente == 0) {
+                    document.getElementById(
+                      "inputTipoDocumento " + paciente.id_paciente
+                    ).value = item;
+                    setviewtipodocumento(0);
+                  } else {
+                    document.getElementById("inputNovoTipoDocumento").value =
+                      item;
+                    setviewtipodocumento(0);
+                  }
                 }}
               >
                 {item}
@@ -480,37 +488,7 @@ function Cadastro() {
                 }
                 onFocus={(e) => (e.target.placeholder = "")}
                 onBlur={(e) => (e.target.placeholder = "DN")}
-                onKeyUp={() => {
-                  var x = document.getElementById("inputNovaDn").value;
-                  if (x.length == 2) {
-                    x = x + "/";
-                    document.getElementById("inputNovaDn").value = x;
-                  }
-                  if (x.length == 5) {
-                    x = x + "/";
-                    document.getElementById("inputNovaDn").value = x;
-                  }
-                  clearTimeout(timeout);
-                  var date = moment(
-                    document.getElementById("inputNovaDn").value,
-                    "DD/MM/YYYY",
-                    true
-                  );
-                  timeout = setTimeout(() => {
-                    if (date.isValid() == false) {
-                      toast(
-                        settoast,
-                        "DATA INVÁLIDA",
-                        "rgb(231, 76, 60, 1)",
-                        3000
-                      );
-                      document.getElementById("inputNovaDn").value = "";
-                    } else {
-                      document.getElementById("inputNovaDn").value =
-                        moment(date).format("DD/MM/YYYY");
-                    }
-                  }, 3000);
-                }}
+                onKeyUp={() => maskdate(timeout, "inputNovaDn")}
                 style={{
                   flexDirection: "row",
                   justifyContent: "center",
@@ -544,7 +522,7 @@ function Cadastro() {
                 <input
                   autoComplete="off"
                   placeholder="TIPO DE DOC."
-                  className="button"
+                  className="input destacaborda"
                   type="text"
                   id={"inputNovoTipoDocumento"}
                   onFocus={(e) => (e.target.placeholder = "")}
@@ -556,15 +534,10 @@ function Cadastro() {
                     alignSelf: "center",
                     width: window.innerWidth > 425 ? 130 : "70vw",
                     alignContent: "center",
-                    height: 40,
-                    minHeight: 40,
-                    maxHeight: 40,
-                    borderStyle: "none",
                     textAlign: "center",
-                    borderColor: "rgba(64, 74, 131, 0.3)",
                   }}
                 ></input>
-                <textarea
+                <input
                   autoComplete="off"
                   placeholder="NÚMERO DO DOCUMENTO"
                   className="textarea"
@@ -573,16 +546,18 @@ function Cadastro() {
                   onFocus={(e) => (e.target.placeholder = "")}
                   onBlur={(e) => (e.target.placeholder = "NÚMERO DO DOCUMENTO")}
                   style={{
-                    flexDirection: "center",
+                    flexDirection: "row",
                     justifyContent: "center",
                     alignSelf: "center",
                     width: window.innerWidth > 425 ? "30vw" : "70vw",
-                    padding: 15,
-                    height: 20,
-                    minHeight: 20,
-                    maxHeight: 20,
+                    alignContent: "center",
+                    height: 40,
+                    minHeight: 40,
+                    maxHeight: 40,
+                    borderStyle: "none",
+                    textAlign: "center",
                   }}
-                ></textarea>
+                ></input>
               </div>
             </div>
             <div
@@ -625,7 +600,7 @@ function Cadastro() {
               }}
             >
               <div className="text1">ENDEREÇO</div>
-              <textarea
+              <input
                 autoComplete="off"
                 placeholder="BUSCAR CEP..."
                 className="textarea"
@@ -634,14 +609,16 @@ function Cadastro() {
                 onFocus={(e) => (e.target.placeholder = "")}
                 onBlur={(e) => (e.target.placeholder = "BUSCAR CEP...")}
                 style={{
-                  flexDirection: "center",
+                  flexDirection: "row",
                   justifyContent: "center",
                   alignSelf: "center",
-                  width: window.innerWidth > 425 ? 100 : "70vw",
-                  padding: 15,
-                  height: 20,
-                  minHeight: 20,
-                  maxHeight: 20,
+                  width: window.innerWidth > 425 ? 200 : "70vw",
+                  alignContent: "center",
+                  height: 40,
+                  minHeight: 40,
+                  maxHeight: 40,
+                  borderStyle: "none",
+                  textAlign: "center",
                 }}
                 onKeyUp={() => {
                   clearTimeout(timeout);
@@ -649,7 +626,7 @@ function Cadastro() {
                     pegaEndereco(document.getElementById("inputNovoCep").value);
                   }, 2000);
                 }}
-              ></textarea>
+              ></input>
               <textarea
                 className="textarea"
                 type="text"
@@ -660,9 +637,9 @@ function Cadastro() {
                   alignSelf: "center",
                   width: window.innerWidth > 425 ? "50vw" : "70vw",
                   padding: 15,
-                  height: 20,
-                  minHeight: 20,
-                  maxHeight: 20,
+                  height: 75,
+                  minHeight: 75,
+                  maxHeight: 75,
                 }}
               ></textarea>
             </div>
@@ -681,6 +658,7 @@ function Cadastro() {
                 className="textarea"
                 type="text"
                 id={"inputNovoTelefone"}
+                onKeyUp={() => maskphone(timeout, "inputNovoTelefone")}
                 onFocus={(e) => (e.target.placeholder = "")}
                 onBlur={(e) => (e.target.placeholder = "TELEFONE")}
                 style={{
@@ -923,7 +901,8 @@ function Cadastro() {
           alignSelf: "center",
           width: window.innerWidth < 426 ? "90vw" : "calc(100vw - 40px)",
           maxWidth: window.innerWidth < 426 ? "90vw" : "calc(100vw - 40px)",
-          marginBottom: 10,
+          marginBottom: 0,
+          marginTop: 10,
         }}
       >
         <div className="header-row">
@@ -970,7 +949,6 @@ function Cadastro() {
   function ListaDePacientes() {
     return (
       <div
-        className="scroll"
         style={{
           width: window.innerWidth < 426 ? "90vw" : "calc(100vw - 30px)",
           height:
@@ -1152,41 +1130,42 @@ function Cadastro() {
     }
     var timeout = null;
     // atualizando um novo paciente.
-    const updatePaciente = (id) => {
+    const updatePaciente = (paciente) => {
       var obj = {
         nome_paciente: document
-          .getElementById("inputNomePaciente " + id)
+          .getElementById("inputNomePaciente " + paciente.id_paciente)
           .value.toUpperCase(),
         nome_mae_paciente: document
-          .getElementById("inputNomeMae " + id)
+          .getElementById("inputNomeMae " + paciente.id_paciente)
           .value.toUpperCase(),
         dn_paciente: moment(
-          document.getElementById("inputDn " + id).value,
+          document.getElementById("inputDn " + paciente.id_paciente).value,
           "DD/MM/YYYY"
         ),
 
-        antecedentes_pessoais: null,
-        medicacoes_previas: null,
-        exames_previos: null,
-        exames_atuais: null,
+        antecedentes_pessoais: paciente.antecedentes_pessoais,
+        medicacoes_previas: paciente.medicacoes_previas,
+        exames_previos: paciente.exames_previos,
+        exames_atuais: paciente.exames_atuais,
 
         tipo_documento: document
-          .getElementById("inputTipoDocumento " + id)
+          .getElementById("inputTipoDocumento " + paciente.id_paciente)
           .value.toUpperCase(),
         numero_documento: document
-          .getElementById("inputNumeroDocumento " + id)
+          .getElementById("inputNumeroDocumento " + paciente.id_paciente)
           .value.toUpperCase(),
         endereco: document
-          .getElementById("inputEndereco " + id)
+          .getElementById("inputEndereco " + paciente.id_paciente)
           .value.toUpperCase(),
         telefone: document
-          .getElementById("inputTelefone " + id)
+          .getElementById("inputTelefone " + paciente.id_paciente)
           .value.toUpperCase(),
-        email: document.getElementById("inputEmail " + id).value.toUpperCase(),
+        email: document.getElementById("inputEmail " + paciente.id_paciente)
+          .value,
       };
       console.log(obj);
       axios
-        .post(html + "update_paciente/" + id, obj)
+        .post(html + "update_paciente/" + paciente.id_paciente, obj)
         .then(() => {
           loadPacientes();
           toast(
@@ -1342,47 +1321,9 @@ function Cadastro() {
                 }
                 onFocus={(e) => (e.target.placeholder = "")}
                 onBlur={(e) => (e.target.placeholder = "DN")}
-                onKeyUp={() => {
-                  var x = document.getElementById(
-                    "inputDn " + paciente.id_paciente
-                  ).value;
-                  if (x.length == 2) {
-                    x = x + "/";
-                    document.getElementById(
-                      "inputDn " + paciente.id_paciente
-                    ).value = x;
-                  }
-                  if (x.length == 5) {
-                    x = x + "/";
-                    document.getElementById(
-                      "inputDn " + paciente.id_paciente
-                    ).value = x;
-                  }
-                  clearTimeout(timeout);
-                  var date = moment(
-                    document.getElementById("inputDn " + paciente.id_paciente)
-                      .value,
-                    "DD/MM/YYYY",
-                    true
-                  );
-                  timeout = setTimeout(() => {
-                    if (date.isValid() == false) {
-                      toast(
-                        settoast,
-                        "DATA INVÁLIDA",
-                        "rgb(231, 76, 60, 1)",
-                        3000
-                      );
-                      document.getElementById(
-                        "inputDn " + paciente.id_paciente
-                      ).value = "";
-                    } else {
-                      document.getElementById(
-                        "inputDn " + paciente.id_paciente
-                      ).value = moment(date).format("DD/MM/YYYY");
-                    }
-                  }, 3000);
-                }}
+                onKeyUp={() =>
+                  maskdate(timeout, "inputDn " + paciente.id_paciente)
+                }
                 defaultValue={moment(paciente.dn_paciente).format("DD/MM/YYYY")}
                 style={{
                   flexDirection: "center",
@@ -1417,12 +1358,12 @@ function Cadastro() {
                 <input
                   autoComplete="off"
                   placeholder="TIPO DE DOC."
-                  className="button"
+                  className="input destacaborda"
                   type="text"
                   id={"inputTipoDocumento " + paciente.id_paciente}
-                  defaultValue={paciente.tipo_documento}
                   onFocus={(e) => (e.target.placeholder = "")}
                   onBlur={(e) => (e.target.placeholder = "TIPO DE DOC.")}
+                  defaultValue={paciente.tipo_documento}
                   onClick={() => setviewtipodocumento(1)}
                   style={{
                     flexDirection: "row",
@@ -1430,10 +1371,6 @@ function Cadastro() {
                     alignSelf: "center",
                     width: window.innerWidth > 425 ? 130 : "70vw",
                     alignContent: "center",
-                    height: 40,
-                    minHeight: 40,
-                    maxHeight: 40,
-                    borderStyle: "none",
                     textAlign: "center",
                   }}
                 ></input>
@@ -1538,9 +1475,9 @@ function Cadastro() {
                   alignSelf: "center",
                   width: window.innerWidth > 425 ? "50vw" : "70vw",
                   padding: 15,
-                  height: 20,
-                  minHeight: 20,
-                  maxHeight: 20,
+                  height: 75,
+                  minHeight: 75,
+                  maxHeight: 75,
                 }}
               ></textarea>
             </div>
@@ -1562,6 +1499,9 @@ function Cadastro() {
                 onFocus={(e) => (e.target.placeholder = "")}
                 onBlur={(e) => (e.target.placeholder = "TELEFONE")}
                 defaultValue={paciente.telefone}
+                onKeyUp={() =>
+                  maskphone(timeout, "inputTelefone " + paciente.id_paciente)
+                }
                 style={{
                   flexDirection: "center",
                   justifyContent: "center",
@@ -1756,7 +1696,7 @@ function Cadastro() {
                     return null;
                   });
                   if (check == 0) {
-                    updatePaciente(paciente.id_paciente);
+                    updatePaciente(paciente);
                   } else {
                     toastypacientes(
                       settoastpacientes,
@@ -2520,7 +2460,8 @@ function Cadastro() {
           display: "flex",
           flexDirection: "column",
           justifyContent: "space-between",
-          width: "calc(100vw - 20px)",
+          width: "calc(100vw - 30px)",
+          height: "calc(100vh - 30px)",
           // height: window.innerWidth < 426 ? '' : window.innerHeight,
         }}
       >
@@ -2531,6 +2472,7 @@ function Cadastro() {
             flexDirection: "row",
             justifyContent: "center",
             alignSelf: "center",
+            marginTop: 10,
           }}
         >
           <div
@@ -2544,7 +2486,7 @@ function Cadastro() {
           >
             <img
               alt=""
-              src={power}
+              src={back}
               style={{
                 margin: 0,
                 height: 30,

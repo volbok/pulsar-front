@@ -7,6 +7,8 @@ import toast from "../functions/toast";
 import checkinput from "../functions/checkinput";
 // imagens.
 import salvar from "../images/salvar.svg";
+import back from "../images/back.svg";
+import power from "../images/power.svg";
 // componentes.
 import Logo from "../components/Logo";
 // router.
@@ -35,22 +37,12 @@ function Login() {
   useEffect(() => {
     if (pagina == 0) {
       sethospital(cliente.id_cliente);
-      console.log(cliente.id_cliente);
-      setusuario({
-        id: 0,
-        nome_usuario: "LOGOFF",
-        dn_usuario: null,
-        cpf_usuario: null,
-        email_usuario: null,
-        paciente: null,
-        prontuario: null,
-        farmacia: null,
-        laboratorio: null,
-        faturamento: null,
-        usuarios: null,
-      });
-      setviewlistaunidades(0);
       loadUnidades();
+      if (usuario.prontuario == 1) {
+        setviewlistaunidades(1);
+        loadAcessos(usuario.id);
+        console.log(usuario.prontuario);
+      }
     }
     // eslint-disable-next-line
   }, [pagina]);
@@ -238,6 +230,7 @@ function Login() {
       .get(html + "list_unidades")
       .then((response) => {
         setunidades(response.data.rows);
+        console.log(unidades);
       })
       .catch(function (error) {
         console.log(error);
@@ -266,6 +259,7 @@ function Login() {
       .then((response) => {
         setacessos(response.data.rows);
         setviewlistaunidades(1);
+        setviewalterarsenha(0);
       })
       .catch(function (error) {
         console.log(error);
@@ -365,9 +359,11 @@ function Login() {
     return (
       <div
         style={{
-          display: viewlistaunidades == 1 ? "none" : "flex",
+          display:
+            viewlistaunidades == 1 || viewalterarsenha == 1 ? "none" : "flex",
           flexDirection: "column",
           justifyContent: "center",
+          alignSelf: "center",
         }}
       >
         <input
@@ -412,116 +408,134 @@ function Login() {
   }, [viewlistaunidades, viewalterarsenha]);
 
   // lista de unidades disponiveis para o usuário logado.
-  const ListaDeAcessos = useCallback(() => {
+  function ListaDeUnidadesAssistenciais() {
     return (
       <div
         style={{
-          display:
-            viewlistaunidades == 1 && viewalterarsenha == 0 ? "flex" : "none",
+          display: viewlistaunidades == 1 ? "flex" : "none",
           flexDirection: "column",
           justifyContent: "center",
-          width: window.innerWidth > 425 ? "45vw" : "80vw",
+          alignSelf: "center",
+        }}
+      >
+        <div className="text2" style={{ fontSize: 16 }}>
+          UNIDADES ASSISTENCIAIS
+        </div>
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "row",
+            justifyContent: "center",
+            flexWrap: "wrap",
+            width: window.innerWidth > 425 ? "45vw" : "80vw",
+          }}
+        >
+          {acessos.map((item) => (
+            <div
+              key={"ACESSO: " + item.id_acesso}
+              className="button"
+              style={{
+                display: "flex",
+                padding: 10,
+                margin: 5,
+                width: 150,
+                minWidth: 150,
+                height: 150,
+                minHeight: 150,
+                maxWidth: 150,
+                maxHeight: 150,
+              }}
+              onClick={() => {
+                setunidade(item.id_unidade);
+                setpagina(1);
+                history.push("/prontuario");
+                localStorage.setItem("viewlistaunidades", 1);
+                localStorage.setItem("viewlistamodulos", 1);
+                console.log("HOSPITAL: " + item.id_unidade);
+              }}
+            >
+              {unidades
+                .filter((valor) => valor.id_unidade == item.id_unidade)
+                .map(
+                  (valor) => valor.nome_cliente + " - " + valor.nome_unidade
+                )}
+            </div>
+          ))}
+        </div>
+      </div>
+    );
+  }
+
+  const montaModuloDeApoio = (titulo, acesso, rota, pagina) => {
+    return (
+      <div
+        className="button"
+        style={{
+          display: acesso == 1 ? "flex" : "none",
+          width: 150,
+          height: 150,
+          margin: 5,
+          padding: 10,
+        }}
+        onClick={() => {
+          history.push(rota);
+          setpagina(pagina);
+          localStorage.setItem("viewlistaunidades", 1);
+          localStorage.setItem("viewlistamodulos", 1);
+        }}
+      >
+        {titulo}
+      </div>
+    );
+  };
+  function ListaDeUnidadesDeApoio() {
+    return (
+      <div
+        style={{
+          display: viewlistaunidades == 1 ? "flex" : "none",
+          flexDirection: "column",
+          justifyContent: "center",
+          alignSelf: "center",
           marginTop: 20,
         }}
       >
-        {acessos.map((item) => (
-          <div
-            key={"ACESSO: " + item.id_acesso}
-            className="button"
-            style={{ flex: 1, padding: 10 }}
-            onClick={() => {
-              console.log(cliente.map((item) => item.id_cliente));
-              setunidade(item.id_unidade);
-              setpagina(1);
-              history.push("/passometro");
-              console.log("HOSPITAL: " + item.id_cliente);
-            }}
-          >
-            {unidades
-              .filter((valor) => valor.id_unidade == item.id_unidade)
-              .map((valor) => valor.nome_cliente + " - " + valor.nome_unidade)}
-          </div>
-        ))}
-      </div>
-    );
-    // eslint-disable-next-line
-  }, [viewlistaunidades, viewalterarsenha]);
-
-  function AcessoModulos() {
-    return (
-      <div
-        style={{
-          display: "flex",
-          flexDirection: "row",
-          flexWrap: "wrap",
-          justifyContent: "center",
-          width: window.innerWidth > 425 ? "80vw" : "80vw",
-        }}
-      >
-        <div
-          className="button"
-          style={{
-            display: usuario.paciente == 1 ? "flex" : "none",
-            width: 150,
-            height: 150,
-          }}
-          onClick={() => {
-            history.push("/cadastro");
-            setpagina(2);
-          }}
-        >
-          GESTÃO DE PACIENTES, ATENDIMENTOS E LEITOS
+        <div className="text2" style={{ fontSize: 16 }}>
+          UNIDADES DE APOIO
         </div>
         <div
-          className="button"
           style={{
-            display: usuario.usuarios == 1 ? "flex" : "none",
-            width: 150,
-            height: 150,
-          }}
-          onClick={() => {
-            history.push("/usuarios");
-            setpagina(5);
+            display: "flex",
+            flexDirection: "row",
+            justifyContent: "center",
+            flexWrap: "wrap",
           }}
         >
-          GESTÃO DE USUÁRIOS
+          {montaModuloDeApoio(
+            "CADASTRO E MOVIMENTAÇÃO DE PACIENTES",
+            usuario.paciente,
+            "/cadastro",
+            2
+          )}
+          {montaModuloDeApoio(
+            "CADASTRO DE USUÁRIOS",
+            usuario.usuarios,
+            "/usuarios",
+            5
+          )}
+          {montaModuloDeApoio("FARMÁCIA", usuario.farmacia, "/farmacia", 6)}
+          {montaModuloDeApoio(
+            "LABORATÓRIO",
+            usuario.laboratorio,
+            "/laboratorio",
+            7
+          )}
+          {montaModuloDeApoio(
+            "FATURAMENTO",
+            usuario.faturamento,
+            "/financeiro",
+            8
+          )}
         </div>
-        <div
-          className="button"
-          style={{
-            display: usuario.farmacia == 1 ? "flex" : "none",
-            width: 150,
-            height: 150,
-          }}
-          onClick={() => {
-            history.push("/farmacia");
-            // setpagina(20);
-          }}
-        ></div>
-        <div
-          className="button"
-          style={{
-            display: usuario.laboratorio == 1 ? "flex" : "none",
-            width: 150,
-            height: 150,
-          }}
-          onClick={() => {
-            history.push("/laboratorio");
-            // setpagina(30);
-          }}
-        ></div>
-        <div
-          className="button"
-          style={{
-            display: usuario.faturamento == 1 ? "flex" : "none",
-            width: 150,
-            height: 150,
-          }}
-          onClick={() => {
-            history.push("/faturamento");
-            // setpagina(40);
-          }}
-        ></div>
       </div>
     );
   }
@@ -540,6 +554,14 @@ function Login() {
         email_usuario: usuario.email_usuario,
         senha: novasenha,
         login: usuario.cpf_usuario,
+        conselho: usuario.conselho,
+        tipo_usuario: null,
+        paciente: usuario.paciente,
+        prontuario: usuario.prontuario,
+        laboratorio: usuario.laboratorio,
+        farmacia: usuario.farmacia,
+        faturamento: usuario.faturamento,
+        usuarios: usuario.usuarios,
       };
       axios
         .post(html + "update_usuario/" + usuario.id, obj)
@@ -585,6 +607,7 @@ function Login() {
           display: viewalterarsenha == 1 ? "flex" : "none",
           flexDirection: "column",
           justifyContent: "center",
+          alignSelf: "center",
         }}
       >
         <div className="text3" style={{ color: "white", fontSize: 16 }}>
@@ -606,6 +629,7 @@ function Login() {
             marginBottom: 10,
             width: 200,
             height: 50,
+            alignSelf: "center",
           }}
         ></input>
         <div className="text1" style={{ color: "white" }}>
@@ -624,33 +648,62 @@ function Login() {
             marginBottom: 10,
             width: 200,
             height: 50,
+            alignSelf: "center",
           }}
         ></input>
         <div
-          id="btnTrocarSenha"
-          title="ALTERAR SENHA"
-          className="button-green"
-          onClick={() => {
-            checkinput(
-              "input",
-              settoast,
-              ["inputNovaSenha", "inputConfirmaSenha"],
-              "btnTrocarSenha",
-              updateUsuario,
-              []
-            );
+          style={{
+            display: "flex",
+            flexDirection: "row",
+            justifyContent: "center",
           }}
-          style={{ width: 50, height: 50, alignSelf: "center" }}
         >
-          <img
-            alt=""
-            src={salvar}
-            style={{
-              margin: 10,
-              height: 30,
-              width: 30,
+          <div
+            id="btnTrocarSenha"
+            title="ALTERAR SENHA"
+            className="button-green"
+            onClick={() => {
+              checkinput(
+                "input",
+                settoast,
+                ["inputNovaSenha", "inputConfirmaSenha"],
+                "btnTrocarSenha",
+                updateUsuario,
+                []
+              );
             }}
-          ></img>
+            style={{ width: 50, height: 50, alignSelf: "center" }}
+          >
+            <img
+              alt=""
+              src={salvar}
+              style={{
+                margin: 10,
+                height: 30,
+                width: 30,
+              }}
+            ></img>
+          </div>
+          <div
+            id="btnCancelaTrocarSenha"
+            title="CANCELAR ALTERAÇÃO DA SENHA"
+            className="button-red"
+            onClick={() => {
+              setviewalterarsenha(0);
+              setviewlistaunidades(1);
+            }}
+            style={{ width: 50, height: 50, alignSelf: "center" }}
+          >
+            <img
+              alt=""
+              src={back}
+              style={{
+                margin: 10,
+                height: 30,
+                width: 30,
+              }}
+            ></img>
+          </div>
         </div>
       </div>
     );
@@ -659,79 +712,117 @@ function Login() {
   return (
     <div
       className={tema != 3 ? "main cor1" : "main"}
-      style={{
-        display: pagina == 0 ? "flex" : "none",
-        overflowY: "auto",
-      }}
+      style={{ display: pagina == 0 ? "flex" : "none" }}
     >
       <div
-        className="text2"
-        style={{
-          display:
-            window.innerWidth < 426 && viewalterarsenha == 1 ? "none" : "flex",
-        }}
-      >
-        <Logo height={100} width={100}></Logo>
-      </div>
-      <div
+        className="scroll"
+        id="conteúdo do login"
         style={{
           display: "flex",
-          flexDirection: "row",
-          justifyContent: "center",
+          position: "relative",
+          flexDirection: "column",
+          justifyContent: viewlistaunidades === 1 ? "flex-start" : "center",
+          alignSelf: "center",
+          width: "calc(100vw - 20px)",
+          height: "calc(100vh - 20px)",
+          backgroundColor: "transparent",
+          borderColor: "transparent",
         }}
       >
-        <a
-          className="text2"
-          style={{ cursor: "pointer" }}
-          href="/site/index.html"
-          target="_blank"
-          rel="noreferrer"
+        <div
+          className="text2 destaque"
+          style={{
+            display:
+              window.innerWidth < 426 && viewalterarsenha == 1
+                ? "none"
+                : "flex",
+          }}
         >
-          SAIBA MAIS
-        </a>
-        <a
+          <Logo height={200} width={200}></Logo>
+        </div>
+        <div
           className="text2"
-          style={{ cursor: "pointer" }}
-          href="/integracoes/index.html"
-          target="_blank"
-          rel="noreferrer"
+          style={{
+            display:
+              window.innerWidth < 426 && viewalterarsenha == 1
+                ? "none"
+                : "flex",
+            margin: 20,
+            fontSize: 20,
+          }}
         >
-          INTEGRAÇÕES
-        </a>
-      </div>
-      <div
-        className="text2"
-        style={{
-          display:
-            window.innerWidth < 426 && viewalterarsenha == 1 ? "none" : "flex",
-          margin: 20,
-          fontSize: 20,
-        }}
-      >
-        PULSAR
-      </div>
-      <Inputs></Inputs>
-      <ListaDeAcessos></ListaDeAcessos>
-      <AcessoModulos></AcessoModulos>
-      <div
-        className="text1"
-        style={{
-          display: usuario.id != 0 ? "flex" : "none",
-          textDecoration: "underline",
-          color: "white",
-          marginTop: window.innerWidth < 426 && viewalterarsenha == 1 ? 20 : 0,
-        }}
-        onClick={() => {
-          if (viewalterarsenha == 1) {
+          PULSAR
+        </div>
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "row",
+            justifyContent: "center",
+          }}
+        >
+          <a
+            className="text2"
+            style={{ cursor: "pointer" }}
+            href="/site/index.html"
+            target="_blank"
+            rel="noreferrer"
+          >
+            SAIBA MAIS
+          </a>
+        </div>
+        <div
+          className="text1"
+          style={{
+            display: viewlistaunidades == 1 ? "flex" : "none",
+            textDecoration: "underline",
+            color: "white",
+            marginTop:
+              window.innerWidth < 426 && viewalterarsenha == 1 ? 20 : 0,
+          }}
+          onClick={() => {
+            if (viewalterarsenha == 1) {
+              setviewalterarsenha(0);
+              setviewlistaunidades(1);
+            } else {
+              setviewalterarsenha(1);
+              setviewlistaunidades(0);
+            }
+          }}
+        >
+          ALTERAR SENHA
+        </div>
+        <Inputs></Inputs>
+        <ListaDeUnidadesAssistenciais></ListaDeUnidadesAssistenciais>
+        <ListaDeUnidadesDeApoio></ListaDeUnidadesDeApoio>
+        <AlterarSenha></AlterarSenha>
+        <div
+          className="button-red"
+          style={{
+            display: usuario.id != undefined ? "flex" : "none",
+            position: "absolute",
+            top: 10,
+            right: 10,
+          }}
+          title="FAZER LOGOFF."
+          onMouseOver={() => console.log(usuario.id)}
+          onClick={() => {
+            setusuario({});
+            setacessos([]);
+            setviewlistaunidades(0);
             setviewalterarsenha(0);
-          } else {
-            setviewalterarsenha(1);
-          }
-        }}
-      >
-        ALTERAR SENHA
+          }}
+        >
+          <img
+            alt=""
+            src={power}
+            style={{
+              margin: 0,
+              height: 30,
+              width: 30,
+            }}
+          ></img>
+        </div>
       </div>
-      <AlterarSenha></AlterarSenha>
     </div>
   );
 }

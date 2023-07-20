@@ -9,10 +9,14 @@ import { useHistory } from "react-router-dom";
 // funções.
 import toast from "../functions/toast";
 import checkinput from "../functions/checkinput";
+import masknumbers from "../functions/masknumber";
+import maskoptions from "../functions/maskoptions";
+import maskdate from "../functions/maskdate";
+import maskphone from "../functions/maskphone";
+
 // imagens.
 import deletar from "../images/deletar.svg";
 import back from "../images/back.svg";
-import power from "../images/power.svg";
 import novo from "../images/novo.svg";
 import salvar from "../images/salvar.svg";
 import editar from "../images/editar.svg";
@@ -41,7 +45,7 @@ function Usuarios() {
       nome_usuario: "LOGOFF",
       dn_usuario: null,
       cpf_usuario: null,
-      email_usuario: null,
+      contato_usuario: null,
     });
     setpagina(0);
     history.push("/");
@@ -112,7 +116,7 @@ function Usuarios() {
         "DD/MM/YYYY"
       ),
       cpf_usuario: document.getElementById("inputCpf").value.toUpperCase(),
-      email_usuario: document.getElementById("inputContato").value,
+      contato_usuario: document.getElementById("inputContato").value,
       senha: document.getElementById("inputCpf").value.toUpperCase(),
       login: document.getElementById("inputCpf").value.toUpperCase(),
       conselho: document.getElementById("inputConselho").value.toUpperCase(),
@@ -166,7 +170,7 @@ function Usuarios() {
         "DD/MM/YYYY"
       ),
       cpf_usuario: document.getElementById("inputCpf").value.toUpperCase(),
-      email_usuario: document
+      contato_usuario: document
         .getElementById("inputContato")
         .value.toUpperCase(),
       senha: selectedusuario.senha,
@@ -217,7 +221,7 @@ function Usuarios() {
       nome_usuario: selectedusuario.nome_usuario,
       dn_usuario: selectedusuario.dn_usuario,
       cpf_usuario: selectedusuario.cpf_usuario,
-      email_usuario: selectedusuario.email_usuario,
+      contato_usuario: selectedusuario.contato_usuario,
       senha: selectedusuario.senha,
       login: selectedusuario.login,
       conselho: selectedusuario.conselho,
@@ -374,35 +378,7 @@ function Usuarios() {
                 onFocus={(e) => (e.target.placeholder = "")}
                 onBlur={(e) => (e.target.placeholder = "DN")}
                 onKeyUp={() => {
-                  var x = document.getElementById("inputDn").value;
-                  if (x.length == 2) {
-                    x = x + "/";
-                    document.getElementById("inputDn").value = x;
-                  }
-                  if (x.length == 5) {
-                    x = x + "/";
-                    document.getElementById("inputDn").value = x;
-                  }
-                  clearTimeout(timeout);
-                  var date = moment(
-                    document.getElementById("inputDn").value,
-                    "DD/MM/YYYY",
-                    true
-                  );
-                  timeout = setTimeout(() => {
-                    if (date.isValid() == false) {
-                      toast(
-                        settoast,
-                        "DATA INVÁLIDA",
-                        "rgb(231, 76, 60, 1)",
-                        3000
-                      );
-                      document.getElementById("inputDn").value = "";
-                    } else {
-                      document.getElementById("inputDn").value =
-                        moment(date).format("DD/MM/YYYY");
-                    }
-                  }, 3000);
+                  maskdate(timeout, "inputDn");
                 }}
                 defaultValue={
                   viewnewusuario == 2
@@ -434,11 +410,8 @@ function Usuarios() {
                 id="inputContato"
                 onFocus={(e) => (e.target.placeholder = "")}
                 onBlur={(e) => (e.target.placeholder = "CONTATO")}
-                defaultValue={
-                  viewnewusuario == 2
-                    ? moment(selectedusuario.dn_usuario).format("DD/MM/YY")
-                    : ""
-                }
+                defaultValue={selectedusuario.contato_usuario}
+                onKeyUp={() => maskphone(timeout, "inputContato")}
                 style={{
                   flexDirection: "center",
                   justifyContent: "center",
@@ -464,6 +437,9 @@ function Usuarios() {
                 id="inputCpf"
                 onFocus={(e) => (e.target.placeholder = "")}
                 onBlur={(e) => (e.target.placeholder = "CPF DO USUÁRIO")}
+                onKeyUp={() => {
+                  masknumbers(timeout, "inputCpf", 13);
+                }}
                 defaultValue={
                   viewnewusuario == 2 ? selectedusuario.cpf_usuario : ""
                 }
@@ -485,6 +461,17 @@ function Usuarios() {
               id="inputConselho"
               onFocus={(e) => (e.target.placeholder = "")}
               onBlur={(e) => (e.target.placeholder = "CONSELHO")}
+              onKeyUp={() =>
+                maskoptions(timeout, "inputConselho", 10, [
+                  "CRM",
+                  "CRO",
+                  "CRESS",
+                  "CRF",
+                  "CREFONO",
+                  "COREN",
+                  "CREFITO",
+                ])
+              }
               defaultValue={viewnewusuario == 2 ? selectedusuario.conselho : ""}
               style={{
                 flexDirection: "center",
@@ -504,6 +491,7 @@ function Usuarios() {
             onFocus={(e) => (e.target.placeholder = "")}
             onBlur={(e) => (e.target.placeholder = "NÚMERO DO CONSELHO")}
             defaultValue={viewnewusuario == 2 ? selectedusuario.n_conselho : ""}
+            onKeyUp={() => masknumbers(timeout, "inputNumeroConselho", 8)}
             style={{
               flexDirection: "center",
               justifyContent: "center",
@@ -511,7 +499,6 @@ function Usuarios() {
               width: window.innerWidth > 425 ? "30vw" : "70vw",
             }}
           ></input>
-
           <div
             style={{
               display: "flex",
@@ -563,7 +550,7 @@ function Usuarios() {
             >
               <img
                 alt=""
-                src={novo}
+                src={salvar}
                 style={{
                   margin: 10,
                   height: 25,
@@ -859,23 +846,24 @@ function Usuarios() {
     return (
       <div
         className="scroll"
+        id="scroll acessos e módulos"
         style={{
           display: "flex",
           flexDirection: "column",
           justifyContent: "flex-start",
-          height: window.innerWidth < 426 ? "50vh" : "calc(100vh - 80px)",
-          width: "calc(100vw - 445px)",
-          backgroundColor: "transparent",
-          borderColor: "transparent",
+          width: "calc(100vw - 460px)",
+          height: window.innerWidth < 426 ? "50vh" : "calc(100vh - 30px)",
+          overflowY: "scroll",
+          marginLeft: 10,
         }}
       >
-        <ListaDeAcessos></ListaDeAcessos>
-        <ListaDeAcessosModulos></ListaDeAcessosModulos>
+        <ListaDeUnidades></ListaDeUnidades>
+        <ListaDeModulos></ListaDeModulos>
       </div>
     );
   }
 
-  function ListaDeAcessos() {
+  function ListaDeUnidades() {
     return (
       <div
         style={{
@@ -910,9 +898,18 @@ function Usuarios() {
               unidades
                 .filter((valor) => valor.id_unidade == item.id_unidade)
                 .map((max) => (
-                  <div className="button">
-                    <div style={{ width: 150 }}>{max.nome_unidade}</div>
+                  <div className="button" style={{ position: "relative" }}>
+                    <div className="text2" style={{ width: 150, height: 150 }}>
+                      {max.nome_unidade}
+                    </div>
                     <div
+                      style={{
+                        position: "absolute",
+                        top: 10,
+                        right: 10,
+                        width: 30, minWidth: 30,
+                        height: 30, minHeight: 30,
+                      }}
                       className="button-yellow"
                       onClick={() =>
                         deleteAcesso(
@@ -1000,10 +997,9 @@ function Usuarios() {
         </div>
       </div>
     );
-    //eslint-disable-next-line
   }
 
-  const mudaAcesso = (acesso, setacesso) => {
+  const mudaModulo = (acesso, setacesso) => {
     if (acesso == 1) {
       setacesso(0);
       setTimeout(() => {
@@ -1020,7 +1016,7 @@ function Usuarios() {
       }, 100);
     }
   };
-  function ListaDeAcessosModulos() {
+  function ListaDeModulos() {
     return (
       <div
         style={{
@@ -1045,43 +1041,43 @@ function Usuarios() {
         >
           <div
             className={acessoprontuario == 1 ? "button-red" : "button"}
-            style={{ width: 150 }}
-            onClick={() => mudaAcesso(acessoprontuario, setacessoprontuario)}
+            style={{ width: 150, height: 150 }}
+            onClick={() => mudaModulo(acessoprontuario, setacessoprontuario)}
           >
             PRONTUÁRIO
           </div>
           <div
             className={acessofarmacia == 1 ? "button-red" : "button"}
-            style={{ width: 150 }}
-            onClick={() => mudaAcesso(acessofarmacia, setacessofarmacia)}
+            style={{ width: 150, height: 150 }}
+            onClick={() => mudaModulo(acessofarmacia, setacessofarmacia)}
           >
             FARMÁCIA
           </div>
           <div
             className={acessolaboratorio == 1 ? "button-red" : "button"}
-            style={{ width: 150 }}
-            onClick={() => mudaAcesso(acessolaboratorio, setacessolaboratorio)}
+            style={{ width: 150, height: 150 }}
+            onClick={() => mudaModulo(acessolaboratorio, setacessolaboratorio)}
           >
             LABORATÓRIO
           </div>
           <div
             className={acessofaturamento == 1 ? "button-red" : "button"}
-            style={{ width: 150 }}
-            onClick={() => mudaAcesso(acessofaturamento, setacessofaturamento)}
+            style={{ width: 150, height: 150 }}
+            onClick={() => mudaModulo(acessofaturamento, setacessofaturamento)}
           >
             FATURAMENTO
           </div>
           <div
             className={acessopaciente == 1 ? "button-red" : "button"}
-            style={{ width: 150 }}
-            onClick={() => mudaAcesso(acessopaciente, setacessopaciente)}
+            style={{ width: 150, height: 150 }}
+            onClick={() => mudaModulo(acessopaciente, setacessopaciente)}
           >
             GESTÃO DE PACIENTES E LEITOS
           </div>
           <div
             className={acessousuarios == 1 ? "button-red" : "button"}
-            style={{ width: 150 }}
-            onClick={() => mudaAcesso(acessousuarios, setacessousuarios)}
+            style={{ width: 150, height: 150 }}
+            onClick={() => mudaModulo(acessousuarios, setacessousuarios)}
           >
             GESTÃO DE USUÁRIOS
           </div>
@@ -1187,7 +1183,7 @@ function Usuarios() {
             >
               <img
                 alt=""
-                src={power}
+                src={back}
                 style={{
                   margin: 0,
                   height: 30,
